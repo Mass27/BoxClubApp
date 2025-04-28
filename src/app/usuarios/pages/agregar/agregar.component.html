@@ -1,0 +1,180 @@
+<form [formGroup]="formulario" class="max-w-md mx-auto">
+  <!-- Campo nombre de Cliente-->
+  <div class="mb-4">
+    <label
+      class="block text-gray-700 text-sm font-bold mb-2"
+      for="nombreCompleto"
+      >Nombre Completo*</label
+    >
+    <input
+      maxlength="50"
+      formControlName="nombreCompleto"
+      type="text"
+      id="nombreCompleto"
+      placeholder="Nombre Completo del Cliente"
+      class="input-field"
+    />
+    <div
+      *ngIf="
+        formulario.get('nombreCompleto')?.invalid &&
+        formulario.get('nombreCompleto')?.touched
+      "
+    >
+      <small class="text-red-500">Nombre del clliente es requerido.</small>
+    </div>
+  </div>
+
+  <!-- Campo Contraseña de Cliente -->
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="tel"
+      >Número de Teléfono*</label
+    >
+    <input
+      formControlName="numeroTelefono"
+      type="number"
+      id="tel"
+      (input)="limitarNumeroTelefono($event)"
+      placeholder="N. Teléfono"
+      class="input-field"
+    />
+    <div
+      *ngIf="
+        formulario.get('numeroTelefono')?.invalid &&
+        formulario.get('numeroTelefono')?.touched
+      "
+    >
+      <small class="text-red-500">Numero del clliente es requerido.</small>
+    </div>
+  </div>
+
+  <!-- Campo Correo de Cliente -->
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="correo"
+      >Correo*</label
+    >
+    <input
+      formControlName="correo"
+      type="email"
+      id="correo"
+      placeholder="Correo"
+      class="input-field"
+    />
+    <div
+      *ngIf="
+        formulario.get('correo')?.invalid && formulario.get('correo')?.touched
+      "
+    >
+      <small class="text-red-500">Correo del clliente es requerido.</small>
+    </div>
+  </div>
+
+  <!-- Campo Identidad  de Cliente-->
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="identidad"
+      >Identidad*</label
+    >
+    <input
+      [maxlength]="13"
+      formControlName="identidad"
+      type="text"
+      id="identidad"
+      (input)="limitarIdentidad($event)"
+      placeholder="Identidad"
+      class="input-field"
+    />
+    <div
+      *ngIf="
+        formulario.get('identidad')?.invalid &&
+        formulario.get('identidad')?.touched
+      "
+    >
+      <small class="text-red-500">Identidad del clliente es requerido.</small>
+    </div>
+  </div>
+  <!-- Campo Fecha de ingreso de Cliente-->
+  <div>
+    <label
+      class="block text-gray-700 text-sm font-bold mb-2"
+      for="fechaNacimiento"
+      >Fecha de Ingreso*</label
+    >
+    <input
+      formControlName="fechaIngreso"
+      type="date"
+      id="fechaNacimiento"
+      placeholder="Fecha de Ingreso"
+      class="input-field"
+    />
+    <div
+      *ngIf="
+        formulario.get('fechaIngreso')?.invalid &&
+        formulario.get('fechaIngreso')?.touched
+      "
+    >
+      <small class="text-red-500"
+        >Fecha de ingreso del clliente es requerido.</small
+      >
+    </div>
+  </div>
+
+  <!-- Campo de Seleccion de Plan del Cliente-->
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="plan"
+      >Plan*</label
+    >
+    <select formControlName="idPlan" id="plan" class="select-field">
+      <option value="" disabled selected>Selecciona un plan</option>
+      <option *ngFor="let plan of tipoPlanes" [value]="plan._id">
+        {{ plan.nombrePlan }}
+      </option>
+    </select>
+    <div
+      *ngIf="
+        formulario.get('idPlan')?.invalid && formulario.get('idPlan')?.touched
+      "
+    >
+      <small class="text-red-500">Plan de gimnasio es requerido.</small>
+    </div>
+  </div>
+
+  <!-- Campo de Estado del Cliente-->
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="estado"
+      >Estados</label
+    >
+    <select formControlName="estado" id="estado" class="select-field">
+      <option value="" disabled selected>Selecciona un estado</option>
+      <option *ngFor="let plan of estados" [value]="plan.id">
+        {{ plan.desc }}
+      </option>
+    </select>
+  </div>
+  <!-- Pre-visualizacion de Imagen -->
+  <div *ngIf="currentImageUrl">
+    <img
+      [src]="currentImageUrl"
+      alt="Imagen actual del usuario"
+      class="current-image"
+    />
+  </div>
+
+  <!-- Campo para seleccionar una nueva imagen -->
+  <div>
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="imagen"
+      >Imagen</label
+    >
+    <input
+      type="file"
+      (change)="onFileChange($event)"
+      class="input-field"
+      id="imagen"
+    />
+  </div>
+
+  <!-- Botón Enviar -->
+  <div class="mb-4">
+    <button type="submit" (click)="enviarFormulario()" class="btn-submit">
+      Guardar
+    </button>
+  </div>
+</form>

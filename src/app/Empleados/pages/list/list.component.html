@@ -1,0 +1,28 @@
+<h2 class="titulo-global">Listado de empleados</h2>
+<app-searchbox
+  class="app-search-box"
+  (buscarEmpleadoNombre)="buscarEmpleadoPorNombre($event)"
+></app-searchbox>
+
+<div class="button-agregar" style="margin-top: 10px">
+  <button routerLink="/empleados/agregar">AGREGAR</button>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+  <div *ngFor="let item of empleadosFiltradas" class="grid-item">
+    <div class="user-card">
+      <h2>{{ item.nombreCompleto }}</h2>
+      <p><strong>Empleado:</strong> {{ item.idempleado }}</p>
+      <p><strong>Correo:</strong> {{ item.correo }}</p>
+      <p><strong>Identidad:</strong> {{ item.identidad }}</p>
+
+      <!-- Muestra otros datos del empleado según la estructura de la interfaz -->
+      <button
+        *ngIf="isAdmin"
+        [routerLink]="['/empleados/edit', item.idempleado]"
+      >
+        Editar
+      </button>
+    </div>
+  </div>
+</div>

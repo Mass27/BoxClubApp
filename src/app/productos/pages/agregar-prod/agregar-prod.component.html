@@ -1,0 +1,121 @@
+<div class="flex justify-center mt-8">
+  <div class="max-w-2xl w-full">
+    <form
+      [formGroup]="formulario"
+      class="bg-white shadow-lg rounded-lg p-6 space-y-6"
+    >
+      <div>
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="nProd"
+          >Nombre de Producto</label
+        >
+        <input
+          formControlName="nombreProducto"
+          type="text"
+          id="nProd"
+          placeholder="Nombre de Producto"
+          class="input-field"
+        />
+
+        <div
+          *ngIf="
+            formulario.get('nombreProducto')?.invalid &&
+            formulario.get('nombreProducto')?.touched
+          "
+        >
+          <small class="text-red-500">Nombre de producto es requerido.</small>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="precio"
+          >Precio</label
+        >
+        <input
+          formControlName="precio"
+          type="number"
+          placeholder="Precio"
+          class="input-field"
+          id="precio"
+          (input)="limitadorNegayMax($event)"
+        />
+        <div
+          *ngIf="
+            formulario.get('precio')?.invalid &&
+            formulario.get('precio')?.touched
+          "
+        >
+          <small class="text-red-500">Precio del producto es requerido.</small>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="desc"
+          >Descripción</label
+        >
+        <input
+          formControlName="descripcion"
+          type="text"
+          id="desc"
+          placeholder="Descripción"
+          class="input-field"
+        />
+        <div
+          *ngIf="
+            formulario.get('descripcion')?.invalid &&
+            formulario.get('descripcion')?.touched
+          "
+        >
+          <small class="text-red-500"
+            >Descripción del producto es requerido.</small
+          >
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="stock"
+          >Cantidad en Stock:</label
+        >
+        <input
+          (input)="limitadorNegayMax($event)"
+          formControlName="cantidadEnStock"
+          type="number"
+          id="stock"
+          placeholder="Cantidad en Stock"
+          class="input-field"
+        />
+        <div
+          *ngIf="
+            formulario.get('cantidadEnStock')?.invalid &&
+            formulario.get('cantidadEnStock')?.touched
+          "
+        >
+          <small class="text-red-500"
+            >Cantidad de stock del producto es requerido.</small
+          >
+        </div>
+      </div>
+
+      <div *ngIf="currentImageUrl">
+        <img
+          [src]="currentImageUrl"
+          alt="Imagen actual del usuario"
+          class="current-image"
+        />
+      </div>
+
+      <div>
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="imagen"
+          >Imagen</label
+        >
+        <input
+          type="file"
+          (change)="onFileChange($event)"
+          class="input-field"
+          id="imagen"
+        />
+      </div>
+
+      <button class="btn-submit" (click)="enviarFormulario()">AGREGAR</button>
+    </form>
+  </div>
+</div>

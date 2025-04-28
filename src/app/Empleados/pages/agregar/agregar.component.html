@@ -1,0 +1,94 @@
+<form [formGroup]="formulario" class="max-w-md mx-auto">
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2">Identidad*</label>
+    <input
+      formControlName="identidad"
+      type="text"
+      placeholder="Identidad"
+      class="input-field"
+      (input)="limitarIdentidad($event)"
+      maxlength="13"
+    />
+    <div
+      *ngIf="
+        formulario.get('identidad')?.invalid &&
+        formulario.get('identidad')?.touched
+      "
+    >
+      <small class="text-red-500">Identidad del empleado es requerido.</small>
+    </div>
+  </div>
+
+  <!-- Campo Nombre Completo -->
+  <div class="mb-4">
+    <label
+      class="block text-gray-700 text-sm font-bold mb-2"
+      for="nombreCompleto"
+      >Nombre Completo*</label
+    >
+    <input
+      formControlName="nombreCompleto"
+      type="text"
+      id="nombreCompleto"
+      placeholder="Nombre Completo"
+      class="input-field"
+    />
+    <div
+      *ngIf="
+        formulario.get('nombreCompleto')?.invalid &&
+        formulario.get('nombreCompleto')?.touched
+      "
+    >
+      <small class="text-red-500">Nombre del empleado es requerido.</small>
+    </div>
+  </div>
+
+  <!-- Campo Correo -->
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="correo"
+      >Correo*</label
+    >
+    <input
+      formControlName="correo"
+      type="email"
+      id="correo"
+      placeholder="Correo"
+      class="input-field"
+    />
+    <div
+      *ngIf="
+        formulario.get('correo')?.invalid && formulario.get('correo')?.touched
+      "
+    >
+      <small class="text-red-500">Correo del empleado es requerido.</small>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="telefono"
+      >Teléfono*</label
+    >
+    <input
+      formControlName="numeroTelefono"
+      type="string"
+      id="telefono"
+      placeholder="Teléfono"
+      class="input-field"
+      maxlength="8"
+      (input)="limitarNumeroTelefono($event)"
+    />
+    <div
+      *ngIf="
+        formulario.get('numeroTelefono')?.invalid &&
+        formulario.get('numeroTelefono')?.touched
+      "
+    >
+      <small class="text-red-500"
+        >Numero de telefono del empleado es requerido.</small
+      >
+    </div>
+  </div>
+
+  <!-- Mostrar errores -->
+  <button class="btn-submit" (click)="enviarForm()">AGREGAR</button>
+</form>

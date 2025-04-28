@@ -1,0 +1,102 @@
+<h2 class="titulo-global">Listado de Clientes</h2>
+
+<div class="search-container">
+  <app-search-box
+    class="app-search-box"
+    (bcNombre)="buscarClientePorNombre($event)"
+  ></app-search-box>
+  <button class="button-agregar" routerLink="/usuarios/agregar">AGREGAR</button>
+</div>
+
+<div class="button-filtrar">
+  <button
+    class="button-alternar"
+    [class.selected]="!mostrarInactivos && !mostrarPendientes"
+    (click)="mostrarUsuarios('Activos')"
+  >
+    Mostrar Activos
+  </button>
+  <button
+    class="button-alternar"
+    [class.selected]="mostrarInactivos"
+    (click)="mostrarUsuarios('Inactivos')"
+  >
+    Mostrar Inactivos
+  </button>
+  <button
+    class="button-alternar"
+    [class.selected]="mostrarPendientes"
+    (click)="mostrarUsuarios('Pendientes')"
+  >
+    Mostrar Pendientes
+  </button>
+</div>
+<div class="contador-clientes-activos">
+  <mat-chip
+    ><strong>Clientes Activos:</strong
+    ><strong>{{ contadorClientesActivos }}</strong></mat-chip
+  >
+</div>
+
+<!-- Botón para desplegar la bandeja de notificaciones -->
+<button
+  class="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+  (click)="toggleBandeja()"
+>
+  <mat-icon>notifications</mat-icon>
+</button>
+
+<!-- Bandeja de notificaciones -->
+<div
+  *ngIf="mostrarBandeja"
+  class="fixed bottom-16 right-4 bg-white border border-gray-200 shadow-lg p-4 rounded"
+>
+  <h3 class="text-lg font-bold mb-2">Notificaciones</h3>
+  <div
+    *ngFor="let user of usuariosConTresDiasRestantes"
+    class="bg-yellow-200 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-2"
+    role="alert"
+  >
+    <p class="text-sm">
+      {{ user.nombreCompleto }} tiene {{ user.diasRestantes }} días restantes en
+      su plan.
+    </p>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+  <div class="grid-item" *ngFor="let item of usuariosFiltrados">
+    <div class="user-card">
+      <img [src]="item.imagen" alt="" />
+      <h2>{{ item.nombreCompleto }}</h2>
+      <p><strong>DNI:</strong> {{ item.identidad }}</p>
+      <p><strong>Telefono:</strong> {{ item.numeroTelefono }}</p>
+      <p><strong>Correo:</strong> {{ item.correo }}</p>
+      <p>
+        <strong>Fecha de Ingreso:</strong> {{ formatDate(item.fechaIngreso) }}
+      </p>
+      <p>
+        <strong>Plan:</strong>
+        {{ item.idPlan ? getPlanName(item.idPlan) : "Plan no encontrado" }}
+      </p>
+      <p>
+        <strong>Dias Restantes:</strong>
+        {{ item.diasRestantes }}
+      </p>
+
+      <p
+        [ngClass]="{
+          activo: item.estado === 'Activo',
+          inactivo: item.estado === 'Inactivo',
+          pendiente: item.estado === 'Pendiente'
+        }"
+      >
+        {{ item.estado }}
+      </p>
+
+      <button *ngIf="isAdmin" [routerLink]="['/usuarios/edit', item._id]">
+        Editar
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,216 @@
+<div class="print-only">
+  <form
+    [formGroup]="formulario"
+    class="factura-form bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+    <!-- Campo Usuario -->
+    <h2 class="factura-title">Factura</h2>
+    <div class="">
+      <img src="assets/logo4.jpg" alt="Logo" class="factura-logo" />
+    </div>
+
+    <div class="factura-grid-container">
+      <div class="factura-grid-item">
+        <div class="mb-4">
+          <label class="factura-label" for="cliente">Cliente*</label>
+          <ng-container *ngIf="!isEditMode; else editModeTemplate">
+            <select
+              (change)="actualizarClietne($event)"
+              formControlName="idcliente"
+              id="cliente"
+              class="factura-input"
+            >
+              <option value="" disabled selected>Selecciona un cliente</option>
+              <option *ngFor="let cliente of clientes" [value]="cliente._id">
+                {{ cliente.nombreCompleto }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                formulario.get('idcliente')?.invalid &&
+                formulario.get('idcliente')?.touched
+              "
+            >
+              <small class="text-red-500"
+                >Nombre del cliente es requerido.</small
+              >
+            </div>
+          </ng-container>
+          <ng-template #editModeTemplate>
+            <input
+              formControlName="nombreCliente"
+              id="nombreCliente"
+              type="text"
+              class="factura-input"
+              readonly
+            />
+          </ng-template>
+        </div>
+
+        <div class="mb-4">
+          <label class="factura-label" for="plan">Plan</label>
+          <select
+            (change)="actualizarPrecioPlan($event); calcularTotal()"
+            formControlName="idPlan"
+            id="plan"
+            class="factura-input"
+          >
+            <option [ngValue]="null" selected>Selecciona un plan</option>
+            <option *ngFor="let plan of tipoPlanes" [value]="plan._id">
+              {{ plan.nombrePlan }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="factura-label" for="producto">Producto</label>
+          <select
+            (change)="actualizarPrecioProducto($event); calcularTotal()"
+            formControlName="idproducto"
+            id="producto"
+            class="factura-input"
+          >
+            <option [ngValue]="null" selected>Selecciona un producto</option>
+            <option *ngFor="let producto of productos" [value]="producto._id">
+              {{ producto.nombreProducto }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="factura-label" for="cantidadProducto">Cantidad</label>
+          <input
+            formControlName="CantidadProducto"
+            type="number"
+            id="cantidadProducto"
+            placeholder="Cantidad"
+            class="factura-input"
+            (change)="calcularTotal()"
+          />
+          <div
+            *ngIf="formulario.get('CantidadProducto')?.errors?.['max']"
+            class="text-red-500"
+          >
+            La cantidad no puede ser mayor al stock disponible.
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="factura-label" for="pago">Metodo De Pago*</label>
+          <select formControlName="metodoPago" id="pago" class="factura-input">
+            <option value="" disabled selected>Selecciona un pago</option>
+            <option *ngFor="let item of metodosDePagos" [value]="item.id">
+              {{ item.desc }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              formulario.get('metodoPago')?.invalid &&
+              formulario.get('metodoPago')?.touched
+            "
+          >
+            <small class="text-red-500">Metodo de Pago es requerido.</small>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="factura-label" for="descuento">Descuentos</label>
+          <select
+            (change)="calcularTotal()"
+            formControlName="descuento"
+            id="descuento"
+            class="factura-input"
+          >
+            <option value="" disabled selected>Selecciona un descuento</option>
+            <option *ngFor="let descuento of descuentos" [value]="descuento.id">
+              {{ descuento.desc }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="factura-grid-item">
+        <div class="mb-4">
+          <label class="factura-label" for="fechaDePago">Fecha*</label>
+          <input
+            formControlName="fecha"
+            type="date"
+            id="fechaDePago"
+            placeholder="Fecha de Factura"
+            class="factura-input"
+          />
+          <div
+            *ngIf="
+              formulario.get('fecha')?.invalid &&
+              formulario.get('fecha')?.touched
+            "
+          >
+            <small class="text-red-500">Fecha de Factura es requerido.</small>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="factura-label" for="precioPlan">Precio del Plan</label>
+          <input
+            formControlName="precioPlan"
+            id="precioPlan"
+            type="text"
+            class="factura-input"
+            readonly
+          />
+        </div>
+        <div class="mb-4">
+          <label class="factura-label" for="precioProducto"
+            >Precio del Producto</label
+          >
+          <input
+            formControlName="precioProducto"
+            id="precioProducto"
+            type="text"
+            class="factura-input"
+            readonly
+          />
+        </div>
+        <div class="mb-4">
+          <label class="factura-label" for="subt">Subtotal</label>
+          <input
+            formControlName="subtotal"
+            type="number"
+            id="subt"
+            placeholder="Subtotal"
+            class="factura-input"
+            readonly
+          />
+        </div>
+        <div class="mb-4">
+          <label class="factura-label" for="totalPagar">Total</label>
+          <input
+            formControlName="totalPagar"
+            type="number"
+            id="totalPagar"
+            placeholder="Total"
+            readonly
+            class="factura-input"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón Enviar -->
+    <div class="mb-4">
+      <button
+        *ngIf="!imprimirMode"
+        type="submit"
+        (click)="enviarFormulario()"
+        class="factura-button"
+      >
+        Guardar
+      </button>
+      <button
+        *ngIf="imprimirMode"
+        (click)="imprimirFactura()"
+        class="factura-button"
+      >
+        Imprimir
+      </button>
+    </div>
+  </form>
+</div>

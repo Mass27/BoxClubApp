@@ -1,0 +1,30 @@
+<h2 class="titulo-global">Listado de Productos</h2>
+<app-search-box
+  (buscarProductoNombre)="buscarProductoPorNombre($event)"
+  class="app-search-box"
+></app-search-box>
+
+<div *ngIf="isAdmin" class="button-agregar">
+  <button routerLink="/productos/agregar">AGREGAR</button>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+  <div *ngFor="let item of prodFiltrados" class="grid-item">
+    <div class="user-card">
+      <img [src]="item.imagen" alt="" />
+      <h2>{{ item.nombreProducto }}</h2>
+      <p><strong>Descripcion:</strong> {{ item.descripcion }}</p>
+      <p><strong>Precio:</strong> {{ item.precio }}</p>
+      <p><strong>Id de Producto:</strong> {{ item.idproducto }}</p>
+      <p><strong>Stock de Producto:</strong> {{ item.cantidadEnStock }}</p>
+
+      <!-- Muestra otros datos del empleado según la estructura de la interfaz -->
+      <button
+        *ngIf="isAdmin"
+        [routerLink]="['/productos/edit', item.idproducto]"
+      >
+        Editar
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+.gridPrincipal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backcolor{
+  background-color: rgb(255, 3, 0);
+  width: 65%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imgPalacio{
+  height: 400px;
+  width: 700px;
+}
+.titulo-auth{
+  font-weight: 700;
+  font-size: 28px;
+}
+.gridLogin{
+  width: 35%;
+  display: grid;
+  place-items: center;
+
+}
+
+.gridEscudo{
+  grid-row: 1;
+  margin-bottom:30px;
+}
+
+.gridFormulario{
+  grid-row:2;
+  margin:0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .txtLogin{
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: rgb(170, 165, 165);
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 18rem;
+} */
+
+/* .txtLogin:hover
+{
+  border-color: black;
+} */
+
+
+
+.btnLogin{
+  background-color: black;
+  color:white;
+  padding: 10px;
+  width: 16rem;
+  border-width: 1px;
+  border-radius: 5px;
+}

@@ -1,0 +1,45 @@
+<mat-sidenav-container fullscreen #containerall>
+  <mat-sidenav
+    #sidenav
+    mode="push"
+    [ngStyle]="{ width: '220px' }"
+    class="sidenav-container-color"
+  >
+    <mat-toolbar class="sidenav-container-color">
+      <a class="img-toolbar" routerLink="/empleados/list"
+        ><img src="assets/logo3.png" alt=""
+      /></a>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-nav-list class="menu" *ngFor="let item of listadoMenuItems">
+      <a *ngIf="isAdmin || item.label !== 'Empleados'" [routerLink]="item.link"
+        ><li>{{ item.label }}</li></a
+      >
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-toolbar class="sidenav-container-color">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="spacer"></span>
+
+    <button
+      (click)="logout()"
+      mat-icon-button
+      color="warn"
+      aria-label="Example icon button with a home icon"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="container-list p-2">
+    <router-outlet></router-outlet>
+  </div>
+</mat-sidenav-container>

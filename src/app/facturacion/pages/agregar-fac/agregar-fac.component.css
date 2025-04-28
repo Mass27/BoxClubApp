@@ -1,0 +1,183 @@
+
+/* Estilo general del formulario de factura */
+.factura-form {
+  font-family: Arial, sans-serif;
+  width: 100%;
+  max-width: 900px; /* Ajusta el ancho del formulario según sea necesario */
+  margin: 0 auto; /* Centrar el formulario horizontalmente */
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #000; /* Borde */
+  position: relative; /* Permitir posicionar elementos hijos relativamente */
+}
+
+/* Estilo de la sección del título y la imagen del logo */
+.factura-title-section {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: flex-start; /* Alinea el contenido arriba */
+  margin-bottom: 20px; /* Espacio debajo de la sección */
+}
+
+/* Estilo del título */
+.factura-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+.factura-grid-item{
+  width: 48%;
+}
+/* Estilo de la imagen del logo */
+.factura-logo {
+  width: 8rem; /* Ancho deseado para el logo */
+  height: auto;
+  margin-top: -50px; /* Altura ajustada automáticamente */
+}
+
+/* Estilo del contenedor de la rejilla */
+.factura-grid-container {
+  grid-template-columns: 1fr 1fr; /* Dos columnas */
+  grid-gap: 20px;
+ display: flex;
+  justify-content: space-between;
+}
+
+/* Estilo de las etiquetas */
+.factura-label {
+  font-size: 16px;
+  font-weight: bold;
+   /* Ajustar el margen inferior */
+}
+/* Estilo de los campos de entrada */
+.factura-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px; /* Incrementar el margen inferior */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilo del botón */
+.factura-button {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.factura-button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para ocultar todo el contenido excepto la parte de la factura durante la impresión */
+@media print {
+  .factura-container {
+   max-width: 600px;
+  }
+
+  .factura-label {
+    margin-bottom: 3px;
+  }
+  .factura-table th,
+  .factura-table td {
+    padding: 3px;
+  }
+  .factura-button-container {
+    display: none;
+  }
+}
+/* Estilos específicos para el formulario de impresión */
+
+.factura-container {
+  width: 800px; /* Adjust width as needed */
+  margin: 0 auto; /* Center the invoice */
+  padding: 20px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+}
+
+.factura-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.factura-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.factura-logo {
+  width: 100px; /* Adjust logo size as needed */
+padding-top: 35px;
+}
+
+.factura-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.cliente-info,
+.fecha-info {
+  flex: 1;
+}
+
+.factura-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.factura-details {
+  margin-bottom: 20px;
+}
+
+.factura-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.factura-th,
+.factura-td {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.factura-th {
+  text-align: center;
+}
+
+.factura-td {
+  text-align: right;
+}
+
+.factura-summary {
+  margin-bottom: 20px;
+}
+
+.factura-subtotal,
+.factura-descuento,
+.factura-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.factura-button-container {
+  text-align: center;
+}
+
+.factura-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
