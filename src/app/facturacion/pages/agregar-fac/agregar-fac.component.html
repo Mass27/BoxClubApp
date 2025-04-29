@@ -1,16 +1,27 @@
-<div class="print-only">
+<div>
+
   <form
     [formGroup]="formulario"
     class="factura-form bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
   >
+  <button
+    routerLink="/facturacion/list"
+    type="button"
+    mat-raised-button
+    color="warn"
+    class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-2 rounded"
+  >
+    <mat-icon class="mat-18">arrow_back</mat-icon>
+  </button>
     <!-- Campo Usuario -->
     <h2 class="factura-title">Factura</h2>
-    <div class="">
+    <div>
       <img src="assets/logo4.jpg" alt="Logo" class="factura-logo" />
     </div>
 
     <div class="factura-grid-container">
       <div class="factura-grid-item">
+        <!-- Cliente -->
         <div class="mb-4">
           <label class="factura-label" for="cliente">Cliente*</label>
           <ng-container *ngIf="!isEditMode; else editModeTemplate">
@@ -47,6 +58,7 @@
           </ng-template>
         </div>
 
+        <!-- Plan -->
         <div class="mb-4">
           <label class="factura-label" for="plan">Plan</label>
           <select
@@ -61,6 +73,8 @@
             </option>
           </select>
         </div>
+
+        <!-- Producto -->
         <div class="mb-4">
           <label class="factura-label" for="producto">Producto</label>
           <select
@@ -76,6 +90,7 @@
           </select>
         </div>
 
+        <!-- Cantidad -->
         <div class="mb-4">
           <label class="factura-label" for="cantidadProducto">Cantidad</label>
           <input
@@ -94,6 +109,7 @@
           </div>
         </div>
 
+        <!-- Método de pago -->
         <div class="mb-4">
           <label class="factura-label" for="pago">Metodo De Pago*</label>
           <select formControlName="metodoPago" id="pago" class="factura-input">
@@ -112,6 +128,7 @@
           </div>
         </div>
 
+        <!-- Descuentos -->
         <div class="mb-4">
           <label class="factura-label" for="descuento">Descuentos</label>
           <select
@@ -129,6 +146,7 @@
       </div>
 
       <div class="factura-grid-item">
+        <!-- Fecha -->
         <div class="mb-4">
           <label class="factura-label" for="fechaDePago">Fecha*</label>
           <input
@@ -147,6 +165,8 @@
             <small class="text-red-500">Fecha de Factura es requerido.</small>
           </div>
         </div>
+
+        <!-- Precios y Totales -->
         <div class="mb-4">
           <label class="factura-label" for="precioPlan">Precio del Plan</label>
           <input
@@ -175,7 +195,6 @@
             formControlName="subtotal"
             type="number"
             id="subt"
-            placeholder="Subtotal"
             class="factura-input"
             readonly
           />
@@ -186,31 +205,19 @@
             formControlName="totalPagar"
             type="number"
             id="totalPagar"
-            placeholder="Total"
-            readonly
             class="factura-input"
+            readonly
           />
         </div>
       </div>
     </div>
 
     <!-- Botón Enviar -->
-    <div class="mb-4">
-      <button
-        *ngIf="!imprimirMode"
-        type="submit"
-        (click)="enviarFormulario()"
-        class="factura-button"
-      >
+    <div class="mb-4 gap-3 flex justify-center">
+      <button type="submit" (click)="enviarFormulario()" class="factura-button">
         Guardar
       </button>
-      <button
-        *ngIf="imprimirMode"
-        (click)="imprimirFactura()"
-        class="factura-button"
-      >
-        Imprimir
-      </button>
+
     </div>
   </form>
 </div>

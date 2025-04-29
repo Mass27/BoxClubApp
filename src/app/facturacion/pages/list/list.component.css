@@ -1,58 +1,36 @@
-/* Estilo para el botón de agregar */
-.add-button-container {
-  margin-bottom: 20px; /* Espacio inferior para separar el botón de la tabla */
+.edit-button mat-icon {
+  color: #007bff;
+  transition: transform 0.2s ease;
 }
-
-.add-button {
-  background-color: #761717; /* Color de fondo rojo */
-  color: #ffffff; /* Color de texto blanco */
-  padding: 10px 20px; /* Espaciado interno */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cursor al pasar por encima */
-  font-size: 16px; /* Tamaño de fuente */
+.edit-button:hover mat-icon {
+  transform: scale(1.2);
 }
-
-.add-button:hover {
-  background-color: #c82333;
-}
-
-
-/* Estilo para el botón de editar */
-.edit-button,
-.imprimir-button {
-    background-color: #9c1c1c;
-    color: white;
-    padding: 8px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.edit-button:hover,
-.imprimir-button:hover {
-    background-color: #6b2c2c;
-}
-
 .export-button button{
   background-color: rgb(30, 108, 66);
   color: white;
 }
-.total-ingresos {
-  background-color: #f9f9f9; /* Fondo suave */
-  border: 1px solid #ddd; /* Borde sutil */
-  padding: 20px;
-  margin-bottom: 20px;
-  text-align: center;
-  border-radius: 10px;
-}
 
-.total-ingresos h3 {
-  font-size: 1.5em;
-  color: #333; /* Color oscuro para el texto */
+button[mat-raised-button] {
+  text-transform: none;
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  box-shadow: none !important;
+}
+.total-ingresos {
+  margin-top: 2rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: right;
+  color: #2c3e50;
 }
 
 .total-ingresos span {
-  color: #28a745; /* Verde para resaltar el monto */
+  color: #28a745;
+}
+
+.total-ingresos span {
+  color: #28a745;
   font-weight: bold;
 }
 .filtros-card {
@@ -68,21 +46,55 @@ justify-content: space-between;
 }
 
 .fecha-filtro {
-  flex: 1; /* Asegura que ambos campos se distribuyan en la fila */
-  min-width: 150px; /* Establece un ancho mínimo para evitar que se hagan muy pequeños */
+  flex: 1;
+  min-width: 150px;
 }
 .table-responsive {
-  overflow-x: auto; /* Hace la tabla desplazable horizontalmente en pantallas pequeñas */
-  -webkit-overflow-scrolling: touch; /* Mejora la experiencia en dispositivos táctiles */
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 table {
-  width: 100%; /* Asegura que la tabla ocupe todo el ancho del contenedor */
+  width: 100%;
 }
 
 
 @media (max-width: 768px) {
+  .flex {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .filtros-card,
+  .fecha-filtros-container {
+    flex-direction: column !important;
+    gap: 10px;
+  }
+
+  .export-button,
+  .button-agregar,
+  .mat-raised-button {
+    width: 100% !important;
+    margin-top: 10px;
+  }
+
+  .search-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-container > * {
+    width: 100%;
+  }
+
+  .total-ingresos {
+    text-align: left;
+    font-size: 1.1rem;
+  }
+
   th, td {
-    white-space: nowrap; /* Evita que el texto en las celdas se desborde o rompa en móviles */
+    white-space: nowrap;
+    font-size: 0.85rem;
   }
 }

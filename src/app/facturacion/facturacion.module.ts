@@ -23,13 +23,16 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { FacturacionprintComponent } from './components/facturacionprint/facturacionprint.component';
+
 
 @NgModule({
   declarations: [
    LayoutFacComponent,
     ListComponent,
     AgregarFacComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    FacturacionprintComponent
   ],
   imports: [
     CommonModule,

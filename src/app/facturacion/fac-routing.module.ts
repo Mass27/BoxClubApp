@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutFacComponent } from './pages/layout-fac/layout-fac.component';
 import { ListComponent } from './pages/list/list.component';
 import { AgregarFacComponent } from './pages/agregar-fac/agregar-fac.component';
+import { FacturacionprintComponent } from './components/facturacionprint/facturacionprint.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,7 @@ const routes: Routes = [
     },
     {
       path: 'imprimir/:id',
-      component: AgregarFacComponent
+      component: FacturacionprintComponent
     },
     {
       path: '**',

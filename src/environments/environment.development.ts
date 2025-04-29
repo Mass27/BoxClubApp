@@ -1,6 +1,6 @@
 export const environment = {
 
-  apiUrl: 'https://boxingclubapi.onrender.com/api'
+  apiUrl: 'http://localhost:5656/api'
 };
 // http://localhost:5656/api
 

@@ -49,7 +49,7 @@
 }
 
 .search-button {
-  background-color: #007bff;
+  background-color: #6c757d;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -59,7 +59,7 @@
 }
 
 .search-button:hover {
-  background-color: #0056b3;
+  background-color: #d11b1b;
 }
 
 .button-agregar {
@@ -75,7 +75,7 @@
 }
 
 .button-agregar:hover {
-  background-color: #5a6268;
+  background-color: #d11b1b;
 }
 /* Estilo para las cartas de usuario */
 .user-card {
@@ -132,9 +132,9 @@
   transition: background-color 0.3s ease;
 }
 
-.button-alternar:hover {
+/* .button-alternar:hover {
   background-color: #d11b1b;
-}
+} */
 
 .button-alternar.selected {
   background-color: #d11b1b;

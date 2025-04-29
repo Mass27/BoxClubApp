@@ -1,12 +1,12 @@
 <h2 class="titulo-global">Listado de Facturas</h2>
+<div class="search-container">
 <search-box-fac
   (buscarNombre)="buscarFacturasPorNombre($event)"
 ></search-box-fac>
 
-<div class="button-agregar">
-  <button routerLink="/facturacion/agregar">AGREGAR</button>
-</div>
+  <button class="button-agregar" routerLink="/facturacion/agregar">AGREGAR</button>
 
+</div>
 
 <div class="flex items-center justify-between">
   <div class="filtros-card">
@@ -32,7 +32,7 @@
       Filtrar
     </button>
     <button mat-raised-button color="warn" (click)="limpiarFiltros()" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
-      Limpiar Filtros
+      Limpiar
     </button>
     <div class="export-button">
       <button mat-raised-button (click)="exportToExcel()"><mat-icon>file_download</mat-icon> Exportar a Excel</button>

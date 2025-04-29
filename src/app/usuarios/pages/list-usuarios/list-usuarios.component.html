@@ -64,39 +64,55 @@
   </div>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-  <div class="grid-item" *ngFor="let item of usuariosFiltrados">
-    <div class="user-card">
-      <img [src]="item.imagen" alt="" />
-      <h2>{{ item.nombreCompleto }}</h2>
-      <p><strong>DNI:</strong> {{ item.identidad }}</p>
-      <p><strong>Telefono:</strong> {{ item.numeroTelefono }}</p>
-      <p><strong>Correo:</strong> {{ item.correo }}</p>
-      <p>
-        <strong>Fecha de Ingreso:</strong> {{ formatDate(item.fechaIngreso) }}
-      </p>
-      <p>
-        <strong>Plan:</strong>
-        {{ item.idPlan ? getPlanName(item.idPlan) : "Plan no encontrado" }}
-      </p>
-      <p>
-        <strong>Dias Restantes:</strong>
-        {{ item.diasRestantes }}
-      </p>
-
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+  <div
+    class="grid-item bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
+    *ngFor="let item of usuariosFiltrados"
+  >
+    <div class="user-card p-4">
+      <div class="flex items-center justify-center mb-4">
+        <img
+          [src]="item.imagen"
+          alt="Imagen de {{ item.nombreCompleto }}"
+          class="w-24 h-24 rounded-full object-cover border-2 border-gray-300"
+        />
+      </div>
+      <h2 class="text-lg font-bold text-center text-gray-800 mb-2">
+        {{ item.nombreCompleto }}
+      </h2>
+      <div class="text-sm text-gray-600 space-y-1">
+        <p><strong>DNI:</strong> {{ item.identidad }}</p>
+        <p><strong>Teléfono:</strong> {{ item.numeroTelefono }}</p>
+        <p><strong>Correo:</strong> {{ item.correo }}</p>
+        <p>
+          <strong>Fecha de Ingreso:</strong> {{ formatDate(item.fechaIngreso) }}
+        </p>
+        <p>
+          <strong>Plan:</strong>
+          {{ item.idPlan ? getPlanName(item.idPlan) : "Plan no encontrado" }}
+        </p>
+        <p><strong>Días Restantes:</strong> {{ item.diasRestantes }}</p>
+      </div>
       <p
+        class="mt-4 text-center font-semibold text-sm py-1 rounded"
         [ngClass]="{
-          activo: item.estado === 'Activo',
-          inactivo: item.estado === 'Inactivo',
-          pendiente: item.estado === 'Pendiente'
+          'bg-green-100 text-green-700': item.estado === 'Activo',
+          'bg-red-100 text-red-700': item.estado === 'Inactivo',
+          'bg-yellow-100 text-yellow-700': item.estado === 'Pendiente'
         }"
       >
         {{ item.estado }}
+        
       </p>
-
-      <button *ngIf="isAdmin" [routerLink]="['/usuarios/edit', item._id]">
-        Editar
-      </button>
+      <div class="mt-4 text-center">
+        <button
+          *ngIf="isAdmin"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
+          [routerLink]="['/usuarios/edit', item._id]"
+        >
+          Editar
+        </button>
+      </div>
     </div>
   </div>
 </div>

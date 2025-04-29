@@ -72,6 +72,7 @@ export class ListUsuariosComponent implements OnInit {
     );
   }
 
+
   filterUsuarios() {
     if (this.mostrarInactivos) {
       this.usuariosFiltrados = this.allUsers.filter(

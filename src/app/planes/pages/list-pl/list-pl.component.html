@@ -1,11 +1,11 @@
 <h2 class="titulo-global">Listado de Planes</h2>
 
+<div class="search-container">
 <searchbox-planes
   (buscarPlanNombre)="buscarPlanesPorNombre($event)"
   class="app-search-box"
 ></searchbox-planes>
-<div *ngIf="isAdmin" class="button-agregar">
-  <button routerLink="/planes/agregar">AGREGAR</button>
+  <button *ngIf="isAdmin" class="button-agregar" routerLink="/planes/agregar">AGREGAR</button>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
@@ -17,7 +17,8 @@
       <p><strong>Precio:</strong>{{ item.precio }}</p>
 
       <!-- Muestra otros datos del empleado según la estructura de la interfaz -->
-      <button *ngIf="isAdmin" [routerLink]="['/planes/edit', item._id]">
+      <button *ngIf="isAdmin" [routerLink]="['/planes/edit', item._id]"
+      class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
         Editar
       </button>
     </div>

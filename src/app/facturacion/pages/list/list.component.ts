@@ -55,7 +55,12 @@ export class ListComponent implements OnInit,AfterViewInit {
       this.facturas = facturas;
       this.facturasFiltradas = new MatTableDataSource(facturas);
       this.facturasFiltradas.paginator = this.paginator;
-      this.calcularTotalIngresos();
+      this.obtenerFiltrosAlmacenados();
+    if (this.fechaInicio && this.fechaFin) {
+      this.aplicarFiltros();
+    } else {
+      this.calcularTotalIngresos(); 
+    }
     });
     this.usuarioService
       .getAllplanes()
