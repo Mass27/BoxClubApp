@@ -10,7 +10,9 @@ import {
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ThemePalette } from '@angular/material/core';
 import { ContadorActivos } from '../../interfaces/contadorActivos.interfaces';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalRutinaComponent } from '../../components/modalRutina/modalRutina.component';
 @Component({
   selector: 'app-list-usuarios',
   // styleUrls: ['./list-usuarios.component.css'],
@@ -33,7 +35,9 @@ export class ListUsuariosComponent implements OnInit {
 
   constructor(
     private usuarioService: usuarioService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -144,4 +148,21 @@ export class ListUsuariosComponent implements OnInit {
       }
     );
   }
+  asignarRutina(usuarioId: string) {
+    const dialogRef = this.dialog.open(ModalRutinaComponent, {
+      width: '500px',
+      data: { clienteId: usuarioId },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.success) {
+        // Puedes mostrar un mensaje de éxito o actualizar la vista de alguna forma
+        alert('Rutina asignada correctamente');
+      } else {
+        // Manejo de error
+        alert('Error al asignar rutina');
+      }
+    });
+  }
 }
+

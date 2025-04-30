@@ -16,9 +16,10 @@ export class LayoutMainComponent implements OnInit {
 
   listadoMenuItems: MenuItem[] = [
     { label: 'Clientes', link: '/usuarios/list' },
-    { label: 'Empleados', link: '/empleados/list' },
-    { label: 'Productos', link: '/productos/list' },
-    { label: 'Planes', link: '/planes/list' },
+    { label: 'Rutinas', link: '/rutinas/list' },
+   { label: 'Empleados', link: '/empleados/list' },
+     { label: 'Productos', link: '/productos/list' },
+     { label: 'Planes', link: '/planes/list' },
     { label: 'Facturacion', link: '/facturacion/list' },
   ];
 

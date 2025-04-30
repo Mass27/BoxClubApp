@@ -27,6 +27,13 @@ const routes: Routes = [
       import('./facturacion/facturacion.module').then(
         (fac) => fac.FacturacionModule
       ),
+  },{
+    path: 'rutinas',
+  //  canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./rutinas/rutinas.module').then(
+        (rut) => rut.RutinasModule
+      ),
   },
   {
     path: 'productos',

@@ -1,15 +1,11 @@
 <h2 class="titulo-global">Listado de empleados</h2>
 <div class="search-container">
-<app-searchbox
-  class="app-search-box"
-  (buscarEmpleadoNombre)="buscarEmpleadoPorNombre($event)"
-></app-searchbox>
+  <app-searchBox
+  (BuscarObject)="buscarEmpleadoPorNombre($event)">
+  </app-searchBox>
 <button class="button-agregar" routerLink="/empleados/agregar">AGREGAR</button>
 </div>
 
-<!-- <div class="button-agregar" style="margin-top: 10px">
-  <button routerLink="/empleados/agregar">AGREGAR</button>
-</div> -->
 
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">

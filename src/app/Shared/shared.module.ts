@@ -8,9 +8,11 @@ import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { SearchBoxComponent } from './searchBox/searchBox.component';
 @NgModule({
   declarations: [
     LayoutMainComponent,
+    SearchBoxComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
 
   ],exports:[
-
+SearchBoxComponent,
     LayoutMainComponent
   ]
 })

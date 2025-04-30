@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Seleccionar Rutina</h2>
+<mat-dialog-content>
+  <mat-select [(value)]="rutinaSeleccionada" placeholder="Selecciona una rutina">
+    <mat-option *ngFor="let rutina of rutinas" [value]="rutina._id">
+      {{ rutina.nombre }}
+    </mat-option>
+  </mat-select>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="cerrar()">Cancelar</button>
+  <button mat-button color="primary" (click)="asignarRutina()">Asignar</button>
+</mat-dialog-actions>
+
+
+

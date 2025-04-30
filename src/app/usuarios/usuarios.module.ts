@@ -10,13 +10,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 import {MatChipsModule} from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { ModalRutinaComponent } from './components/modalRutina/modalRutina.component';
 
 @NgModule({
   declarations: [
     ListUsuariosComponent,
     AgregarComponent,
     LayoutUsuariosComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    ModalRutinaComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +30,11 @@ import { MatIconModule } from '@angular/material/icon';
     FormsModule,
     ReactiveFormsModule,
     MatChipsModule,
-MatIconModule
+MatIconModule,
+MatSnackBarModule,
+MatSelectModule,
+MatDialogModule
+
   ]
 })
 export class UsuariosModule { }

@@ -70,4 +70,8 @@ export class usuarioService {
       `${this.baseUrl}/clientes/contar/clientesAct`
     );
   }
+
+  asignarRutina(clienteId: string, rutinaId: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/clientes/asignar-rutina`, { clienteId, rutinaId });
+  }
 }
