@@ -1,13 +1,15 @@
 
 export interface IDUsuarios {
-  estado:         string;
   _id:            string;
+  imagen:         string;
   nombreCompleto: string;
-  identidad:      number;
+  identidad:      string;
   numeroTelefono: string;
-  fechaIngreso:   string;
-  __v:            number;
   correo:         string;
-  imagen?:        string;
-  idPlan?:        string;
+  estado:         string;
+  fechaIngreso:   Date;
+  idPlan:         string;
+  diasRestantes:  number;
+  __v:            number;
+  rutinaAsignada: string;
 }

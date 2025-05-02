@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { usuarioService } from '../../services/usuarios.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Planes } from '../../../planes/interfaces/planes.interface';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'agregar-usuarios',
@@ -25,7 +26,8 @@ export class AgregarComponent implements OnInit {
   constructor(
     private userService: usuarioService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private datepipe:DatePipe
   ) {
     this.formulario = new FormGroup({
       imagen: new FormControl(null),
@@ -63,7 +65,7 @@ export class AgregarComponent implements OnInit {
               numeroTelefono: usuario.numeroTelefono || '',
               identidad: usuario.identidad || '',
               correo: usuario.correo || '',
-              fechaIngreso: this.formatDate(usuario.fechaIngreso),
+              fechaIngreso:  this.datepipe.transform(usuario.fechaIngreso, 'yyyy-MM-dd'),
               idPlan: usuario.idPlan || '',
               estado: usuario.estado,
             });
@@ -71,11 +73,6 @@ export class AgregarComponent implements OnInit {
         });
       }
     });
-  }
-  formatDate(date: string): string {
-    // Obtener solo la parte de la fecha (sin la hora, minutos, segundos ni la zona horaria)
-    const fechaSinHora = date.split('T')[0];
-    return fechaSinHora;
   }
 
   obtenerPlanes() {

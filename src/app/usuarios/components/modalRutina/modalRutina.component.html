@@ -1,16 +1,32 @@
-<h2 mat-dialog-title>Seleccionar Rutina</h2>
-<mat-dialog-content>
-  <mat-select [(value)]="rutinaSeleccionada" placeholder="Selecciona una rutina">
+<h2 class="text-2xl font-semibold text-center mb-4">Seleccionar Rutina</h2>
+
+<!-- Mostrar rutinas asignadas -->
+<div *ngIf="rutinasAsignadas && rutinasAsignadas.length > 0" class="mb-4">
+  <h3 class="text-lg font-semibold">Rutinas Asignadas:</h3>
+  <ul class="space-y-2">
+    <li *ngFor="let rutina of rutinasAsignadas" class="flex items-center justify-between p-3 border rounded-md shadow-sm bg-gray-50">
+      <span class="text-md">{{ rutina.nombre }}</span>
+      <button mat-button color="warn" (click)="eliminarRutina(rutina._id)" class="text-red-600 hover:text-red-800 transition duration-200">Eliminar</button>
+    </li>
+  </ul>
+</div>
+
+<!-- Selección de Rutina -->
+<mat-form-field appearance="fill" class="w-full mb-4">
+  <mat-label class="text-lg">Selecciona una rutina</mat-label>
+  <mat-select [(value)]="rutinaSeleccionada" class="w-full">
     <mat-option *ngFor="let rutina of rutinas" [value]="rutina._id">
       {{ rutina.nombre }}
     </mat-option>
   </mat-select>
-</mat-dialog-content>
+</mat-form-field>
 
-<mat-dialog-actions>
-  <button mat-button (click)="cerrar()">Cancelar</button>
-  <button mat-button color="primary" (click)="asignarRutina()">Asignar</button>
-</mat-dialog-actions>
-
-
-
+<!-- Botones de Acción -->
+<div class="flex justify-end space-x-4">
+  <button mat-button (click)="cerrar()" class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 text-sm text-gray-800 transition duration-200">
+    Cancelar
+  </button>
+  <button mat-button color="primary" (click)="asignarRutina()" class="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700 text-white text-sm transition duration-200">
+    Asignar
+  </button>
+</div>

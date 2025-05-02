@@ -72,7 +72,7 @@ export class ListUsuariosComponent implements OnInit {
 
   updateUsuariosConTresDiasRestantes() {
     this.usuariosConTresDiasRestantes = this.allUsers.filter(
-      (user) => user.diasRestantes === 3
+      (user) => user.diasRestantes === 27
     );
   }
 
@@ -151,7 +151,7 @@ export class ListUsuariosComponent implements OnInit {
   asignarRutina(usuarioId: string) {
     const dialogRef = this.dialog.open(ModalRutinaComponent, {
       width: '500px',
-      data: { clienteId: usuarioId },
+      data: { _id: usuarioId },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

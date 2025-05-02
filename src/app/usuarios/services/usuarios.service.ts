@@ -74,4 +74,13 @@ export class usuarioService {
   asignarRutina(clienteId: string, rutinaId: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/clientes/asignar-rutina`, { clienteId, rutinaId });
   }
+
+  obtenerRutinasPorCliente(clienteId: string): Observable<any> {
+
+    return this.http.get(`${this.baseUrl}/clientes/rutina-asignada/${clienteId}`);
+  }
+
+  eliminarRutina(clienteId: string, rutinaId: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/clientes/eliminar-rutina/${clienteId}/${rutinaId}`, {});
+  }
 }

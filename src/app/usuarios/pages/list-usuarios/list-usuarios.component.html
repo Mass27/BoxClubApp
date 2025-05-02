@@ -85,7 +85,7 @@
         <p><strong>Teléfono:</strong> {{ item.numeroTelefono }}</p>
         <p><strong>Correo:</strong> {{ item.correo }}</p>
         <p>
-          <strong>Fecha de Ingreso:</strong> {{ formatDate(item.fechaIngreso) }}
+          <strong>Fecha de Ingreso:</strong> {{ item.fechaIngreso }}
         </p>
         <p>
           <strong>Plan:</strong>
@@ -114,7 +114,7 @@
         </button>
       </div>
 
-    
+
       <div class="mt-4 text-center">
         <button
           *ngIf="isAdmin"
