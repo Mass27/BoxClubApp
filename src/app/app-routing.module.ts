@@ -50,6 +50,12 @@ const routes: Routes = [
       import('./planes/planes.module').then((pl) => pl.PlanesModule),
   },
   {
+    path: 'metricas',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./metricas/metricas.module').then((met) => met.MetricasModule),
+  },
+  {
     path: 'main',
     canActivate: [AuthGuard],
     component: LayoutMainComponent,

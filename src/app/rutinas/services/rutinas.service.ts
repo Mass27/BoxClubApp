@@ -11,14 +11,7 @@ import { RutinasID } from '../interfaces/rutinasId.interfaces';
 export class RutinasService {
   private baseUrl = environment.apiUrl;
 
-constructor(private HttpClient:HttpClient) {
-
-
-
-
-
-
-}
+constructor(private HttpClient:HttpClient) {}
 
 
 getRutinaById(id: string): Observable<RutinasID> {
