@@ -15,6 +15,7 @@
       <h2>{{ item.nombrePlan }}</h2>
       <p><strong>Descripcion</strong> {{ item.descripcion }}</p>
       <p><strong>Precio:</strong>{{ item.precio }}</p>
+      <p><strong>Dias:</strong>{{ item.dias }}</p>
 
 
       <button *ngIf="isAdmin" [routerLink]="['/planes/edit', item._id]"

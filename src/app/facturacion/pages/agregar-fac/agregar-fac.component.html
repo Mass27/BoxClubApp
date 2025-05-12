@@ -149,6 +149,7 @@
         <!-- Fecha -->
         <div class="mb-4">
           <label class="factura-label" for="fechaDePago">Fecha*</label>
+          <ng-container  *ngIf="!isEditMode; else editModeTemplateFec">
           <input
             formControlName="fecha"
             type="date"
@@ -164,7 +165,19 @@
           >
             <small class="text-red-500">Fecha de Factura es requerido.</small>
           </div>
+        </ng-container>
+        <ng-template #editModeTemplateFec>
+          <input
+            formControlName="fecha"
+            id="fechaDePago"
+            type="text"
+            class="factura-input"
+            readonly
+          />
+        </ng-template>
         </div>
+
+    
 
         <!-- Precios y Totales -->
         <div class="mb-4">

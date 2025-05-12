@@ -10,26 +10,26 @@ const routes: Routes = [
   },
   {
     path: 'empleados',
- //   canActivate: [AuthGuard],
+   canActivate: [AuthGuard],
     loadChildren: () =>
       import('./Empleados/empleados.module').then((em) => em.EmpleadosModule),
   },
   {
     path: 'usuarios',
-   // canActivate: [AuthGuard],
+   canActivate: [AuthGuard],
     loadChildren: () =>
       import('./usuarios/usuarios.module').then((usu) => usu.UsuariosModule),
   },
   {
     path: 'facturacion',
-  //  canActivate: [AuthGuard],
+   canActivate: [AuthGuard],
     loadChildren: () =>
       import('./facturacion/facturacion.module').then(
         (fac) => fac.FacturacionModule
       ),
   },{
     path: 'rutinas',
-  //  canActivate: [AuthGuard],
+   canActivate: [AuthGuard],
     loadChildren: () =>
       import('./rutinas/rutinas.module').then(
         (rut) => rut.RutinasModule
@@ -37,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: 'productos',
-  //  canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./productos/productos.module').then(
         (prod) => prod.ProductosModule
@@ -45,13 +45,13 @@ const routes: Routes = [
   },
   {
     path: 'planes',
-  //  canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./planes/planes.module').then((pl) => pl.PlanesModule),
   },
   {
     path: 'main',
- //   canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: LayoutMainComponent,
   },
   {

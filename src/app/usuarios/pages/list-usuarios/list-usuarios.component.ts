@@ -160,7 +160,7 @@ export class ListUsuariosComponent implements OnInit {
         alert('Rutina asignada correctamente');
       } else {
         // Manejo de error
-        alert('Error al asignar rutina');
+        // alert('Error al asignar rutina');
       }
     });
   }

@@ -5,5 +5,6 @@ export interface PlanesByID {
     nombrePlan:  string;
     descripcion: string;
     precio:      number;
+    dias:        number;
     __v:         number;
 }

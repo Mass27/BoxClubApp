@@ -18,10 +18,11 @@ export class AgregarPlComponent implements OnInit {
     private router: Router
   ) {
     this.formulario = new FormGroup({
-      // idproducto: new FormControl('', Validators.required),
+  
       nombrePlan: new FormControl('', Validators.required),
       descripcion: new FormControl('', Validators.required),
       precio: new FormControl('', [Validators.required]),
+      dias: new FormControl('', [Validators.required]),
     });
   }
 
@@ -32,13 +33,14 @@ export class AgregarPlComponent implements OnInit {
         this.isEditMode = true;
         this.planeId = id;
         this.planesServices.getPlanesById(id).subscribe((planes) => {
-          // Rellenar el formulario con los datos del usuario
+      
           this.formulario.patchValue({
             nombrePlan: planes.nombrePlan,
             descripcion: planes.descripcion,
             precio: planes.precio,
+            dias: planes.dias
 
-            // Formatear la fecha
+        
           });
         });
       }
@@ -48,7 +50,7 @@ export class AgregarPlComponent implements OnInit {
     if (this.formulario.valid) {
       const formData = this.formulario.value;
       if (this.isEditMode) {
-        formData._id = this.planeId; // Agregar el id del empleado al objeto
+        formData._id = this.planeId; 
         this.planesServices.updateProducto(formData).subscribe(
           (response) => {
             console.log('Planes actualizado exitosamente:', response);

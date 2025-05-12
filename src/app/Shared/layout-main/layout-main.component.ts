@@ -20,7 +20,7 @@ export class LayoutMainComponent implements OnInit {
    { label: 'Empleados', link: '/empleados/list' },
      { label: 'Productos', link: '/productos/list' },
      { label: 'Planes', link: '/planes/list' },
-    { label: 'Facturacion', link: '/facturacion/list' },
+    // { label: 'Facturacion', link: '/facturacion/list' },
   ];
 
   constructor(private router: Router) {}

@@ -43,11 +43,11 @@ export class ModalRutinaComponent implements OnInit {
     if (this.rutinaSeleccionada) {
       this.usuarioService.asignarRutina(this.data._id, this.rutinaSeleccionada).subscribe(
         (response) => {
-          alert(response.message || 'Rutina asignada correctamente');
+      
           this.dialogRef.close({ success: true });
         },
         (error) => {
-          console.error('Error al asignar rutina:', error);
+
           this.dialogRef.close({ success: false });
         }
       );

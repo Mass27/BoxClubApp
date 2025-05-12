@@ -68,6 +68,32 @@
         </div>
       </div>
 
+      <div>
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="precio"
+          >Dias*</label
+        >
+        <input
+          formControlName="dias"
+          (input)="limitarInput($event)"
+          type="number"
+          placeholder="dias"
+          class="input-field"
+          id="dias"
+        />
+        <div
+          *ngIf="
+            formulario.get('dias')?.invalid &&
+            formulario.get('dias')?.touched
+          "
+        >
+          <small class="text-red-500">Cantidad de dias es requerido.</small>
+        </div>
+      </div>
+
+
+
+
+
       <button (click)="enviarForm()" class="btn-submit">AGREGAR</button>
     </form>
   </div>

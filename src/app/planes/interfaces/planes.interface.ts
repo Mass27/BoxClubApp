@@ -6,4 +6,5 @@ export interface Planes {
     descripcion: string;
     precio:      number;
     __v:         number;
+    dias?:       number;
 }
