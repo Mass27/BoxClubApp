@@ -8,20 +8,32 @@
   <button *ngIf="isAdmin" class="button-agregar" routerLink="/planes/agregar">AGREGAR</button>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-  <div *ngFor="let item of planesFiltrado" class="grid-item">
-    <div class="user-card">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+  <div *ngFor="let item of planesFiltrado" class="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
 
-      <h2>{{ item.nombrePlan }}</h2>
-      <p><strong>Descripcion</strong> {{ item.descripcion }}</p>
-      <p><strong>Precio:</strong>{{ item.precio }}</p>
-      <p><strong>Dias:</strong>{{ item.dias }}</p>
+    <div class="space-y-2">
+      <h2 class="text-xl font-semibold text-gray-800">{{ item.nombrePlan }}</h2>
 
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">Descripción:</strong> {{ item.descripcion }}
+      </p>
 
-      <button *ngIf="isAdmin" [routerLink]="['/planes/edit', item._id]"
-      class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-        Editar
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">Precio:</strong> L {{ item.precio }}
+      </p>
+
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">Días:</strong> {{ item.dias }}
+      </p>
+    </div>
+
+    <div class="mt-4">
+      <button *ngIf="isAdmin"
+              [routerLink]="['/planes/edit', item._id]"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+        Editar Plan
       </button>
     </div>
+
   </div>
 </div>

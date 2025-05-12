@@ -8,22 +8,34 @@
 
 
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-  <div *ngFor="let item of empleadosFiltradas" class="grid-item">
-    <div class="user-card">
-      <h2>{{ item.nombreCompleto }}</h2>
-      <p><strong>Empleado:</strong> {{ item.idempleado }}</p>
-      <p><strong>Correo:</strong> {{ item.correo }}</p>
-      <p><strong>Identidad:</strong> {{ item.identidad }}</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+  <div *ngFor="let item of empleadosFiltradas" class="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
 
-      <!-- Muestra otros datos del empleado según la estructura de la interfaz -->
+    <div class="space-y-2">
+      <h2 class="text-xl font-semibold text-gray-800">{{ item.nombreCompleto }}</h2>
+
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">ID de Empleado:</strong> {{ item.idempleado }}
+      </p>
+
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">Correo:</strong> {{ item.correo }}
+      </p>
+
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">Identidad:</strong> {{ item.identidad }}
+      </p>
+    </div>
+
+    <div class="mt-4">
       <button
-      class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
         *ngIf="isAdmin"
         [routerLink]="['/empleados/edit', item.idempleado]"
-      >
-        Editar
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+        Editar Empleado
       </button>
     </div>
+
   </div>
 </div>
+

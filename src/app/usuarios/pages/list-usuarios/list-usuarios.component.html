@@ -66,64 +66,65 @@
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
   <div
-    class="grid-item bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
     *ngFor="let item of usuariosFiltrados"
+    class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6"
   >
-    <div class="user-card p-4">
-      <div class="flex items-center justify-center mb-4">
-        <img
-          [src]="item.imagen"
-          alt="Imagen de {{ item.nombreCompleto }}"
-          class="w-24 h-24 rounded-full object-cover border-2 border-gray-300"
-        />
-      </div>
-      <h2 class="text-lg font-bold text-center text-gray-800 mb-2">
-        {{ item.nombreCompleto }}
-      </h2>
-      <div class="text-sm text-gray-600 space-y-1">
-        <p><strong>DNI:</strong> {{ item.identidad }}</p>
-        <p><strong>Teléfono:</strong> {{ item.numeroTelefono }}</p>
-        <p><strong>Correo:</strong> {{ item.correo }}</p>
-        <p>
-          <strong>Fecha de Ingreso:</strong> {{ item.fechaIngreso | date}}
-        </p>
-        <p>
-          <strong>Plan:</strong>
-          {{ item.idPlan ? getPlanName(item.idPlan) : "Plan no encontrado" }}
-        </p>
-        <p><strong>Días Restantes:</strong> {{ item.diasRestantes }}</p>
-      </div>
-      <p
-        class="mt-4 text-center font-semibold text-sm py-1 rounded"
-        [ngClass]="{
-          'bg-green-100 text-green-700': item.estado === 'Activo',
-          'bg-red-100 text-red-700': item.estado === 'Inactivo',
-          'bg-yellow-100 text-yellow-700': item.estado === 'Pendiente'
-        }"
+    <!-- Imagen del usuario -->
+     <div class="flex justify-center mb-4">
+      <img
+        [src]="item.imagen"
+        alt="Imagen de {{ item.nombreCompleto }}"
+        class="w-32 h-32 object-cover border-2 border-gray-300 shadow-sm"
+      />
+    </div>
+
+    <!-- Nombre -->
+    <h2 class="text-xl font-semibold text-center text-gray-800 mb-4">
+      {{ item.nombreCompleto }}
+    </h2>
+
+    <!-- Información del usuario -->
+    <ul class="text-sm text-gray-600 space-y-1">
+      <li><strong>DNI:</strong> {{ item.identidad }}</li>
+      <li><strong>Teléfono:</strong> {{ item.numeroTelefono }}</li>
+      <li><strong>Correo:</strong> {{ item.correo }}</li>
+      <li><strong>Fecha de Ingreso:</strong> {{ item.fechaIngreso | date }}</li>
+      <li>
+        <strong>Plan:</strong>
+        {{ item.idPlan ? getPlanName(item.idPlan) : "Plan no encontrado" }}
+      </li>
+      <li><strong>Días Restantes:</strong> {{ item.diasRestantes }}</li>
+    </ul>
+
+    <!-- Estado -->
+    <div
+      class="mt-4 text-center font-medium py-1 rounded text-sm"
+      [ngClass]="{
+        'bg-green-100 text-green-700': item.estado === 'Activo',
+        'bg-red-100 text-red-700': item.estado === 'Inactivo',
+        'bg-yellow-100 text-yellow-700': item.estado === 'Pendiente'
+      }"
+    >
+      {{ item.estado }}
+    </div>
+
+    <!-- Botones -->
+    <div class="flex flex-col space-y-2 mt-6">
+      <button
+        *ngIf="isAdmin"
+        (click)="asignarRutina(item._id)"
+        class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold transition"
       >
-        {{ item.estado }}
+        Asignar Rutina
+      </button>
 
-      </p>
-      <div class="mt-4 text-center">
-        <button
-          *ngIf="isAdmin"
-          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-          (click)="asignarRutina(item._id)"
-        >
-          Asignar Rutina
-        </button>
-      </div>
-
-
-      <div class="mt-4 text-center">
-        <button
-          *ngIf="isAdmin"
-          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-          [routerLink]="['/usuarios/edit', item._id]"
-        >
-          Editar
-        </button>
-      </div>
+      <button
+        *ngIf="isAdmin"
+        [routerLink]="['/usuarios/edit', item._id]"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold transition"
+      >
+        Editar Usuario
+      </button>
     </div>
   </div>
 </div>

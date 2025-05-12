@@ -5,14 +5,29 @@
   (BuscarObject)="searchByName($event)"
   >
   </app-searchBox>
-  <button *ngIf="isAdmin" class="button-agregar" routerLink="/rutinas/agregar">AGREGAR</button>
+  <button *ngIf="isAdmin" class="button-agregar" routerLink="/metricas/agregar">Asignar Metrica</button>
     </div>
 
-    <h2>Métricas</h2>
-<ul>
-  <li *ngFor="let metrica of MetricasFiltradas">
-    Cliente: {{ metrica.clienteId }} |
-    Fecha: {{ metrica.fecha | date:'shortDate' }} |
-    Peso: {{ metrica.pesoCorporal || 'N/A' }} kg
-  </li>
-</ul>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+  <div *ngFor="let metrica of MetricasFiltradas" class="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+
+    <div class="mb-4">
+      <h2 class="text-xl font-semibold text-gray-800 mb-1">
+        {{ getUuserName(metrica.clienteId) }}
+      </h2>
+      <p class="text-sm text-gray-500">
+        <strong class="text-gray-600">Fecha:</strong> {{ metrica.fecha | date:'mediumDate' }}
+      </p>
+    </div>
+
+    <div class="mt-6">
+      <button *ngIf="isAdmin"
+              [routerLink]="['/metricas/edit', metrica._id]"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+        Evaluar Métrica
+      </button>
+    </div>
+
+  </div>
+</div>

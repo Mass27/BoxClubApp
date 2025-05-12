@@ -14,24 +14,40 @@
   <button routerLink="/productos/agregar">AGREGAR</button>
 </div> -->
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-  <div *ngFor="let item of prodFiltrados" class="grid-item">
-    <div class="user-card">
-      <img [src]="item.imagen" alt="" />
-      <h2>{{ item.nombreProducto }}</h2>
-      <p><strong>Descripcion:</strong> {{ item.descripcion }}</p>
-      <p><strong>Precio:</strong> {{ item.precio }}</p>
-      <p><strong>Id de Producto:</strong> {{ item.idproducto }}</p>
-      <p><strong>Stock de Producto:</strong> {{ item.cantidadEnStock }}</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+  <div *ngFor="let item of prodFiltrados" class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
 
-      <!-- Muestra otros datos del empleado según la estructura de la interfaz -->
+    <!-- Imagen del producto -->
+    <img [src]="item.imagen" alt="Producto" class="w-full h-48 object-cover" />
+
+    <!-- Contenido de la card -->
+    <div class="p-5 space-y-2">
+      <h2 class="text-xl font-semibold text-gray-800">{{ item.nombreProducto }}</h2>
+
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">Descripción:</strong> {{ item.descripcion }}
+      </p>
+
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">Precio:</strong> L {{ item.precio }}
+      </p>
+
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">ID:</strong> {{ item.idproducto }}
+      </p>
+
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">Stock:</strong> {{ item.cantidadEnStock }}
+      </p>
+
       <button
-      class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
         *ngIf="isAdmin"
         [routerLink]="['/productos/edit', item.idproducto]"
-      >
-        Editar
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+        Editar Producto
       </button>
     </div>
+
   </div>
 </div>
+

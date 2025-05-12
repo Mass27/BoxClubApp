@@ -9,19 +9,28 @@
   </div>
 
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-    <div *ngFor="let item of rutinasFiltrado" class="grid-item">
-      <div class="user-card">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+  <div *ngFor="let item of rutinasFiltrado" class="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
 
-        <h2>{{ item.nombre }}</h2>
-        <p><strong>Descripcion</strong> {{ item.descripcion }}</p>
-        <p><strong>Empleado:</strong>{{ this.getempleadoName(item.empleado) }}</p>
-
-
-        <button *ngIf="isAdmin" [routerLink]="['/rutinas/edit', item._id]"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-          Editar
-        </button>
-      </div>
+    <div class="mb-4">
+      <h2 class="text-xl font-semibold text-gray-800 mb-1">
+        {{ item.nombre }}
+      </h2>
+      <p class="text-sm text-gray-600 mb-1">
+        <strong class="text-gray-700">Descripción:</strong> {{ item.descripcion | slice:0:30 }}...
+      </p>
+      <p class="text-sm text-gray-600">
+        <strong class="text-gray-700">Empleado:</strong> {{ getempleadoName(item.empleado) }}
+      </p>
     </div>
+
+    <div class="mt-6">
+      <button *ngIf="isAdmin"
+              [routerLink]="['/rutinas/edit', item._id]"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+        Editar Rutina
+      </button>
+    </div>
+
   </div>
+</div>

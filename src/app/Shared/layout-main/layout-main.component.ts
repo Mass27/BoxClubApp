@@ -18,7 +18,7 @@ export class LayoutMainComponent implements OnInit {
     { label: 'Clientes', link: '/usuarios/list' },
     { label: 'Rutinas', link: '/rutinas/list' },
     { label: 'Metricas', link: '/metricas/list' },
-   { label: 'Empleados', link: '/empleados/list' },
+     { label: 'Empleados', link: '/empleados/list' },
      { label: 'Productos', link: '/productos/list' },
      { label: 'Planes', link: '/planes/list' },
     { label: 'Facturacion', link: '/facturacion/list' },
