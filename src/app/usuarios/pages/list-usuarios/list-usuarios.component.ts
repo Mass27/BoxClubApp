@@ -13,6 +13,7 @@ import { ContadorActivos } from '../../interfaces/contadorActivos.interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalRutinaComponent } from '../../components/modalRutina/modalRutina.component';
+import { ClientePage } from '../../interfaces/clientesPagin.interfaces';
 @Component({
   selector: 'app-list-usuarios',
   // styleUrls: ['./list-usuarios.component.css'],
@@ -23,6 +24,10 @@ export class ListUsuariosComponent implements OnInit {
   allUsers: Clientes[] = [];
   tipPlanes: Planes[] = [];
   usuariosFiltrados: Clientes[] = [];
+  totalClientes: number = 0;
+currentPage: number = 1;
+limit: number = 10;
+totalPages: number = 0;
 
   mostrarInactivos: boolean = false;
   mostrarPendientes: boolean = false;
@@ -41,20 +46,25 @@ export class ListUsuariosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.usuarioService.getAllUser().subscribe((users) => {
-      this.users = users;
-      this.allUsers = users;
-      this.filterUsuarios();
-      this.updateUsuariosConTresDiasRestantes();
-    });
-
+    this.cargarUsuarios();
     this.usuarioService
       .getAllplanes()
       .subscribe((planes) => (this.tipPlanes = planes));
     this.adminUser();
     this.contarClientesActivos();
   }
-
+cargarUsuarios(page: number = 1): void {
+  this.usuarioService.getuserPaginated(page, this.limit).subscribe((data) => {
+    this.users = data.clientes;
+    this.allUsers = data.clientes;
+    this.totalClientes = data.total;
+    this.totalPages = data.totalPages;
+    this.currentPage = data.page;
+    this.filterUsuarios();
+    this.updateUsuariosConTresDiasRestantes();
+    console.log(this.users);
+  });
+}
   adminUser() {
     const tipoUsuario = sessionStorage.getItem('tipoUsuario');
     if (tipoUsuario === 'ADMINISTRADOR') {

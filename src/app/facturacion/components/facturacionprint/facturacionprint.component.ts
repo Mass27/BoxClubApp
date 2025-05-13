@@ -60,5 +60,6 @@ export class FacturacionprintComponent implements OnInit {
       return prod ? prod.nombreProducto : '';
     }
 
+    
   }
 

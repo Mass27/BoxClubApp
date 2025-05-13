@@ -40,29 +40,24 @@
 
 <!-- Botón para desplegar la bandeja de notificaciones -->
 <button
-  class="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+  class="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg focus:outline-none transition-all duration-300"
   (click)="toggleBandeja()"
 >
   <mat-icon>notifications</mat-icon>
 </button>
 
 <!-- Bandeja de notificaciones -->
-<div
-  *ngIf="mostrarBandeja"
-  class="fixed bottom-16 right-4 bg-white border border-gray-200 shadow-lg p-4 rounded"
->
-  <h3 class="text-lg font-bold mb-2">Notificaciones</h3>
-  <div
-    *ngFor="let user of usuariosConTresDiasRestantes"
-    class="bg-yellow-200 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-2"
-    role="alert"
-  >
+<div *ngIf="mostrarBandeja" class="fixed bottom-16 right-4 bg-white border border-gray-300 shadow-lg p-4 rounded-lg max-w-sm w-full">
+  <h3 class="text-lg font-semibold text-gray-800 mb-4">Notificaciones</h3>
+
+  <div *ngFor="let user of usuariosConTresDiasRestantes" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 px-4 py-3 rounded-lg mb-3 shadow-sm">
     <p class="text-sm">
-      {{ user.nombreCompleto }} tiene {{ user.diasRestantes }} días restantes en
-      su plan.
+      <span class="font-medium">{{ user.nombreCompleto }}</span> tiene {{ user.diasRestantes }} días restantes en su plan.
     </p>
   </div>
 </div>
+
+
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
   <div
@@ -128,3 +123,60 @@
     </div>
   </div>
 </div>
+<!-- Paginación -->
+<!-- Paginación -->
+<div class="flex flex-col items-center mt-8 space-y-4">
+
+  <!-- Controles de página -->
+  <div class="flex justify-center items-center gap-4">
+    <button
+      (click)="cargarUsuarios(1)"
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm rounded disabled:opacity-50"
+    >
+      Primera
+    </button>
+
+    <button
+      (click)="cargarUsuarios(currentPage - 1)"
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm rounded disabled:opacity-50"
+    >
+      Anterior
+    </button>
+
+    <span class="text-sm font-medium">
+      Página {{ currentPage }} de {{ totalPages }}
+    </span>
+
+    <button
+      (click)="cargarUsuarios(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+      class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm rounded disabled:opacity-50"
+    >
+      Siguiente
+    </button>
+
+    <button
+      (click)="cargarUsuarios(totalPages)"
+      [disabled]="currentPage === totalPages"
+      class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm rounded disabled:opacity-50"
+    >
+      Última
+    </button>
+  </div>
+
+  <!-- Selector de ítems por página -->
+  <div class="flex items-center space-x-2">
+    <label class="text-sm">Items por página:</label>
+    <select
+      [(ngModel)]="limit"
+      (change)="cargarUsuarios(1)"
+      class="border px-2 py-1 rounded text-sm"
+    >
+      <option *ngFor="let l of [5, 10, 20, 50]" [value]="l">{{ l }}</option>
+    </select>
+  </div>
+
+</div>
+

@@ -269,13 +269,13 @@ export class AgregarFacComponent implements OnInit {
     }
   }
 
-  imprimirFactura() {
-    this.isPrintMode = true;
-    setTimeout(() => {
-      // Abre el cuadro de diálogo de impresión
-      window.print();
-      // Después de la impresión, restablece el modo de impresión
-      this.isPrintMode = false;
-    }, 500);
-  }
+  // imprimirFactura() {
+  //   this.isPrintMode = true;
+  //   setTimeout(() => {
+  //     // Abre el cuadro de diálogo de impresión
+  //     window.print();
+  //     // Después de la impresión, restablece el modo de impresión
+  //     this.isPrintMode = false;
+  //   }, 500);
+  // }
 }

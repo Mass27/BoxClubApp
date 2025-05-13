@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { MetricasService } from '../../services/metricas.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -39,17 +39,17 @@ export class AgregarMetricasComponent implements OnInit {
   ) {
     this.metricaForm = this.fb.group({
       clienteId: [''],
-      fecha: [''],
-      pesoCorporal: [''],
-      grasaCorporal: [''],
-      imc: [''],
-      rutinaActual: [''],
-      progreso: [''],
+      fecha: ['', Validators.required],
+      pesoCorporal: ['', Validators.required],
+      grasaCorporal: ['', Validators.required],
+      imc: ['', Validators.required],
+      rutinaActual: ['', Validators.required],
+      progreso: ['', Validators.required],
       nota: [''],
       medidas: this.fb.group({
-        cintura: [''],
-        pecho: [''],
-        biceps: [''],
+        cintura: ['', Validators.required],
+        pecho: ['', Validators.required],
+        biceps: ['', Validators.required],
       }),
     });
   }
@@ -107,29 +107,35 @@ export class AgregarMetricasComponent implements OnInit {
     this.metricaId = metrica._id;
   }
   onSubmit() {
+    //  if (this.metricaForm.invalid) {
+    //   // Mostrar mensajes de error si el formulario es inválido
+    //   return;
+    // }
     const datos = this.metricaForm.value;
 
     if (!datos.clienteId && this.clienteId) {
       datos.clienteId = this.clienteId;
     }
 
-    const esHistorial =
-      this.ActivatedRoute.snapshot.routeConfig?.path?.includes('edit');
+    // const esHistorial =
+    //   this.ActivatedRoute.snapshot.routeConfig?.path?.includes('edit');
 
 
-    const payload = {
-      ...datos,
-      ...(this.isEditMode && { _id: this.metricaId }),
+    // const payload = {
+    //   ...datos,
+    //   ...(this.isEditMode && { _id: this.metricaId }),
+    //   esHistorial:true
 
-    };
+    // };
 
     if (this.isEditMode) {
-      this.metricasService.updateRutinas(payload).subscribe(() => {
-        this.cargarHistorial(this.clienteId);
+      datos._id = this.metricaId;
+      this.metricasService.updateRutinas(datos).subscribe(() => {
+       this.cargarHistorial(this.clienteId);
         this.resetForm();
       });
     } else {
-      this.metricasService.guardar(payload).subscribe(() => {
+      this.metricasService.guardar(datos).subscribe(() => {
 
         this.resetForm();
         this.router.navigate(['/metricas']);

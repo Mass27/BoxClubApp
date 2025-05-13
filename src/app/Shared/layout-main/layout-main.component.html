@@ -1,8 +1,9 @@
 <mat-sidenav-container fullscreen #containerall>
   <mat-sidenav
     #sidenav
-    mode="push"
-    [ngStyle]="{ width: '220px' }"
+     [opened]="true"
+    mode="side"
+    [ngStyle]="{ width: '8rem' }"
     class="sidenav-container-color"
   >
     <mat-toolbar class="sidenav-container-color">
@@ -10,9 +11,9 @@
         ><img src="assets/logo3.png" alt=""
       /></a>
       <span class="spacer"></span>
-      <button mat-icon-button (click)="sidenav.toggle()">
+      <!-- <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
-      </button>
+      </button> -->
     </mat-toolbar>
 
     <mat-nav-list class="menu" *ngFor="let item of listadoMenuItems">
@@ -23,9 +24,9 @@
   </mat-sidenav>
 
   <mat-toolbar class="sidenav-container-color">
-    <button mat-icon-button (click)="sidenav.toggle()">
+    <!-- <button mat-icon-button (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
-    </button>
+    </button> -->
 
     <span class="spacer"></span>
 

@@ -7,6 +7,7 @@ import { Clientes } from '../interfaces/usuario.interfaces';
 import { Planes } from '../../planes/interfaces/planes.interface';
 import { IDUsuarios } from '../interfaces/usuId.interface';
 import { ContadorActivos } from '../interfaces/contadorActivos.interfaces';
+import { ClientePag } from '../interfaces/clientesPagin.interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class usuarioService {
@@ -17,6 +18,10 @@ export class usuarioService {
   getAllUser(): Observable<Clientes[]> {
     return this.http.get<Clientes[]>(`${this.baseUrl}/clientes/listar`);
   }
+  getuserPaginated(page: number, limit: number): Observable<ClientePag> {
+    return this.http.get<ClientePag>(
+      `${this.baseUrl}/clientes/listarPage?=${page}&limit=${limit}`
+    );  }
 
   addUser(user: Clientes): Observable<Clientes> {
     return this.http.post<Clientes>(`${this.baseUrl}/clientes/guardar`, user);

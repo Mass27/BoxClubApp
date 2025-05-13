@@ -1,20 +1,19 @@
 <div>
-
+  <button
+  routerLink="/facturacion/list"
+  type="button"
+  mat-raised-button
+  color="warn"
+  class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md mb-4 transition-all ease-in-out transform hover:scale-105 hover:shadow-lg"
+>
+  <mat-icon class="mat-18">arrow_back</mat-icon>
+</button>
   <form
     [formGroup]="formulario"
     class="factura-form bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
   >
-  <button
-    routerLink="/facturacion/list"
-    type="button"
-    mat-raised-button
-    color="warn"
-    class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-2 rounded"
-  >
-    <mat-icon class="mat-18">arrow_back</mat-icon>
-  </button>
     <!-- Campo Usuario -->
-    <h2 class="factura-title">Factura</h2>
+    <!-- <h2 class="factura-title">Factura</h2> -->
     <div>
       <img src="assets/logo4.jpg" alt="Logo" class="factura-logo" />
     </div>
@@ -149,35 +148,33 @@
         <!-- Fecha -->
         <div class="mb-4">
           <label class="factura-label" for="fechaDePago">Fecha*</label>
-          <ng-container  *ngIf="!isEditMode; else editModeTemplateFec">
-          <input
-            formControlName="fecha"
-            type="date"
-            id="fechaDePago"
-            placeholder="Fecha de Factura"
-            class="factura-input"
-          />
-          <div
-            *ngIf="
-              formulario.get('fecha')?.invalid &&
-              formulario.get('fecha')?.touched
-            "
-          >
-            <small class="text-red-500">Fecha de Factura es requerido.</small>
-          </div>
-        </ng-container>
-        <ng-template #editModeTemplateFec>
-          <input
-            formControlName="fecha"
-            id="fechaDePago"
-            type="text"
-            class="factura-input"
-            readonly
-          />
-        </ng-template>
+          <ng-container *ngIf="!isEditMode; else editModeTemplateFec">
+            <input
+              formControlName="fecha"
+              type="date"
+              id="fechaDePago"
+              placeholder="Fecha de Factura"
+              class="factura-input"
+            />
+            <div
+              *ngIf="
+                formulario.get('fecha')?.invalid &&
+                formulario.get('fecha')?.touched
+              "
+            >
+              <small class="text-red-500">Fecha de Factura es requerido.</small>
+            </div>
+          </ng-container>
+          <ng-template #editModeTemplateFec>
+            <input
+              formControlName="fecha"
+              id="fechaDePago"
+              type="text"
+              class="factura-input"
+              readonly
+            />
+          </ng-template>
         </div>
-
-    
 
         <!-- Precios y Totales -->
         <div class="mb-4">
@@ -230,7 +227,6 @@
       <button type="submit" (click)="enviarFormulario()" class="factura-button">
         Guardar
       </button>
-
     </div>
   </form>
 </div>
