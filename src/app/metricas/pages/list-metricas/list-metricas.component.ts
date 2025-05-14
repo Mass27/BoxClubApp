@@ -19,6 +19,7 @@ export class ListMetricasComponent implements OnInit{
     private usuariosService:usuarioService
    ) {}
   isAdmin: boolean = false;
+  isEntrenador: boolean = false;
   ngOnInit(): void {
     this.adminUser();
     this.usuariosService.getAllUser().subscribe((usuarios) => {
@@ -39,14 +40,11 @@ this.metricasService.listar().subscribe((metricas) => {
   this.MetricasFiltradas = [...this.Metricas];});
 
 }
-  adminUser() {
-    const tipoUsuario = sessionStorage.getItem('tipoUsuario');
-    if (tipoUsuario === 'ADMINISTRADOR') {
-      this.isAdmin = true;
-    } else {
-      this.isAdmin = false;
-    }
-  }
+   adminUser() {
+  const tipoUsuario = sessionStorage.getItem('tipoUsuario');
+  this.isAdmin = tipoUsuario === 'ADMINISTRADOR';
+  this.isEntrenador = tipoUsuario === 'entrenadores'; // o 'ENTRENADOR' si lo guardas en mayúsculas
+}
 
 
 

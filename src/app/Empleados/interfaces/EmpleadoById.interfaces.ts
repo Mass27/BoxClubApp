@@ -6,6 +6,7 @@ export interface EmpleadoByID {
   identidad:      number;
   numeroTelefono: string;
   correo:         string;
+  tipoEmpleado: string;
   createdAt:      string;
   updatedAt:      string;
   idempleado:     number;

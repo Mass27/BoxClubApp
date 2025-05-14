@@ -1,3 +1,5 @@
+<!-- TODO: ARREGLAR LA IMPRESION DE LA FACTUR, SALE EL MENU DEL LADO -->
+
 <div *ngIf="loading" class="text-center p-4">
   <p class="text-lg font-semibold text-gray-600">Cargando factura...</p>
 </div>
@@ -40,7 +42,7 @@
         </tr>
       </thead>
       <tbody>
-       
+
         <tr *ngIf="factura.idPlan">
           <td class="border border-gray-300 p-2">{{ getPlanName(factura.idPlan || 'N/A') }}</td>
           <td class="border border-gray-300 p-2 text-right">1</td>

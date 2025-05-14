@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MetricasService } from '../../services/metricas.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -26,7 +26,9 @@ export class AgregarMetricasComponent implements OnInit {
   clienteId: string = '';
   clientes: Clientes[] = [];
   rutinas: Rutinas[] = [];
-   showFormulario = false;
+  showFormulario = false;
+ filtroFecha: string = '';
+ordenHistorial: 'reciente' | 'antiguo' = 'reciente';
   // @HostBinding('class') protected readonly class = 'contents'; // Makes component host as if it was not there, can offer less css headaches. Assumes .contents{display:contents} css class exits
   constructor(
     private fb: FormBuilder,
@@ -58,13 +60,11 @@ export class AgregarMetricasComponent implements OnInit {
     this.ActivatedRoute.params.subscribe((params) => {
       const id = params['id'];
       if (id) {
-
         this.metricasService.obtenerPorId(id).subscribe((resp: MetricasID) => {
           const metrica = resp.data;
 
           this.metricaId = metrica._id;
           this.clienteId = metrica.clienteId._id;
-
 
           this.metricaForm.patchValue({
             clienteId: this.clienteId,
@@ -107,10 +107,6 @@ export class AgregarMetricasComponent implements OnInit {
     this.metricaId = metrica._id;
   }
   onSubmit() {
-    //  if (this.metricaForm.invalid) {
-    //   // Mostrar mensajes de error si el formulario es inválido
-    //   return;
-    // }
     const datos = this.metricaForm.value;
 
     if (!datos.clienteId && this.clienteId) {
@@ -119,7 +115,6 @@ export class AgregarMetricasComponent implements OnInit {
 
     // const esHistorial =
     //   this.ActivatedRoute.snapshot.routeConfig?.path?.includes('edit');
-
 
     // const payload = {
     //   ...datos,
@@ -131,12 +126,11 @@ export class AgregarMetricasComponent implements OnInit {
     if (this.isEditMode) {
       datos._id = this.metricaId;
       this.metricasService.updateRutinas(datos).subscribe(() => {
-       this.cargarHistorial(this.clienteId);
+        this.cargarHistorial(this.clienteId);
         this.resetForm();
       });
     } else {
       this.metricasService.guardar(datos).subscribe(() => {
-
         this.resetForm();
         this.router.navigate(['/metricas']);
       });
@@ -151,4 +145,22 @@ export class AgregarMetricasComponent implements OnInit {
     this.isEditMode = false;
     this.metricaId = '';
   }
+
+ get metricasHistorialFiltradas() {
+  let filtradas = this.metricasHistorial;
+
+  if (this.filtroFecha) {
+    const fechaSeleccionada = new Date(this.filtroFecha).toDateString();
+    filtradas = filtradas.filter(m => new Date(m.fecha).toDateString() === fechaSeleccionada);
+  }
+
+  filtradas.sort((a, b) => {
+    const fechaA = new Date(a.fecha).getTime();
+    const fechaB = new Date(b.fecha).getTime();
+    return this.ordenHistorial === 'reciente' ? fechaB - fechaA : fechaA - fechaB;
+  });
+
+  return filtradas;
+}
+
 }

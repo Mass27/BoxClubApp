@@ -24,6 +24,7 @@ export class AgregarComponent implements OnInit {
       nombreCompleto: new FormControl('', Validators.required),
       numeroTelefono: new FormControl('', Validators.required),
       correo: new FormControl('', [Validators.required, Validators.email]),
+      tipoEmpleado:new FormControl('', Validators.required)
     });
   }
 
@@ -34,7 +35,7 @@ export class AgregarComponent implements OnInit {
         this.isEditMode = true;
         this.empleadoId = id;
         this.empleadosService.getEmpleadoById(id).subscribe((empleado) => {
-          this.formulario.patchValue(empleado); // Rellenar el formulario con los datos del empleado
+          this.formulario.patchValue(empleado);
         });
       }
     });
@@ -44,7 +45,7 @@ export class AgregarComponent implements OnInit {
     if (this.formulario.valid) {
       const formData = this.formulario.value;
       if (this.isEditMode) {
-        formData.idempleado = this.empleadoId; // Agregar el id del empleado al objeto
+        formData.idempleado = this.empleadoId;
         this.empleadosService.updateEmpleado(formData).subscribe(
           (response) => {
             this.router.navigate(['/empleados/list']);

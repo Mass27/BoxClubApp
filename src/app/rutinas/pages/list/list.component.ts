@@ -15,6 +15,7 @@ export class ListComponent implements OnInit {
   rutinasFiltrado: Rutinas[] = [];
   isAdmin: boolean = false;
     empleados:Empleados2[] = [];
+    isEntrenador: boolean = false;
   constructor(private rutinasService: RutinasService,
         private empleadoService: EmpleadosService
   ) {}
@@ -36,13 +37,10 @@ export class ListComponent implements OnInit {
     });
   }
   adminUser() {
-    const tipoUsuario = sessionStorage.getItem('tipoUsuario');
-    if (tipoUsuario === 'ADMINISTRADOR') {
-      this.isAdmin = true;
-    } else {
-      this.isAdmin = false;
-    }
-  }
+  const tipoUsuario = sessionStorage.getItem('tipoUsuario');
+  this.isAdmin = tipoUsuario === 'ADMINISTRADOR';
+  this.isEntrenador = tipoUsuario === 'entrenadores'; // o 'ENTRENADOR' si lo guardas en mayúsculas
+}
 
   searchByName(name: string): void {
     if (name.trim() === '') {

@@ -5,7 +5,7 @@
     class="app-search-box"
     (bcNombre)="buscarClientePorNombre($event)"
   ></app-search-box>
-  <button class="button-agregar" routerLink="/usuarios/agregar">AGREGAR</button>
+  <button class="button-agregar"  *ngIf="isAdmin" routerLink="/usuarios/agregar">AGREGAR</button>
 </div>
 
 <div class="button-filtrar">
@@ -106,7 +106,7 @@
     <!-- Botones -->
     <div class="flex flex-col space-y-2 mt-6">
       <button
-        *ngIf="isAdmin"
+     *ngIf="isAdmin || isEntrenador"
         (click)="asignarRutina(item._id)"
         class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold transition"
       >

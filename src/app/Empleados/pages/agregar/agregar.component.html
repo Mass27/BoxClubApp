@@ -88,7 +88,31 @@
       >
     </div>
   </div>
-
+<div class="mb-4">
+  <label class="block text-gray-700 text-sm font-bold mb-2" for="tipoEmpleado">
+    Tipo de Empleado*
+  </label>
+  <select
+    formControlName="tipoEmpleado"
+    id="tipoEmpleado"
+    class="input-field"
+  >
+    <option value="" disabled selected>Seleccione un tipo</option>
+    <option value="entrenador">Entrenador</option>
+    <option value="administrativo">Administrativo</option>
+    <option value="conserje">Conserje</option>
+  </select>
+  <div
+    *ngIf="
+      formulario.get('tipoEmpleado')?.invalid &&
+      formulario.get('tipoEmpleado')?.touched
+    "
+  >
+    <small class="text-red-500">
+      Tipo de empleado es requerido.
+    </small>
+  </div>
+</div>
   <!-- Mostrar errores -->
   <button class="btn-submit" (click)="enviarForm()">AGREGAR</button>
 </form>

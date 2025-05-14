@@ -9,5 +9,6 @@ export interface Empleados2 {
     createdAt:      string;
     updatedAt:      string;
     idempleado:     number;
+    tipoEmpleado: string;
     __v:            number;
 }

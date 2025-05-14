@@ -1,9 +1,9 @@
 <mat-sidenav-container fullscreen #containerall>
   <mat-sidenav
     #sidenav
-     [opened]="true"
+    [opened]="true"
     mode="side"
-    [ngStyle]="{ width: '8rem' }"
+    [ngStyle]="{ width: '10rem' }"
     class="sidenav-container-color"
   >
     <mat-toolbar class="sidenav-container-color">
@@ -11,23 +11,16 @@
         ><img src="assets/logo3.png" alt=""
       /></a>
       <span class="spacer"></span>
-      <!-- <button mat-icon-button (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button> -->
     </mat-toolbar>
 
-    <mat-nav-list class="menu" *ngFor="let item of listadoMenuItems">
-      <a *ngIf="isAdmin || item.label !== 'Empleados'" [routerLink]="item.link"
+    <mat-nav-list class="menu" *ngFor="let item of menuVisible">
+      <a [routerLink]="item.link"
         ><li>{{ item.label }}</li></a
       >
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-toolbar class="sidenav-container-color">
-    <!-- <button mat-icon-button (click)="sidenav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button> -->
-
+  <mat-toolbar>
     <span class="spacer"></span>
 
     <button

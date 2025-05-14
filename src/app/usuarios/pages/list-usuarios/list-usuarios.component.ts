@@ -37,7 +37,7 @@ totalPages: number = 0;
   isAdmin: boolean = false;
   usuariosConTresDiasRestantes: Clientes[] = [];
   mostrarBandeja: boolean = false;
-
+isEntrenador: boolean = false;
   constructor(
     private usuarioService: usuarioService,
     private authService: AuthService,
@@ -65,14 +65,11 @@ cargarUsuarios(page: number = 1): void {
     console.log(this.users);
   });
 }
-  adminUser() {
-    const tipoUsuario = sessionStorage.getItem('tipoUsuario');
-    if (tipoUsuario === 'ADMINISTRADOR') {
-      this.isAdmin = true;
-    } else {
-      this.isAdmin = false;
-    }
-  }
+ adminUser() {
+  const tipoUsuario = sessionStorage.getItem('tipoUsuario');
+  this.isAdmin = tipoUsuario === 'ADMINISTRADOR';
+  this.isEntrenador = tipoUsuario === 'entrenadores';
+}
   toggleBandeja() {
     this.mostrarBandeja = !this.mostrarBandeja;
     if (this.mostrarBandeja) {

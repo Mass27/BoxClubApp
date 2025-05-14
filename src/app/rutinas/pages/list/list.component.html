@@ -5,7 +5,7 @@
 (BuscarObject)="searchByName($event)"
 >
 </app-searchBox>
-<button *ngIf="isAdmin" class="button-agregar" routerLink="/rutinas/agregar">AGREGAR</button>
+<button *ngIf="isAdmin || isEntrenador" class="button-agregar" routerLink="/rutinas/agregar">AGREGAR</button>
   </div>
 
 
@@ -25,7 +25,7 @@
     </div>
 
     <div class="mt-6">
-      <button *ngIf="isAdmin"
+      <button *ngIf="isAdmin || isEntrenador"
               [routerLink]="['/rutinas/edit', item._id]"
               class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
         Editar Rutina

@@ -13,8 +13,9 @@ interface MenuItem {
 })
 export class LayoutMainComponent implements OnInit {
   isAdmin: boolean = false;
+  menuVisible: MenuItem[] = [];
 
-  listadoMenuItems: MenuItem[] = [
+  menuAdmin: MenuItem[] = [
     { label: 'Clientes', link: '/usuarios/list' },
     { label: 'Rutinas', link: '/rutinas/list' },
     { label: 'Metricas', link: '/metricas/list' },
@@ -22,6 +23,12 @@ export class LayoutMainComponent implements OnInit {
      { label: 'Productos', link: '/productos/list' },
      { label: 'Planes', link: '/planes/list' },
     { label: 'Facturacion', link: '/facturacion/list' },
+  ];
+
+ menuEntrenador: MenuItem[] = [
+    { label: 'Clientes', link: '/usuarios/list' },
+    { label: 'Rutinas', link: '/rutinas/list' },
+    { label: 'Metricas', link: '/metricas/list' },
   ];
 
   constructor(private router: Router) {}
@@ -34,15 +41,12 @@ export class LayoutMainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.adminUser();
+    this.setMenuByTipoUsuario();
   }
-
-  adminUser() {
+  setMenuByTipoUsuario(): void {
     const tipoUsuario = sessionStorage.getItem('tipoUsuario');
-    if (tipoUsuario === 'ADMINISTRADOR') {
-      this.isAdmin = true;
-    } else {
-      this.isAdmin = false;
-    }
+    this.isAdmin = tipoUsuario === 'ADMINISTRADOR';
+
+    this.menuVisible = this.isAdmin ? this.menuAdmin : this.menuEntrenador;
   }
 }

@@ -5,7 +5,7 @@
   (BuscarObject)="searchByName($event)"
   >
   </app-searchBox>
-  <button *ngIf="isAdmin" class="button-agregar" routerLink="/metricas/agregar">Asignar Metrica</button>
+  <button   *ngIf="isAdmin || isEntrenador" class="button-agregar" routerLink="/metricas/agregar">Asignar Metrica</button>
     </div>
 
 
@@ -17,12 +17,12 @@
         {{ getUuserName(metrica.clienteId) }}
       </h2>
       <p class="text-sm text-gray-500">
-        <strong class="text-gray-600">Fecha:</strong> {{ metrica.fecha | date:'mediumDate' }}
+        <strong class="text-gray-600">Fecha:</strong> {{ metrica.fecha | date:'yyyy-MM-dd':'UTC' }}
       </p>
     </div>
 
     <div class="mt-6">
-      <button *ngIf="isAdmin"
+      <button   *ngIf="isAdmin || isEntrenador"
               [routerLink]="['/metricas/edit', metrica._id]"
               class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
         Evaluar Métrica
