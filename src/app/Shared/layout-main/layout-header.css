@@ -29,8 +29,3 @@ color: antiquewhite;
   background-color: #555;
   border-right: 6px solid rgb(255, 0, 0);
 }
-@media print {
-  .mat-toolbar button {
-    display: none !important; /* Oculta todos los botones dentro de la barra de herramientas */
-  }
-}
