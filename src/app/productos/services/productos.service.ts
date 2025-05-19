@@ -25,7 +25,7 @@ export class ProductosService {
   }
   updateProductos(producto: Productos): Observable<Productos> {
     return this.http.put<Productos>(
-      `${this.baseUrl}/productos/editar/${producto.idproducto}`,
+      `${this.baseUrl}/productos/editar/${producto._id}`,
       producto
     );
   }

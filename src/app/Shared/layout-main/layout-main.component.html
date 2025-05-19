@@ -4,7 +4,7 @@
     [opened]="true"
     mode="side"
     [ngStyle]="{ width: '10rem' }"
-    class="sidenav-container-color"
+    class="sidenav-container-color no-print"
   >
     <mat-toolbar class="sidenav-container-color">
       <a class="img-toolbar" routerLink="/usuarios/list"
@@ -20,7 +20,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-toolbar>
+  <mat-toolbar class="no-print">
     <span class="spacer"></span>
 
     <button (click)="logout()" mat-icon-button color="warn">
@@ -28,7 +28,7 @@
     </button>
   </mat-toolbar>
 
-  <div class="container-list p-2">
+  <div class="container-list p-2" >
     <router-outlet></router-outlet>
   </div>
 </mat-sidenav-container>

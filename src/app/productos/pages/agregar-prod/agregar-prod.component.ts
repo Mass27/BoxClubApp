@@ -45,7 +45,7 @@ export class AgregarProdComponent implements OnInit {
               this.currentImageUrl = null;
             }
             this.formulario.patchValue({
-              imagen: this.currentImageUrl,
+            imagen: this.currentImageUrl,
               nombreProducto: prod.nombreProducto,
               descripcion: prod.descripcion,
               precio: prod.precio,
@@ -63,7 +63,7 @@ export class AgregarProdComponent implements OnInit {
     if (this.isEditMode && this.prodId) {
       if (!this.isUpdating) {
         this.isUpdating = true;
-        formData.idproducto = this.prodId;
+        formData._id = this.prodId;
         this.productosService.updateProductos(formData).subscribe(
           (response) => {
             if (this.prodId) {
@@ -85,7 +85,7 @@ export class AgregarProdComponent implements OnInit {
       this.productosService.postProductos(formData).subscribe(
         (response) => {
           // Una vez agregado el usuario, subimos la imagen
-          const nuevoProd = response.idproducto.toString(); // Suponiendo que el servidor devuelve el ID del nuevo usuario
+          const nuevoProd = response._id.toString(); // Suponiendo que el servidor devuelve el ID del nuevo usuario
           this.uploadImage(nuevoProd);
         },
         (error) => {

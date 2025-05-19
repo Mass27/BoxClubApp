@@ -223,16 +223,16 @@ export class AgregarFacComponent implements OnInit {
         (cliente) => cliente._id === formData.idcliente
       );
       if (clienteSeleccionado) {
-    
+
         formData.idcliente = {
           _id: formData.idcliente,
           nombreCompleto: clienteSeleccionado.nombreCompleto,
         };
       }
       if (this.isEditMode && this.facturaId) {
-        
+
         if (!this.isUpdating) {
-          this.isUpdating = true; 
+          this.isUpdating = true;
           formData._id = this.facturaId;
           this.facturacionService.updateFactura(formData).subscribe(
             (response) => {
@@ -240,13 +240,14 @@ export class AgregarFacComponent implements OnInit {
             },
             (error) => {
               console.error('Error al actualizar usuario:', error);
-              this.isUpdating = false; 
+              this.isUpdating = false;
             }
           );
         } else {
           console.log('La actualización de la factura ya está en curso.');
         }
       } else {
+        console.log('FormData que se envía:', formData);
         this.facturacionService.postFactura(formData).subscribe(
           (response) => {
             this.router.navigate(['/facturacion/list']);

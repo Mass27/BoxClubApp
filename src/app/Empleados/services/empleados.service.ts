@@ -19,6 +19,12 @@ export class EmpleadosService {
     );
   }
 
+   getAllEntranadores(): Observable<Empleados2[]> {
+    return this.httpClient.get<Empleados2[]>(
+      `${this.baseUrl}/empleados/entrenadores`
+    );
+  }
+
   addImg(imagen: string) {
     const formData = new FormData();
     formData.append('img', imagen);

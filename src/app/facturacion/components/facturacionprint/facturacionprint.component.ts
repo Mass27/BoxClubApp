@@ -33,7 +33,7 @@ export class FacturacionprintComponent implements OnInit {
           next: (data) => {
             this.factura = data;
             this.loading = false;
-            setTimeout(() => window.print(), 500);
+          //  setTimeout(() => window.print(), 500);
           },
           error: (err) => {
             console.error('Error al obtener la factura:', err);
@@ -60,6 +60,6 @@ export class FacturacionprintComponent implements OnInit {
       return prod ? prod.nombreProducto : '';
     }
 
-    
+
   }
 

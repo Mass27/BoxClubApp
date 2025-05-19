@@ -9,11 +9,6 @@
 <button class="button-agregar" *ngIf="isAdmin" routerLink="/productos/agregar">AGREGAR</button>
 </div>
 
-
-<!-- <div *ngIf="isAdmin" class="button-agregar">
-  <button routerLink="/productos/agregar">AGREGAR</button>
-</div> -->
-
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
   <div *ngFor="let item of prodFiltrados" class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
 
@@ -32,9 +27,6 @@
         <strong class="text-gray-700">Precio:</strong> L {{ item.precio }}
       </p>
 
-      <p class="text-sm text-gray-600">
-        <strong class="text-gray-700">ID:</strong> {{ item.idproducto }}
-      </p>
 
       <p class="text-sm text-gray-600">
         <strong class="text-gray-700">Stock:</strong> {{ item.cantidadEnStock }}
@@ -42,7 +34,7 @@
 
       <button
         *ngIf="isAdmin"
-        [routerLink]="['/productos/edit', item.idproducto]"
+        [routerLink]="['/productos/edit', item._id]"
         class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
         Editar Producto
       </button>

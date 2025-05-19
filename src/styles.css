@@ -23,11 +23,11 @@
 
 .search-container {
   display: flex;
-  align-items: center; 
-  justify-content: center; 
-  gap: 15px; 
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
   margin-bottom: 10px;
- 
+
 }
 
 .search-box {
@@ -84,9 +84,9 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 15px;
   transition: transform 0.3s ease;
-  width: 300px; 
-  margin-bottom: 20px; 
-  flex-grow: 1; 
+  width: 300px;
+  margin-bottom: 20px;
+  flex-grow: 1;
 }
 
 .user-card:hover {

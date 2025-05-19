@@ -73,7 +73,7 @@ export class AgregarRutinasComponent implements OnInit {
   }
 
   getempleadoName() {
-this.empleadoService.getAllEmpleados().subscribe((empleados: Empleados2[]) => {
+this.empleadoService.getAllEntranadores().subscribe((empleados: Empleados2[]) => {
   this.empleados = empleados;
 });
   }

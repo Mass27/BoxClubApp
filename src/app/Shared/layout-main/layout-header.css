@@ -29,3 +29,29 @@ color: antiquewhite;
   background-color: #555;
   border-right: 6px solid rgb(255, 0, 0);
 }
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .mat-sidenav-container {
+    background: none !important;
+  }
+
+  .container-list {
+    padding: 0 !important;
+    margin: 0 !important;
+
+  }
+
+  /* Ensure full width printing */
+  @page {
+    margin: 0.5cm;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}
