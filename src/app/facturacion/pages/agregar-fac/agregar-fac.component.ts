@@ -223,16 +223,16 @@ export class AgregarFacComponent implements OnInit {
         (cliente) => cliente._id === formData.idcliente
       );
       if (clienteSeleccionado) {
-        // Agregar tanto el ID como el nombre del cliente al objeto formData
+    
         formData.idcliente = {
           _id: formData.idcliente,
           nombreCompleto: clienteSeleccionado.nombreCompleto,
         };
       }
       if (this.isEditMode && this.facturaId) {
-        // Verificar si la actualización ya se realizó antes de proceder
+        
         if (!this.isUpdating) {
-          this.isUpdating = true; // Establecer la bandera de actualización
+          this.isUpdating = true; 
           formData._id = this.facturaId;
           this.facturacionService.updateFactura(formData).subscribe(
             (response) => {
@@ -240,7 +240,7 @@ export class AgregarFacComponent implements OnInit {
             },
             (error) => {
               console.error('Error al actualizar usuario:', error);
-              this.isUpdating = false; // Restablecer la bandera en caso de error
+              this.isUpdating = false; 
             }
           );
         } else {
@@ -269,13 +269,5 @@ export class AgregarFacComponent implements OnInit {
     }
   }
 
-  // imprimirFactura() {
-  //   this.isPrintMode = true;
-  //   setTimeout(() => {
-  //     // Abre el cuadro de diálogo de impresión
-  //     window.print();
-  //     // Después de la impresión, restablece el modo de impresión
-  //     this.isPrintMode = false;
-  //   }, 500);
-  // }
+
 }

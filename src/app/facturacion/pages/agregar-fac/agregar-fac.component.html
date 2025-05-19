@@ -145,7 +145,7 @@
       </div>
 
       <div class="factura-grid-item">
-        <!-- Fecha -->
+
         <div class="mb-4">
           <label class="factura-label" for="fechaDePago">Fecha*</label>
           <ng-container *ngIf="!isEditMode; else editModeTemplateFec">
@@ -176,7 +176,7 @@
           </ng-template>
         </div>
 
-        <!-- Precios y Totales -->
+    
         <div class="mb-4">
           <label class="factura-label" for="precioPlan">Precio del Plan</label>
           <input
@@ -222,7 +222,7 @@
       </div>
     </div>
 
-    <!-- Botón Enviar -->
+
     <div class="mb-4 gap-3 flex justify-center">
       <button type="submit" (click)="enviarFormulario()" class="factura-button">
         Guardar

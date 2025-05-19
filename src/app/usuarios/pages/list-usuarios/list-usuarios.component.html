@@ -108,7 +108,7 @@
       <button
      *ngIf="isAdmin || isEntrenador"
         (click)="asignarRutina(item._id)"
-        class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold transition"
+        class="w-full bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-lg font-semibold transition"
       >
         Asignar Rutina
       </button>
@@ -116,7 +116,7 @@
       <button
         *ngIf="isAdmin"
         [routerLink]="['/usuarios/edit', item._id]"
-        class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold transition"
+        class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-semibold transition"
       >
         Editar Usuario
       </button>
