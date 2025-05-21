@@ -1,62 +1,70 @@
-<div class="gridPrincipal">
-  <div class="backcolor">
-    <img src="assets/logo.jpg" />
-  </div>
-
-  <div class="gridLogin">
-    <div class="gridEscudo">
-      <!-- <img src="assets/logo4.jpg" class="imgEscudoM"/> -->
-      <h2 class="titulo-auth">BOXING CLUB</h2>
+<div class="min-h-screen flex items-center justify-center bg-gray-50">
+  <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
+    <!-- Logo and Title Section -->
+    <div class="text-center">
+      <img src="assets/logo3.png" class="mx-auto h-24 w-auto" alt="Boxing Club Logo" />
+      <!-- <h2 class="mt-6 text-3xl font-bold text-red-800">BOXING CLUB</h2> -->
     </div>
-    <div class="gridFormulario">
-      <form (ngSubmit)="onSubmit()">
-        <div>
-          <mat-form-field appearance="outline">
-            <input
-              matInput
-              type="text"
-              id="username"
-              name="username"
-              [(ngModel)]="username"
-              placeholder="Usuario *"
-              required
-            />
-            <button mat-icon-button matSuffix>
-              <mat-icon>person</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
 
-        <div>
-          <mat-form-field appearance="outline">
-            <input
-              matInput
-              [type]="hide ? 'password' : 'text'"
-              type="password"
-              id="password"
-              name="password"
-              [(ngModel)]="password"
-              placeholder="Contraseña *"
-              required
-            />
-            <button
-              mat-icon-button
-              matSuffix
-              (click)="hide = !hide"
-              [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide"
-            >
-              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-        <div *ngIf="errorMessage" style="color: red">
-          {{ errorMessage }}
-        </div>
-        <div class="">
-          <button type="submit" class="btnLogin">Iniciar sesión</button>
-        </div>
-      </form>
-    </div>
+    <!-- Login Form -->
+    <form (ngSubmit)="onSubmit()" class="mt-8 space-y-6">
+      <div class="space-y-4">
+        <!-- Username Field -->
+        <mat-form-field appearance="outline" class="w-full">
+          <input
+            matInput
+            type="text"
+            id="username"
+            name="username"
+            [(ngModel)]="username"
+            placeholder="Usuario *"
+            required
+            class="w-full rounded-lg border-red-200 focus:ring-red-500 focus:border-red-500"
+          />
+          <button mat-icon-button matSuffix class="text-red-500">
+            <mat-icon>person</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <!-- Password Field -->
+        <mat-form-field appearance="outline" class="w-full">
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Contraseña *"
+            required
+            class="w-full rounded-lg border-red-200 focus:ring-red-500 focus:border-red-500"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+            class="text-red-500"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="text-center text-red-600 text-sm bg-red-50 p-2 rounded">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button
+          type="submit"
+          class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out"
+        >
+          Iniciar sesión
+        </button>
+      </div>
+    </form>
   </div>
 </div>

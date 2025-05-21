@@ -19,17 +19,23 @@ color: antiquewhite;
 }
 
 .menu a {
-  display: block;
+ display: block;
   padding: 10px 20px;
   color: #fff;
   text-decoration: none;
+  margin-bottom: 10px;
 }
 
+.mat-expansion-panel {
+  margin-bottom: 10px;
+}
 .menu a:hover{
   background-color: #555;
   border-right: 6px solid rgb(255, 0, 0);
 }
-
+::ng-deep .mat-expansion-panel {
+  box-shadow: none !important;
+}
 @media print {
   .no-print {
     display: none !important;
@@ -45,7 +51,6 @@ color: antiquewhite;
 
   }
 
-  /* Ensure full width printing */
   @page {
     margin: 0.5cm;
   }

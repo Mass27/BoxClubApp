@@ -1,4 +1,3 @@
-
 {
   "name": "sige",
   "version": "0.0.0",
@@ -30,7 +29,6 @@
     "xlsx": "^0.18.5",
     "zone.js": "~0.13.0"
   },
-
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.0.2",
     "@angular/cli": "^16.2.12",

@@ -1,179 +1,219 @@
-<form [formGroup]="formulario" class="max-w-md mx-auto">
-  <!-- Campo nombre de Cliente-->
-  <div class="mb-4">
-    <label
-      class="block text-gray-700 text-sm font-bold mb-2"
-      for="nombreCompleto"
-      >Nombre Completo*</label
-    >
-    <input
-      maxlength="50"
-      formControlName="nombreCompleto"
-      type="text"
-      id="nombreCompleto"
-      placeholder="Nombre Completo del Cliente"
-      class="input-field"
-    />
-    <div
-      *ngIf="
-        formulario.get('nombreCompleto')?.invalid &&
-        formulario.get('nombreCompleto')?.touched
-      "
-    >
-      <small class="text-red-500">Nombre del clliente es requerido.</small>
+<form [formGroup]="formulario" class="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-10">
+  <h2 class="text-2xl font-bold text-red-600 mb-6 text-center">{{ usuarioId ? "Editar Cliente" : "Registrar Cliente" }}</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Nombre Completo -->
+    <div>
+    <label for="nombreCompleto" class="block text-sm font-semibold text-gray-700 mb-2">
+  <span class="inline-block align-middle mr-1">
+    <!-- User Icon -->
+    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8z"/>
+    </svg>
+  </span>
+  Nombre Completo <span class="text-red-500">*</span>
+</label>
+      <input
+        maxlength="50"
+        formControlName="nombreCompleto"
+        type="text"
+        id="nombreCompleto"
+        placeholder="Ej: Juan Pérez"
+        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
+      />
+      <div *ngIf="formulario.get('nombreCompleto')?.invalid && formulario.get('nombreCompleto')?.touched">
+        <small class="text-red-500">Nombre del cliente es requerido.</small>
+      </div>
     </div>
-  </div>
 
-  <!-- Campo Contraseña de Cliente -->
-  <div class="mb-4">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="tel"
-      >Número de Teléfono*</label
-    >
-    <input
-      formControlName="numeroTelefono"
-      type="number"
-      id="tel"
-      (input)="limitarNumeroTelefono($event)"
-      placeholder="N. Teléfono"
-      class="input-field"
-    />
-    <div
-      *ngIf="
-        formulario.get('numeroTelefono')?.invalid &&
-        formulario.get('numeroTelefono')?.touched
-      "
-    >
-      <small class="text-red-500">Numero del clliente es requerido.</small>
-    </div>
-  </div>
+    <!-- Número de Teléfono -->
+    <div>
+      <label for="tel" class="block text-sm font-semibold text-gray-700 mb-2">
+  <span class="inline-block align-middle mr-1">
+    <!-- Phone Icon -->
+    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm0 10a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-2zm10-10a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zm0 10a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+    </svg>
+  </span>
+  Número de Teléfono <span class="text-red-500">*</span>
+</label>
 
-  <!-- Campo Correo de Cliente -->
-  <div class="mb-4">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="correo"
-      >Correo*</label
-    >
-    <input
-      formControlName="correo"
-      type="email"
-      id="correo"
-      placeholder="Correo"
-      class="input-field"
-    />
-    <div
-      *ngIf="
-        formulario.get('correo')?.invalid && formulario.get('correo')?.touched
-      "
-    >
-      <small class="text-red-500">Correo del clliente es requerido.</small>
+      <input
+        formControlName="numeroTelefono"
+        type="number"
+        id="tel"
+        (input)="limitarNumeroTelefono($event)"
+        placeholder="Ej: 99998888"
+        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
+      />
+      <div *ngIf="formulario.get('numeroTelefono')?.invalid && formulario.get('numeroTelefono')?.touched">
+        <small class="text-red-500">Número del cliente es requerido.</small>
+      </div>
     </div>
-  </div>
 
-  <!-- Campo Identidad  de Cliente-->
-  <div class="mb-4">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="identidad"
-      >Identidad*</label
-    >
-    <input
-      [maxlength]="13"
-      formControlName="identidad"
-      type="text"
-      id="identidad"
-      (input)="limitarIdentidad($event)"
-      placeholder="Identidad"
-      class="input-field"
-    />
-    <div
-      *ngIf="
-        formulario.get('identidad')?.invalid &&
-        formulario.get('identidad')?.touched
-      "
-    >
-      <small class="text-red-500">Identidad del clliente es requerido.</small>
+    <!-- Correo -->
+    <div>
+     <label for="correo" class="block text-sm font-semibold text-gray-700 mb-2">
+  <span class="inline-block align-middle mr-1">
+    <!-- Mail Icon -->
+    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M16 12l-4-4-4 4m8 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16 0V6a2 2 0 00-2-2H6a2 2 0 00-2 2v6"/>
+    </svg>
+  </span>
+  Correo <span class="text-red-500">*</span>
+</label>
+      <input
+        formControlName="correo"
+        type="email"
+        id="correo"
+        placeholder="Ej: correo@ejemplo.com"
+        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
+      />
+      <div *ngIf="formulario.get('correo')?.invalid && formulario.get('correo')?.touched">
+        <small class="text-red-500">Correo del cliente es requerido.</small>
+      </div>
     </div>
-  </div>
-  <!-- Campo Fecha de ingreso de Cliente-->
-  <div>
-    <label
-      class="block text-gray-700 text-sm font-bold mb-2"
-      for="fechaNacimiento"
-      >Fecha de Ingreso*</label
-    >
-    <input
-      formControlName="fechaIngreso"
-      type="date"
-      id="fechaNacimiento"
-      placeholder="Fecha de Ingreso"
-      class="input-field"
-    />
-    <div
-      *ngIf="
-        formulario.get('fechaIngreso')?.invalid &&
-        formulario.get('fechaIngreso')?.touched
-      "
-    >
-      <small class="text-red-500"
-        >Fecha de ingreso del clliente es requerido.</small
+
+    <!-- Identidad -->
+    <div>
+    <label for="identidad" class="block text-sm font-semibold text-gray-700 mb-2">
+  <span class="inline-block align-middle mr-1">
+    <!-- ID Card Icon -->
+    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <rect width="20" height="14" x="2" y="5" rx="2" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8 11h4M8 15h8"/>
+    </svg>
+  </span>
+  Identidad <span class="text-red-500">*</span>
+</label>
+      <input
+        [maxlength]="13"
+        formControlName="identidad"
+        type="text"
+        id="identidad"
+        (input)="limitarIdentidad($event)"
+        placeholder="Ej: 0801199912345"
+        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
+      />
+      <div *ngIf="formulario.get('identidad')?.invalid && formulario.get('identidad')?.touched">
+        <small class="text-red-500">Identidad del cliente es requerido.</small>
+      </div>
+    </div>
+
+    <!-- Fecha de Ingreso -->
+    <div>
+   <label for="fechaNacimiento" class="block text-sm font-semibold text-gray-700 mb-2">
+  <span class="inline-block align-middle mr-1">
+    <!-- Calendar Icon -->
+    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M16 2v4M8 2v4M3 10h18"/>
+    </svg>
+  </span>
+  Fecha de Ingreso <span class="text-red-500">*</span>
+</label>
+      <input
+        formControlName="fechaIngreso"
+        type="date"
+        id="fechaNacimiento"
+        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
+      />
+      <div *ngIf="formulario.get('fechaIngreso')?.invalid && formulario.get('fechaIngreso')?.touched">
+        <small class="text-red-500">Fecha de ingreso del cliente es requerido.</small>
+      </div>
+    </div>
+
+    <!-- Plan -->
+    <div>
+     <label for="plan" class="block text-sm font-semibold text-gray-700 mb-2">
+  <span class="inline-block align-middle mr-1">
+    <!-- Dumbbell Icon (Gym) -->
+    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <rect x="1" y="9" width="4" height="6" rx="1"/>
+      <rect x="19" y="9" width="4" height="6" rx="1"/>
+      <rect x="7" y="11" width="10" height="2" rx="1"/>
+      <rect x="5" y="10" width="2" height="4" rx="1"/>
+      <rect x="17" y="10" width="2" height="4" rx="1"/>
+    </svg>
+  </span>
+  Plan <span class="text-red-500">*</span>
+</label>
+      <select
+        formControlName="idPlan"
+        id="plan"
+        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
       >
+        <option value="" disabled selected>Selecciona un plan</option>
+        <option *ngFor="let plan of tipoPlanes" [value]="plan._id">
+          {{ plan.nombrePlan }}
+        </option>
+      </select>
+      <div *ngIf="formulario.get('idPlan')?.invalid && formulario.get('idPlan')?.touched">
+        <small class="text-red-500">Plan de gimnasio es requerido.</small>
+      </div>
+    </div>
+
+    <!-- Estado -->
+    <div>
+     <label for="estado" class="block text-sm font-semibold text-gray-700 mb-2">
+  <span class="inline-block align-middle mr-1">
+    <!-- Tag Icon -->
+    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M3 11l9 9a2 2 0 002.83 0l7.07-7.07a2 2 0 000-2.83l-9-9a2 2 0 00-2.83 0L3 8.17a2 2 0 000 2.83z"/>
+    </svg>
+  </span>
+  Estado
+</label>
+      <select
+        formControlName="estado"
+        id="estado"
+        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
+      >
+        <option value="" disabled selected>Selecciona un estado</option>
+        <option *ngFor="let plan of estados" [value]="plan.id">
+          {{ plan.desc }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Imagen actual -->
+    <div *ngIf="currentImageUrl" class="flex flex-col items-center md:col-span-2">
+      <span class="text-xs text-gray-500 mb-1">Imagen actual</span>
+      <img
+        [src]="currentImageUrl"
+        alt="Imagen actual del usuario"
+        class="w-28 h-28 object-cover rounded-full border-4 border-red-200 shadow-lg"
+      />
+    </div>
+
+    <!-- Subir nueva imagen -->
+    <div class="md:col-span-2">
+    <label for="imagen" class="block text-sm font-semibold text-gray-700 mb-2">
+  <span class="inline-block align-middle mr-1">
+    <!-- Image Icon -->
+    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <rect width="20" height="16" x="2" y="4" rx="2"/>
+      <circle cx="8" cy="10" r="2"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5-4 4-2-2-3 3"/>
+    </svg>
+  </span>
+  Imagen
+</label>
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        id="imagen"
+        class="block w-full text-base text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-base file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 transition"
+      />
     </div>
   </div>
 
-  <!-- Campo de Seleccion de Plan del Cliente-->
-  <div class="mb-4">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="plan"
-      >Plan*</label
+  <!-- Botón Guardar -->
+  <div class="pt-6">
+    <button
+      type="submit"
+      (click)="enviarFormulario()"
+      class="w-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white font-bold py-3 rounded-xl shadow-lg transition text-lg tracking-wide"
     >
-    <select formControlName="idPlan" id="plan" class="select-field">
-      <option value="" disabled selected>Selecciona un plan</option>
-      <option *ngFor="let plan of tipoPlanes" [value]="plan._id">
-        {{ plan.nombrePlan }}
-      </option>
-    </select>
-    <div
-      *ngIf="
-        formulario.get('idPlan')?.invalid && formulario.get('idPlan')?.touched
-      "
-    >
-      <small class="text-red-500">Plan de gimnasio es requerido.</small>
-    </div>
-  </div>
-
-  <!-- Campo de Estado del Cliente-->
-  <div class="mb-4">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="estado"
-      >Estados</label
-    >
-    <select formControlName="estado" id="estado" class="select-field">
-      <option value="" disabled selected>Selecciona un estado</option>
-      <option *ngFor="let plan of estados" [value]="plan.id">
-        {{ plan.desc }}
-      </option>
-    </select>
-  </div>
-  <!-- Pre-visualizacion de Imagen -->
-  <div *ngIf="currentImageUrl">
-    <img
-      [src]="currentImageUrl"
-      alt="Imagen actual del usuario"
-      class="current-image"
-    />
-  </div>
-
-  <!-- Campo para seleccionar una nueva imagen -->
-  <div>
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="imagen"
-      >Imagen</label
-    >
-    <input
-      type="file"
-      (change)="onFileChange($event)"
-      class="input-field"
-      id="imagen"
-    />
-  </div>
-
-  <!-- Botón Enviar -->
-  <div class="mb-4">
-    <button type="submit" (click)="enviarFormulario()" class="btn-submit">
       Guardar
     </button>
   </div>
