@@ -84,9 +84,10 @@ export class AgregarProdComponent implements OnInit {
       // Si es un nuevo usuario, primero agregamos el usuario
       this.productosService.postProductos(formData).subscribe(
         (response) => {
-          // Una vez agregado el usuario, subimos la imagen
-          const nuevoProd = response._id.toString(); // Suponiendo que el servidor devuelve el ID del nuevo usuario
+console.log('Producto FORM:', formData);
+          const nuevoProd = response._id;
           this.uploadImage(nuevoProd);
+
         },
         (error) => {
           console.error('Error al agregar usuario:', error);
@@ -95,15 +96,16 @@ export class AgregarProdComponent implements OnInit {
     }
   }
 
-  // Método para cargar la imagen si se ha seleccionado
+
   uploadImage(idproducto: string) {
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('idproducto', idproducto);
-      formData.append('img', this.selectedFile); // Asegúrate de que el nombre del campo coincida con el que espera tu servidor
+      formData.append('img', this.selectedFile);
 
       this.productosService.uploadImage(formData).subscribe(
         (response) => {
+             console.log('Imagen cargada exitosamente:', response);
           this.router.navigate(['/productos/list']);
         },
         (error) => {

@@ -59,7 +59,7 @@ export class ListComponent implements OnInit,AfterViewInit {
     if (this.fechaInicio && this.fechaFin) {
       this.aplicarFiltros();
     } else {
-      this.calcularTotalIngresos(); 
+      this.calcularTotalIngresos();
     }
     });
     this.usuarioService
@@ -124,7 +124,7 @@ export class ListComponent implements OnInit,AfterViewInit {
       const row = {
         'Nombre de Cliente': this.getclientesName(factura.idcliente),
         'No. De Factura': factura.numeroFactura,
-        'Fecha': this.formatDate(factura.fecha),
+        'Fecha': factura.fecha,
         'Método de Pago': factura.metodoPago,
         'Plan': this.getPlanName(factura.idPlan),
         'Productos': this.getProdName(factura.idproducto!),

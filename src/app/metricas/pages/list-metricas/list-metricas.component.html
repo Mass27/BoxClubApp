@@ -1,33 +1,52 @@
 <h2 class="titulo-global">Listado de Metricas</h2>
 
 <div class="search-container">
-  <app-searchBox
-  (BuscarObject)="searchByName($event)"
-  >
-  </app-searchBox>
-  <button   *ngIf="isAdmin || isEntrenador" class="button-agregar" routerLink="/metricas/agregar">Asignar Metrica</button>
-    </div>
+  <app-searchBox (BuscarObject)="searchByName($event)"> </app-searchBox>
 
+  <button
+    *ngIf="isAdmin || isEntrenador"
+    class="button-agregar"
+    routerLink="/metricas/agregar"
+  >
+    <svg
+      class="w-5 h-5 text-white"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M12 4v16m8-8H4"
+      /></svg
+    >Asignar Metrica
+  </button>
+</div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-  <div *ngFor="let metrica of MetricasFiltradas" class="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-
+  <div
+    *ngFor="let metrica of MetricasFiltradas"
+    class="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
+  >
     <div class="mb-4">
       <h2 class="text-xl font-semibold text-gray-800 mb-1">
         {{ getUuserName(metrica.clienteId) }}
       </h2>
       <p class="text-sm text-gray-500">
-        <strong class="text-gray-600">Fecha:</strong> {{ metrica.fecha | date:'yyyy-MM-dd':'UTC' }}
+        <strong class="text-gray-600">Fecha:</strong>
+        {{ metrica.fecha | date : "yyyy-MM-dd" : "UTC" }}
       </p>
     </div>
 
     <div class="mt-6">
-      <button   *ngIf="isAdmin || isEntrenador"
-              [routerLink]="['/metricas/edit', metrica._id]"
-              class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+      <button
+        *ngIf="isAdmin || isEntrenador"
+        [routerLink]="['/metricas/edit', metrica._id]"
+        class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300"
+      >
         Evaluar Métrica
       </button>
     </div>
-
   </div>
 </div>

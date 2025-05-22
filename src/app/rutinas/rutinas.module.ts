@@ -1,3 +1,4 @@
+import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RutinaRoutingModule } from './rutina-routing.module';
@@ -15,7 +16,7 @@ import { AgregarRutinasComponent } from './pages/agregarRutinas/agregarRutinas.c
     LayoutRutinasComponent,
     ListComponent,
     AgregarRutinasComponent,
-    
+
   ],
   imports: [
   CommonModule,
@@ -23,7 +24,8 @@ import { AgregarRutinasComponent } from './pages/agregarRutinas/agregarRutinas.c
     SharedModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
   ]
 })
 export class RutinasModule { }

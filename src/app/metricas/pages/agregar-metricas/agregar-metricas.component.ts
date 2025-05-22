@@ -102,6 +102,7 @@ ordenHistorial: 'reciente' | 'antiguo' = 'reciente';
       ...metrica,
       fecha: this.datepipe.transform(metrica.fecha, 'yyyy-MM-dd'),
     });
+    
     this.mostrarFormulario = true;
     this.isEditMode = true;
     this.metricaId = metrica._id;
@@ -162,5 +163,7 @@ ordenHistorial: 'reciente' | 'antiguo' = 'reciente';
 
   return filtradas;
 }
-
+verNotaCompleta(nota: string) {
+  alert(nota);
+}
 }

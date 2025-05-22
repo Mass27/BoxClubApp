@@ -94,7 +94,7 @@ export class AgregarFacComponent implements OnInit {
             nombreCliente: factura.nombreCliente,
             idcliente: factura.idcliente,
             metodoPago: factura.metodoPago,
-            fecha: this.formatDate(factura.fecha),
+            fecha: factura.fecha,
             subtotal: factura.subtotal,
             totalPagar: factura.totalPagar,
             descuento: factura.descuento,
@@ -103,17 +103,17 @@ export class AgregarFacComponent implements OnInit {
             idproducto: factura.idproducto,
             precioProducto: factura.precioProducto,
           });
-          this.formulario
-            .get('CantidadProducto')
-            ?.setValue(factura.CantidadProducto);
-          if (this.isPrintMode) {
-            this.formulario.disable(); // Deshabilitar el formulario en modo de impresión
-          }
-          this.modoVisualizacion = true;
+          // this.formulario
+          //   .get('CantidadProducto')
+          //   ?.setValue(factura.CantidadProducto);
+          // if (this.isPrintMode) {
+          //   this.formulario.disable(); // Deshabilitar el formulario en modo de impresión
+          // }
+          // this.modoVisualizacion = true;
         });
       }
     });
-    this.getClientes();
+ //   this.getClientes();
     this.obtenerPlanes();
     this.getProdcutos();
     this.checkPrintMode();
@@ -181,7 +181,7 @@ export class AgregarFacComponent implements OnInit {
     }
   }
 
-  actualizarClietne(event: Event) {
+  actualizarCliente(event: Event) {
     const idCliente = (event.target as HTMLSelectElement).value;
     const clienteSeleccionado = this.clientes.find(
       (cliente) => cliente._id === idCliente
