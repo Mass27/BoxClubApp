@@ -39,5 +39,12 @@ export class FacService {
     return this.http.get<FacturaID[]>(
       `${this.baseUrl}/facturacion/buscarCli/${name}`
     );
+
   }
+
+
+  enviarFactura(idFactura: string, emailDestino: string):Observable<FacturaID[]> {
+  return this.http.post<FacturaID[]>(`${this.baseUrl}/facturacion/enviar/${idFactura}`, { emailDestino });
+}
+
 }

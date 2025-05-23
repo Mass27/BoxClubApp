@@ -24,6 +24,9 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FacturacionprintComponent } from './components/facturacionprint/facturacionprint.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CorreoComponent } from './components/correo/correo.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -32,7 +35,8 @@ import { FacturacionprintComponent } from './components/facturacionprint/factura
     ListComponent,
     AgregarFacComponent,
     SearchBoxComponent,
-    FacturacionprintComponent
+    FacturacionprintComponent,
+    CorreoComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +54,9 @@ import { FacturacionprintComponent } from './components/facturacionprint/factura
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule,
+    MatDialogModule
 
 
   ],providers:[

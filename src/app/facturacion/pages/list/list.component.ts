@@ -11,7 +11,9 @@ import * as XLSX from 'xlsx';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { CorreoComponent } from '../../components/correo/correo.component';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -27,8 +29,8 @@ export class ListComponent implements OnInit,AfterViewInit {
   totalIngresos: number = 0;
   //facturasFiltradas: Factura[] = [];
   isAdmin: boolean = false;
-  fechaInicio: string = ''; // Fecha de inicio
-  fechaFin: string = ''; // Fecha de fin // Agregar la propiedad fechaInicio
+  fechaInicio: string = '';
+  fechaFin: string = '';
   columnas: string[] = [
     'nombreCliente',
     'numeroFactura',
@@ -46,7 +48,10 @@ export class ListComponent implements OnInit,AfterViewInit {
   constructor(
     private facturaService: FacService,
     private usuarioService: usuarioService,
-    private prodService: ProductosService
+    private prodService: ProductosService,
+     private snackBar: MatSnackBar,
+     private dialog: MatDialog,
+
   ) {}
 
 
@@ -95,19 +100,19 @@ export class ListComponent implements OnInit,AfterViewInit {
   }
 
   formatDate(date: string): string {
-    // Obtener solo la parte de la fecha (sin la hora, minutos, segundos ni la zona horaria)
+
     const dateObj = new Date(date);
     return dateObj.toISOString().split('T')[0];
   }
 
   buscarFacturasPorNombre(nombre: string): void {
     if (nombre.trim() === '') {
-      this.facturasFiltradas.data = this.facturas; // Restaurar la lista completa
+      this.facturasFiltradas.data = this.facturas;
       return;
     }
     this.facturaService.buscarPorNombre(nombre).subscribe(
       (facturas: FacturaID[]) => {
-        this.facturasFiltradas.data = facturas; // Asignar los datos al MatTableDataSource
+        this.facturasFiltradas.data = facturas;
       },
       (error) => {
         console.error('Error al buscar facturas por nombre:', error);
@@ -117,10 +122,10 @@ export class ListComponent implements OnInit,AfterViewInit {
 
   exportToExcel(): void {
     const data: any[] = [];
-    let totalIngresos: number = 0; // Inicializamos la variable para sumar los ingresos
+    let totalIngresos: number = 0;
 
-    // Agregar las filas filtradas a los datos y sumar los ingresos
-    this.facturasFiltradas.data.forEach(factura => { // Acceder a .data para iterar sobre los datos
+
+    this.facturasFiltradas.data.forEach(factura => {
       const row = {
         'Nombre de Cliente': this.getclientesName(factura.idcliente),
         'No. De Factura': factura.numeroFactura,
@@ -134,10 +139,10 @@ export class ListComponent implements OnInit,AfterViewInit {
         'Total': `Lps.${factura.totalPagar}`,
       };
       data.push(row);
-      totalIngresos += factura.totalPagar; // Sumamos el total de la factura a los ingresos totales
+      totalIngresos += factura.totalPagar;
     });
 
-    // Agregar una fila al final con el total de ingresos del mes
+
     const totalRow = {
       'Nombre de Cliente': '',
       'No. De Factura': '',
@@ -152,14 +157,14 @@ export class ListComponent implements OnInit,AfterViewInit {
     };
     data.push(totalRow);
 
-    // Crear una hoja de trabajo
+
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
 
-    // Crear un libro de trabajo y agregar la hoja de trabajo
+
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Facturas');
 
-    // Exportar el libro de trabajo a un archivo Excel
+
     XLSX.writeFile(wb, `Reporte de Facturas de Mes_${this.fechaInicio}__${this.fechaFin}.xlsx`);
   }
 
@@ -216,4 +221,35 @@ export class ListComponent implements OnInit,AfterViewInit {
       this.isAdmin = false;
     }
   }
+
+//  enviarFacturaPorCorreo(idFactura: string) {
+//   const correoDestino = prompt('Ingrese el correo electrónico de destino:');
+//   if (!correoDestino) return;
+
+//   this.facturaService.enviarFactura(idFactura, correoDestino).subscribe({
+//     next: () => {
+//       this.snackBar.open('Factura enviada correctamente', 'Cerrar', { duration: 3000 });
+//     },
+//     error: (err) => {
+//       console.error('Error al enviar factura:', err);
+//       this.snackBar.open('Error al enviar factura', 'Cerrar', { duration: 3000 });
+//     }
+//   });
+// }
+enviarFacturaPorCorreo(idFactura: string) {
+  const dialogRef = this.dialog.open(CorreoComponent, {
+    width: '400px'
+  });
+
+  dialogRef.afterClosed().subscribe(email => {
+    if (email) {
+      this.facturaService.enviarFactura(idFactura, email).subscribe({
+        next: () => this.snackBar.open('Factura enviada correctamente', 'Cerrar', { duration: 3000 }),
+        error: () => this.snackBar.open('Error al enviar factura', 'Cerrar', { duration: 3000 })
+      });
+    }
+  });
+}
+
+
 }

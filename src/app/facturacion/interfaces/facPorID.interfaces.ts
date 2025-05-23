@@ -2,7 +2,7 @@ export interface FacturaID {
   _id:              string;
   idcliente:        string;
   nombreCliente:    string;
-  fecha:            Date;
+  fecha:            string;
   metodoPago:       string;
   idPlan:           string;
   precioPlan:       number;

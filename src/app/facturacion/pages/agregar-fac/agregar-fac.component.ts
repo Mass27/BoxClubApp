@@ -90,11 +90,10 @@ export class AgregarFacComponent implements OnInit {
         this.facturaId = id;
         this.facturacionService.getFacturaById(id).subscribe((factura) => {
           this.formulario.patchValue({
-            cantidadProducto: factura.CantidadProducto,
             nombreCliente: factura.nombreCliente,
             idcliente: factura.idcliente,
             metodoPago: factura.metodoPago,
-            fecha: factura.fecha,
+            fecha: this.formatDate(factura.fecha),
             subtotal: factura.subtotal,
             totalPagar: factura.totalPagar,
             descuento: factura.descuento,
@@ -102,14 +101,9 @@ export class AgregarFacComponent implements OnInit {
             precioPlan: factura.precioPlan,
             idproducto: factura.idproducto,
             precioProducto: factura.precioProducto,
+            CantidadProducto: factura.CantidadProducto,
           });
-          // this.formulario
-          //   .get('CantidadProducto')
-          //   ?.setValue(factura.CantidadProducto);
-          // if (this.isPrintMode) {
-          //   this.formulario.disable(); // Deshabilitar el formulario en modo de impresión
-          // }
-          // this.modoVisualizacion = true;
+console.log('Factura obtenida:', factura);
         });
       }
     });
@@ -269,6 +263,28 @@ export class AgregarFacComponent implements OnInit {
       this.isPrintMode = true;
     }
   }
+
+ getNombrePlan(): string {
+  const idSeleccionado = this.formulario.get('idPlan')?.value;
+  const producto = this.tipoPlanes.find(p => p._id === idSeleccionado);
+  return producto ? producto.nombrePlan : '';
+}
+
+getNombreProductoSeleccionado(): string {
+  const idSeleccionado = this.formulario.get('idproducto')?.value;
+  const producto = this.productos.find(p => p._id === idSeleccionado);
+  return producto ? producto.nombreProducto : '';
+}
+getCantidad(): number | '' {
+  const cantidad = this.formulario.get('CantidadProducto')?.value;
+  return cantidad ?? '';
+}
+getFechaFormateada(): string {
+  const fecha = this.formulario.get('fecha')?.value;
+  if (!fecha) return '';
+  // Opcional: ajustar formato a dd/mm/yyyy si lo deseas
+  return new Date(fecha).toLocaleDateString('es-ES');
+}
 
 
 }
