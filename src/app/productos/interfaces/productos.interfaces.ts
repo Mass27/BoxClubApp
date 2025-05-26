@@ -15,6 +15,18 @@
 
 
 
+// export interface Productos {
+//   _id:             string;
+//   imagen:          string;
+//   nombreProducto:  string;
+//   descripcion:     string;
+//   precio:          number;
+//   cantidadEnStock: number;
+//   createdAt:       string;
+//   updatedAt:       string;
+//   __v:             number;
+// }
+
 export interface Productos {
   _id:             string;
   imagen:          string;
@@ -22,7 +34,9 @@ export interface Productos {
   descripcion:     string;
   precio:          number;
   cantidadEnStock: number;
+  estado:          string;
   createdAt:       string;
   updatedAt:       string;
   __v:             number;
 }
+

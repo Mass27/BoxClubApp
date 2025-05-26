@@ -43,7 +43,7 @@ export class ListComponent implements OnInit,AfterViewInit {
     'descuentos',
     'total',
     'acciones',
-    'imprimir',
+    'send',
   ];
   constructor(
     private facturaService: FacService,
@@ -222,20 +222,6 @@ export class ListComponent implements OnInit,AfterViewInit {
     }
   }
 
-//  enviarFacturaPorCorreo(idFactura: string) {
-//   const correoDestino = prompt('Ingrese el correo electrónico de destino:');
-//   if (!correoDestino) return;
-
-//   this.facturaService.enviarFactura(idFactura, correoDestino).subscribe({
-//     next: () => {
-//       this.snackBar.open('Factura enviada correctamente', 'Cerrar', { duration: 3000 });
-//     },
-//     error: (err) => {
-//       console.error('Error al enviar factura:', err);
-//       this.snackBar.open('Error al enviar factura', 'Cerrar', { duration: 3000 });
-//     }
-//   });
-// }
 enviarFacturaPorCorreo(idFactura: string) {
   const dialogRef = this.dialog.open(CorreoComponent, {
     width: '400px'

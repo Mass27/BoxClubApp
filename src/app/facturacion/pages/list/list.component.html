@@ -1,26 +1,30 @@
-<h2 class="titulo-global">Listado de Facturas</h2>
-<div class="search-container">
-<search-box-fac
-  (buscarNombre)="buscarFacturasPorNombre($event)"
-></search-box-fac>
+<div class="main-container">
 
-  <button class="button-agregar" routerLink="/facturacion/agregar"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-  </svg>Agregar</button>
+<h2 class="titulo-global text-xl md:text-2xl font-semibold mb-4">Listado de Facturas</h2>
+<div class="search-container flex flex-col sm:flex-row items-center sm:justify-between mb-4">
+  <search-box-fac
+    (buscarNombre)="buscarFacturasPorNombre($event)"
+    class="mb-4 sm:mb-0"
+  ></search-box-fac>
 
+  <button class="button-agregar flex items-center justify-center bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600" routerLink="/facturacion/agregar">
+    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+    </svg> Agregar
+  </button>
 </div>
 
-<div class="flex items-center justify-between">
-  <div class="filtros-card">
-    <div class="fecha-filtros-container">
-      <mat-form-field class="fecha-filtro">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+  <div class="filtros-card mb-4 sm:mb-0">
+    <div class="fecha-filtros-container flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+      <mat-form-field class="fecha-filtro w-full sm:w-auto">
         <mat-label>Fecha de Inicio</mat-label>
         <input matInput [matDatepicker]="pickerInicio" [(ngModel)]="fechaInicio">
         <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
         <mat-datepicker #pickerInicio></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field class="fecha-filtro">
+      <mat-form-field class="fecha-filtro w-full sm:w-auto">
         <mat-label>Fecha de Fin</mat-label>
         <input matInput [matDatepicker]="pickerFin" [(ngModel)]="fechaFin">
         <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
@@ -29,26 +33,32 @@
     </div>
   </div>
 
-  <div class="flex space-x-4">
-    <button mat-raised-button color="primary" (click)="buscarFacturasPorFechas()" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+  <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+    <button mat-raised-button color="primary" (click)="buscarFacturasPorFechas()" class="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
       Filtrar
     </button>
-    <button mat-raised-button color="warn" (click)="limpiarFiltros()" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
+    <button mat-raised-button color="warn" (click)="limpiarFiltros()" class="w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
       Limpiar
     </button>
-    <div class="export-button">
-      <button mat-raised-button (click)="exportToExcel()"><mat-icon>file_download</mat-icon> Exportar a Excel</button>
+    <div class="export-button w-full sm:w-auto">
+      <button mat-raised-button (click)="exportToExcel()" class="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+        <mat-icon>file_download</mat-icon> Exportar a Excel
+      </button>
     </div>
   </div>
 </div>
 
-<div  class="table-responsive">
-  <table mat-table [dataSource]="facturasFiltradas">
-    <!-- Definir las columnas -->
 
+
+
+
+<div class="table-responsive">
+  <table mat-table [dataSource]="facturasFiltradas">
     <ng-container matColumnDef="nombreCliente">
-      <th mat-header-cell *matHeaderCellDef> Nombre de Cliente </th>
-      <td mat-cell *matCellDef="let factura">  {{ getclientesName(factura.idcliente) }} </td>
+      <th mat-header-cell *matHeaderCellDef>Nombre de Cliente</th>
+      <td mat-cell *matCellDef="let factura">
+        {{ getclientesName(factura.idcliente) }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="numeroFactura">
@@ -89,7 +99,9 @@
 
     <ng-container matColumnDef="subTotal">
       <th mat-header-cell *matHeaderCellDef>SubTotal</th>
-      <td mat-cell *matCellDef="let factura">Lps.{{ factura.subtotal | number}}</td>
+      <td mat-cell *matCellDef="let factura">
+        Lps.{{ factura.subtotal | number }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="descuentos">
@@ -99,13 +111,16 @@
 
     <ng-container matColumnDef="total">
       <th mat-header-cell *matHeaderCellDef>Total</th>
-      <td mat-cell *matCellDef="let factura">Lps.{{ factura.totalPagar  | number}}</td>
+      <td mat-cell *matCellDef="let factura">
+        Lps.{{ factura.totalPagar | number }}
+      </td>
     </ng-container>
 
-    <ng-container matColumnDef="acciones" >
-      <th mat-header-cell *matHeaderCellDef  >Editar</th>
-      <td mat-cell *matCellDef="let factura"  >
-        <button  *ngIf="isAdmin"
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Editar</th>
+      <td mat-cell *matCellDef="let factura">
+        <button
+          *ngIf="isAdmin"
           mat-icon-button
           [routerLink]="['/facturacion/edit', factura._id]"
           class="edit-button"
@@ -115,24 +130,29 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="imprimir">
+    <ng-container matColumnDef="send">
       <th mat-header-cell *matHeaderCellDef>Enviar</th>
       <td mat-cell *matCellDef="let factura">
         <button
           mat-icon-button
-       (click)="enviarFacturaPorCorreo(factura._id)"
+          (click)="enviarFacturaPorCorreo(factura._id)"
           class="edit-button"
         >
           <mat-icon>send</mat-icon>
         </button>
       </td>
     </ng-container>
-    <!-- Definir las filas -->
     <tr mat-header-row *matHeaderRowDef="columnas"></tr>
     <tr mat-row *matRowDef="let row; columns: columnas"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
   <div class="total-ingresos">
-    <h3>Total de Ingresos: <span>Lps. {{ totalIngresos | number}}</span></h3>
+    <h3>
+      Total de Ingresos: <span>Lps. {{ totalIngresos | number }}</span>
+    </h3>
   </div>
+</div>
 </div>
