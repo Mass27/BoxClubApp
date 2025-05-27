@@ -5,7 +5,7 @@
     class="app-search-box mb-4 sm:mb-0"
     (bcNombre)="buscarClientePorNombre($event)"
   ></app-search-box>
-  <button class="button-agregar flex items-center justify-center bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600" *ngIf="isAdmin" routerLink="/usuarios/agregar">
+  <button class="button-agregar flex items-center justify-center bg-red-500 text-white rounded-lg py-2 px-4 hover:bg-red-600" *ngIf="isAdmin" routerLink="/usuarios/agregar">
     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
     </svg> Agregar
@@ -14,21 +14,21 @@
 
 <div class="button-filtrar flex flex-wrap gap-2 justify-center mb-4">
   <button
-    class="button-alternar py-2 px-4 rounded-lg text-sm font-semibold w-full sm:w-auto"
+    class="button-alternar py-2 px-4 rounded-lg text-sm  w-full sm:w-auto"
     [class.selected]="!mostrarInactivos && !mostrarPendientes"
     (click)="mostrarUsuarios('Activos')"
   >
     Mostrar Activos
   </button>
   <button
-    class="button-alternar py-2 px-4 rounded-lg text-sm font-semibold w-full sm:w-auto"
+    class="button-alternar py-2 px-4 rounded-lg text-sm w-full sm:w-auto"
     [class.selected]="mostrarInactivos"
     (click)="mostrarUsuarios('Inactivos')"
   >
     Mostrar Inactivos
   </button>
   <button
-    class="button-alternar py-2 px-4 rounded-lg text-sm font-semibold w-full sm:w-auto"
+    class="button-alternar py-2 px-4 rounded-lg text-sm w-full sm:w-auto"
     [class.selected]="mostrarPendientes"
     (click)="mostrarUsuarios('Pendientes')"
   >
@@ -59,78 +59,90 @@
     </p>
   </div>
 </div>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   <div
     *ngFor="let item of usuariosFiltrados"
-    class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6"
+    class="bg-gradient-to-b from-red-200 to-white rounded-3xl shadow-lg border-t-4 border-red-400 overflow-hidden"
   >
-    <!-- Imagen del usuario -->
-    <div class="flex justify-center mb-4">
+    <!-- Imagen -->
+    <div class="w-full h-44 overflow-hidden">
       <img
         [src]="item.imagen"
         alt="Imagen de {{ item.nombreCompleto }}"
-        class="w-32 h-32 object-cover border-2 border-gray-300 shadow-sm"
+        class="w-full h-full object-cover"
       />
     </div>
 
-    <!-- Nombre -->
-    <h2 class="text-xl font-semibold text-center text-gray-800 mb-4">
-      {{ item.nombreCompleto }}
-    </h2>
-
-    <!-- Información del usuario -->
-    <ul class="text-sm text-gray-600 space-y-1">
-      <li><strong>DNI:</strong> {{ item.identidad }}</li>
-      <li><strong>Teléfono:</strong> {{ item.numeroTelefono }}</li>
-      <li><strong>Correo:</strong> {{ item.correo }}</li>
-      <li><strong>Fecha de Ingreso:</strong> {{ item.fechaIngreso | date }}</li>
-      <li>
-        <strong>Plan:</strong>
-        {{ item.idPlan ? getPlanName(item.idPlan) : "Plan no encontrado" }}
-      </li>
-      <li><strong>Días Restantes:</strong> {{ item.diasRestantes }}</li>
-    </ul>
-
-    <!-- Estado -->
-    <div
-      class="mt-4 text-center font-medium py-1 rounded text-sm"
-      [ngClass]="{
-        'bg-green-100 text-green-700': item.estado === 'Activo',
-        'bg-red-100 text-red-700': item.estado === 'Inactivo',
-        'bg-yellow-100 text-yellow-700': item.estado === 'Pendiente'
-      }"
-    >
-      {{ item.estado }}
+    <!-- Nombre principal + estado -->
+    <div class="px-6 pt-4 pb-2 text-center">
+      <h2 class="text-2xl font-bold text-gray-800 mb-1">
+        {{ item.nombreCompleto }}
+      </h2>
+      <p
+        class="text-sm font-semibold"
+        [ngClass]="{
+          'text-green-600': item.estado === 'Activo',
+          'text-red-600': item.estado === 'Inactivo',
+          'text-yellow-600': item.estado === 'Pendiente'
+        }"
+      >
+        {{ item.estado }}
+      </p>
     </div>
 
-    <!-- Botones -->
-    <div class="flex flex-col space-y-2 mt-6">
-      <button
-        *ngIf="isAdmin || isEntrenador"
-        (click)="asignarRutina(item._id)"
-        class="w-full bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-lg font-semibold transition"
-      >
-        Asignar Rutina
-      </button>
+    <!-- Datos personales principales -->
+    <div class="px-6 text-sm text-gray-700 mb-4">
+      <p class="mb-1"><strong>Correo:</strong> {{ item.correo }}</p>
+      <p class="mb-1"><strong>DNI:</strong> {{ item.identidad }}</p>
+    </div>
 
-      <button
-        *ngIf="isAdmin"
-        [routerLink]="['/usuarios/edit', item._id]"
-        class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-semibold transition"
-      >
-        Editar Cliente
-      </button>
+    <!-- Sección inferior estilo resumen -->
+   <div class="bg-gray-100 px-6 py-4 border-t border-gray-300">
+  <div class="grid grid-cols-3 gap-4 text-center text-xs text-gray-600">
+    <div>
+      <p class="uppercase tracking-wide font-semibold text-[11px] text-gray-500 mb-1">Ingreso</p>
+      <p class="text-sm text-gray-700">{{ item.fechaIngreso | date }}</p>
+    </div>
+    <div>
+      <p class="uppercase tracking-wide font-semibold text-[11px] text-gray-500 mb-1">Días Restantes</p>
+      <p class="text-sm text-gray-700">{{ item.diasRestantes }}</p>
+    </div>
+    <div>
+      <p class="uppercase tracking-wide font-semibold text-[11px] text-gray-500 mb-1">Plan</p>
+      <p class="text-sm text-gray-700">{{ item.idPlan ? getPlanName(item.idPlan) : 'No encontrado' }}</p>
+    </div>
+  </div>
+</div>
+    <!-- Botones -->
+    <div class="px-6 py-4 flex justify-between items-center border-t">
+      <div class="flex space-x-3 w-full">
+        <button
+          *ngIf="isAdmin || isEntrenador"
+          (click)="asignarRutina(item._id)"
+          class="flex-1 bg-gray-600 hover:bg-gray-700 text-white text-sm py-2 rounded-lg transition"
+        >
+          Asignar Rutina
+        </button>
+        <button
+          *ngIf="isAdmin"
+          [routerLink]="['/usuarios/edit', item._id]"
+          class="flex-1 bg-red-500 hover:bg-red-600 text-white text-sm py-2 rounded-lg transition"
+        >
+          Editar Cliente
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="flex flex-col items-center mt-8 space-y-4">
-  <div class="flex justify-center items-center gap-4">
+
+<div class="flex flex-col items-center mt-10 space-y-6">
+  <!-- Controles de paginación -->
+  <div class="flex flex-wrap justify-center items-center gap-3 text-sm font-medium">
     <button
       (click)="cargarUsuarios(1)"
       [disabled]="currentPage === 1"
-      class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm rounded disabled:opacity-50"
+      class="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-100 rounded disabled:opacity-50"
     >
       Primera
     </button>
@@ -138,19 +150,19 @@
     <button
       (click)="cargarUsuarios(currentPage - 1)"
       [disabled]="currentPage === 1"
-      class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm rounded disabled:opacity-50"
+      class="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-100 rounded disabled:opacity-50"
     >
       Anterior
     </button>
 
-    <span class="text-sm font-medium">
-      Página {{ currentPage }} de {{ totalPages }}
+    <span class="px-4 py-2 text-gray-700">
+      Página <strong>{{ currentPage }}</strong> de <strong>{{ totalPages }}</strong>
     </span>
 
     <button
       (click)="cargarUsuarios(currentPage + 1)"
       [disabled]="currentPage === totalPages"
-      class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm rounded disabled:opacity-50"
+      class="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-100 rounded disabled:opacity-50"
     >
       Siguiente
     </button>
@@ -158,21 +170,23 @@
     <button
       (click)="cargarUsuarios(totalPages)"
       [disabled]="currentPage === totalPages"
-      class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm rounded disabled:opacity-50"
+      class="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-100 rounded disabled:opacity-50"
     >
       Última
     </button>
   </div>
 
-  <!-- Selector de ítems por página -->
-  <div class="flex items-center space-x-2">
-    <label class="text-sm">Items por página:</label>
+  <!-- Selector de límite -->
+  <div class="flex items-center space-x-3 text-sm">
+    <label for="limitSelect" class="text-gray-700">Items por página:</label>
     <select
+      id="limitSelect"
       [(ngModel)]="limit"
       (change)="cargarUsuarios(1)"
-      class="border px-2 py-1 rounded text-sm"
+      class="border-gray-300 rounded px-3 py-1 focus:ring focus:ring-blue-200"
     >
       <option *ngFor="let l of [5, 10, 20, 50]" [value]="l">{{ l }}</option>
     </select>
   </div>
 </div>
+

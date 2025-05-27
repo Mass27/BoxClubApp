@@ -3,7 +3,7 @@
 <div class="search-container flex flex-col sm:flex-row items-center sm:justify-between mb-4">
   <app-searchBox (BuscarObject)="buscarPlanesPorNombre($event)" class="mb-4 sm:mb-0"></app-searchBox>
 
-  <button *ngIf="isAdmin" class="button-agregar flex items-center justify-center bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600" routerLink="/planes/agregar">
+  <button *ngIf="isAdmin" class="button-agregar flex items-center justify-center bg-red-500 text-white rounded-lg py-2 px-4 hover:bg-red-600" routerLink="/planes/agregar">
     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
     </svg> Agregar
@@ -22,7 +22,7 @@
       <div class="border-t border-gray-200 pt-4 space-y-3">
         <div class="text-sm text-gray-600">
           <p class="font-medium text-gray-700">Descripción:</p>
-          <p class="break-words mt-1">{{ item.descripcion }}</p>
+          <p class="break-words mt-1">{{ item.descripcion| slice:0:15  }}...</p>
         </div>
 
         <p class="text-sm text-gray-600 flex justify-between">
