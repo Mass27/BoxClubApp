@@ -14,10 +14,11 @@ export class ListComponent implements OnInit {
   rutinas: Rutinas[] = [];
   rutinasFiltrado: Rutinas[] = [];
   isAdmin: boolean = false;
-    empleados:Empleados2[] = [];
-    isEntrenador: boolean = false;
-  constructor(private rutinasService: RutinasService,
-        private empleadoService: EmpleadosService
+  empleados: Empleados2[] = [];
+  isEntrenador: boolean = false;
+  constructor(
+    private rutinasService: RutinasService,
+    private empleadoService: EmpleadosService
   ) {}
 
   ngOnInit() {
@@ -27,7 +28,6 @@ export class ListComponent implements OnInit {
     this.empleadoService.getAllEmpleados().subscribe((empleados) => {
       this.empleados = empleados;
     });
-
   }
 
   getRutinas() {
@@ -37,10 +37,10 @@ export class ListComponent implements OnInit {
     });
   }
   adminUser() {
-  const tipoUsuario = sessionStorage.getItem('tipoUsuario');
-  this.isAdmin = tipoUsuario === 'ADMINISTRADOR';
-  this.isEntrenador = tipoUsuario === 'entrenadores'; // o 'ENTRENADOR' si lo guardas en mayúsculas
-}
+    const tipoUsuario = sessionStorage.getItem('tipoUsuario');
+    this.isAdmin = tipoUsuario === 'ADMINISTRADOR';
+    this.isEntrenador = tipoUsuario === 'entrenadores'; // o 'ENTRENADOR' si lo guardas en mayúsculas
+  }
 
   searchByName(name: string): void {
     if (name.trim() === '') {
@@ -59,8 +59,36 @@ export class ListComponent implements OnInit {
     );
   }
 
-    getempleadoName(empleadoId:string): string {
-const empleado = this.empleados.find((empleado) => empleado._id === empleadoId);
-return empleado ? empleado.nombreCompleto : 'Empleado no encontrado';
+  getempleadoName(empleadoId: string): string {
+    const empleado = this.empleados.find(
+      (empleado) => empleado._id === empleadoId
+    );
+    return empleado ? empleado.nombreCompleto : 'Empleado no encontrado';
+  }
+
+ downloadPDF(id: string) {
+  this.rutinasService.downloadPDF(id).subscribe(
+    (response) => {
+      const blob = new Blob([response], { type: 'application/pdf' });
+
+
+      if (blob.size === 0) {
+        console.error('El archivo PDF está vacío.');
+        return;
+      }
+
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `rutina-${id}.pdf`;
+      link.click();
+
+     
+      URL.revokeObjectURL(link.href);
+    },
+    (error) => {
+      console.error('Error al descargar el PDF', error);
     }
+  );
+}
+
 }

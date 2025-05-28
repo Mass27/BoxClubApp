@@ -24,7 +24,7 @@
         {{ item.nombre }}
       </h2>
       <p class="text-sm text-gray-600 mb-1">
-        <strong class="text-gray-700">Descripción:</strong> {{ item.descripcion | slice:0:30 }}...
+        <strong class="text-gray-700">Descripción:</strong> {{ item.descripcion | slice:0:20 }}...
       </p>
       <p class="text-sm text-gray-600">
         <strong class="text-gray-700">Empleado:</strong> {{ getempleadoName(item.empleado) }}
@@ -36,6 +36,11 @@
               [routerLink]="['/rutinas/edit', item._id]"
               class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
         Editar Rutina
+      </button>
+       <button *ngIf="isAdmin || isEntrenador"
+              (click)="downloadPDF(item._id)"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300 mt-4">
+        Descargar PDF
       </button>
     </div>
   </div>

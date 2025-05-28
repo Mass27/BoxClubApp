@@ -279,6 +279,11 @@ getCantidad(): number | '' {
   const cantidad = this.formulario.get('CantidadProducto')?.value;
   return cantidad ?? '';
 }
+
+getdesc(): number | '' {
+  const desc = this.formulario.get('descuento')?.value;
+  return desc ?? '';
+}
 getFechaFormateada(): string {
   const fecha = this.formulario.get('fecha')?.value;
   if (!fecha) return '';

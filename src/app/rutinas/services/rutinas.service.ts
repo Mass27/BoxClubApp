@@ -34,4 +34,11 @@ addRutinas(rutina: Rutinas): Observable<Rutinas> {
 
 updateRutinas(rutina: Rutinas): Observable<RutinasID> {
   return this.HttpClient.put<RutinasID>(`${this.baseUrl}/rutinas/editar/${rutina._id}`, rutina);}
+
+  downloadPDF(id: string): Observable<Blob> {
+    return this.HttpClient.get<Blob>(`${this.baseUrl}/rutinas/pdf/${id}`, {
+      responseType: 'blob' as 'json',
+    });
+  }
+
 }
