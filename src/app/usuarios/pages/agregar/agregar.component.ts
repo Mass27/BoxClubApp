@@ -4,6 +4,8 @@ import { usuarioService } from '../../services/usuarios.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Planes } from '../../../planes/interfaces/planes.interface';
 import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'agregar-usuarios',
@@ -34,7 +36,8 @@ export class AgregarComponent implements OnInit {
       nombreCompleto: new FormControl('', Validators.required),
       numeroTelefono: new FormControl('', [
         Validators.required,
-        Validators.maxLength(8),
+         Validators.maxLength(8),
+  Validators.pattern(/^\d{8}$/)
       ]),
       identidad: new FormControl('', Validators.required),
       correo: new FormControl('', Validators.required),
@@ -62,13 +65,14 @@ export class AgregarComponent implements OnInit {
             this.formulario.patchValue({
               imagen: this.currentImageUrl,
               nombreCompleto: usuario.nombreCompleto || '',
-              numeroTelefono: usuario.numeroTelefono || '',
+             numeroTelefono: String(usuario.numeroTelefono || ''),
               identidad: usuario.identidad || '',
               correo: usuario.correo || '',
               fechaIngreso:  this.datepipe.transform(usuario.fechaIngreso, 'yyyy-MM-dd'),
               idPlan: usuario.idPlan || '',
               estado: usuario.estado,
             });
+          
           }
         });
       }
@@ -81,49 +85,91 @@ export class AgregarComponent implements OnInit {
     });
   }
 
-  enviarFormulario() {
-    // if (this.formulario.valid) {
-    const formData = this.formulario.value;
-    if (this.isEditMode && this.usuarioId) {
-      if (!this.isUpdating) {
-        this.isUpdating = true;
-        formData._id = this.usuarioId;
-        this.userService.updateUser(formData).subscribe(
-          (response) => {
-            if (this.usuarioId) {
-              // Verifica que usuarioId tenga un valor definido
-              this.uploadImage(this.usuarioId);
-            }
-          },
-          (error) => {
-            console.error('Error al actualizar usuario:', error);
+ enviarFormulario() {
+  if (this.formulario.invalid) {
+    const camposInvalidos: string[] = [];
 
-            this.isUpdating = false;
-          }
-        );
-      } else {
-        console.log('La actualización del usuario ya está en curso.');
+    Object.keys(this.formulario.controls).forEach((campo) => {
+      const control = this.formulario.get(campo);
+      if (control && control.invalid) {
+        switch (campo) {
+          case 'nombreCompleto':
+            camposInvalidos.push('Nombre Completo');
+            break;
+          case 'numeroTelefono':
+            camposInvalidos.push('Número de Teléfono');
+            break;
+          case 'identidad':
+            camposInvalidos.push('Identidad');
+            break;
+          case 'correo':
+            camposInvalidos.push('Correo');
+            break;
+          case 'idPlan':
+            camposInvalidos.push('Plan');
+            break;
+          case 'fechaIngreso':
+            camposInvalidos.push('Fecha de Ingreso');
+            break;
+        }
       }
-    } else {
-      // Si es un nuevo usuario, primero agregamos el usuario
-      this.userService.addUser(formData).subscribe(
+    });
+
+
+    Object.values(this.formulario.controls).forEach(control => {
+      control.markAsTouched();
+    });
+
+  Swal.fire({
+  title: '🚫 Faltan datos',
+  html: '<p style="font-size: 15px;">Completa los siguientes campos:</p><ul style="text-align:left;">' +
+    camposInvalidos.map(campo => `<li>📌 ${campo}</li>`).join('') +
+    '</ul>',
+  icon: 'error',
+  background: '#fff',
+  confirmButtonText: 'Entendido',
+  customClass: {
+    confirmButton: 'swal2-confirm-custom'
+  }
+});
+
+    return; 
+  }
+
+  const formData = this.formulario.value;
+
+  if (this.isEditMode && this.usuarioId) {
+    if (!this.isUpdating) {
+      this.isUpdating = true;
+      formData._id = this.usuarioId;
+      this.userService.updateUser(formData).subscribe(
         (response) => {
-          console.log('Usuario agregado exitosamente:', response);
-          // Una vez agregado el usuario, subimos la imagen
-          const nuevoUsuarioId = response._id; // Suponiendo que el servidor devuelve el ID del nuevo usuario
-          this.uploadImage(nuevoUsuarioId);
+          if (this.usuarioId) {
+            this.uploadImage(this.usuarioId);
+          }
         },
         (error) => {
-          console.error('Error al agregar usuario:', error);
+          console.error('Error al actualizar usuario:', error);
+          this.isUpdating = false;
         }
       );
+    } else {
+      console.log('La actualización del usuario ya está en curso.');
     }
-    // }else {
-    //   console.error(
-    //     'El formulario es inválido. Por favor, completa correctamente todos los campos.'
-    //   );
-    // }
+  } else {
+    this.userService.addUser(formData).subscribe(
+      (response) => {
+        console.log('Usuario agregado exitosamente:', response);
+        const nuevoUsuarioId = response._id;
+        this.uploadImage(nuevoUsuarioId);
+      },
+      (error) => {
+        console.error('Error al agregar usuario:', error);
+      }
+    );
   }
+}
+
 
   uploadImage(clienteId: string) {
     if (this.imgFile) {
@@ -160,17 +206,19 @@ export class AgregarComponent implements OnInit {
     }
   }
 
-  limitarNumeroTelefono(event: any) {
-    let inputValue = event.target.value;
-    const maxLength = 8;
-    inputValue = inputValue.replace(/\D/g, '');
-    if (inputValue.length > maxLength) {
-      inputValue = inputValue.slice(0, maxLength);
-    }
-
-    // Actualizar el valor del campo con el valor modificado
-    event.target.value = inputValue;
+ limitarNumeroTelefono(event: any) {
+  // 1) Obtén solo dígitos y recórtalo a 8 caracteres
+  let inputValue = event.target.value.replace(/\D/g, '');
+  if (inputValue.length > 8) {
+    inputValue = inputValue.slice(0, 8);
   }
+
+  // 2) Actualiza el DOM para que el usuario vea los dígitos filtrados
+  event.target.value = inputValue;
+
+  // 3) ¡Y MUY IMPORTANTE! Actualiza también el FormControl
+  this.formulario.get('numeroTelefono')?.setValue(inputValue);
+}
 
   limitarIdentidad(event: any) {
     let inputValue = event.target.value;

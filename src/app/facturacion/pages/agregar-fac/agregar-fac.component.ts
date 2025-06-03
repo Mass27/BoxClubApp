@@ -63,21 +63,18 @@ export class AgregarFacComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    this.activatedRoute.url.subscribe((url) => {
-      this.imprimirMode = url[0].path === 'imprimir';
-    });
     this.formulario = new FormGroup({
       idcliente: new FormControl('', Validators.required),
       nombreCliente: new FormControl(''),
       metodoPago: new FormControl('', Validators.required),
       subtotal: new FormControl('', Validators.required),
-      descuento: new FormControl(null),
-      totalPagar: new FormControl('', Validators.required),
+      descuento: new FormControl(0),
+      totalPagar: new FormControl(0, Validators.required),
       fecha: new FormControl(null, Validators.required),
       idPlan: new FormControl(null),
-      precioPlan: new FormControl(null),
+      precioPlan: new FormControl(0),
       idproducto: new FormControl(null),
-      precioProducto: new FormControl(null),
+      precioProducto: new FormControl(0),
       CantidadProducto: new FormControl(''),
     });
   }
@@ -144,7 +141,7 @@ console.log('Factura obtenida:', factura);
     });
   }
 
-  actualizarPrecioPlan(event: Event) {
+   actualizarPrecioPlan(event: Event) {
     const idPlanSeleccionado = (event.target as HTMLSelectElement).value;
     const planSeleccionado = this.tipoPlanes.find(
       (plan) => plan._id === idPlanSeleccionado
@@ -152,39 +149,38 @@ console.log('Factura obtenida:', factura);
     if (planSeleccionado) {
       this.formulario.get('precioPlan')?.setValue(planSeleccionado.precio);
     } else {
-      this.formulario.get('precioPlan')?.setValue('');
+      this.formulario.get('precioPlan')?.setValue(0);
     }
+    this.calcularTotal(); 
   }
-  actualizarPrecioProducto(event: Event) {
+ actualizarPrecioProducto(event: Event) {
     const idProductoSeleccionado = (event.target as HTMLSelectElement).value;
     const productoSeleccionado = this.productos.find(
       (producto) => producto._id === idProductoSeleccionado
     );
     if (productoSeleccionado) {
-      this.formulario
-        .get('precioProducto')
-        ?.setValue(productoSeleccionado.precio);
-      // Actualizar el stock en el formulario
+      this.formulario.get('precioProducto')?.setValue(productoSeleccionado.precio);
       this.formulario.get('CantidadProducto')?.setValue(1);
       this.formulario
         .get('CantidadProducto')
-        ?.setValidators([Validators.max(productoSeleccionado.cantidadEnStock)]);
+        ?.setValidators([Validators.max(productoSeleccionado.cantidadEnStock), Validators.min(1)]);
       this.formulario.get('CantidadProducto')?.updateValueAndValidity();
     } else {
-      this.formulario.get('precioProducto')?.setValue('');
+      this.formulario.get('precioProducto')?.setValue(0);
+      this.formulario.get('CantidadProducto')?.clearValidators();
+      this.formulario.get('CantidadProducto')?.setValue(1);
     }
+    this.calcularTotal(); 
   }
 
-  actualizarCliente(event: Event) {
+actualizarCliente(event: Event) {
     const idCliente = (event.target as HTMLSelectElement).value;
     const clienteSeleccionado = this.clientes.find(
       (cliente) => cliente._id === idCliente
     );
     if (clienteSeleccionado) {
       this.formulario.get('idcliente')?.setValue(clienteSeleccionado._id);
-      this.formulario
-        .get('nombreCliente')
-        ?.setValue(clienteSeleccionado.nombreCompleto);
+      this.formulario.get('nombreCliente')?.setValue(clienteSeleccionado.nombreCompleto);
     } else {
       this.formulario.get('idcliente')?.setValue('');
       this.formulario.get('nombreCliente')?.setValue('');
@@ -195,20 +191,21 @@ console.log('Factura obtenida:', factura);
     const precioPlan = +this.formulario.get('precioPlan')?.value || 0;
     const precioProducto = +this.formulario.get('precioProducto')?.value || 0;
     const descuento = +this.formulario.get('descuento')?.value || 0;
-    const cantidadProducto =
-      +this.formulario.get('CantidadProducto')?.value || 1;
+    const cantidadProducto = +this.formulario.get('CantidadProducto')?.value || 1;
 
-    let subTotal = (precioPlan + precioProducto) * cantidadProducto;
+    // Si no hay plan ni producto, subtotal = 0
+    let subTotal = precioPlan + precioProducto * cantidadProducto;
 
+    // Aplicar descuento / porcentaje
     let total = subTotal;
-
     if (descuento > 0) {
-      total -= (subTotal * descuento) / 100; // Aplicar descuento
+      total -= (subTotal * descuento) / 100;
     }
 
     this.formulario.get('subtotal')?.setValue(subTotal);
     this.formulario.get('totalPagar')?.setValue(total);
   }
+
 
   enviarFormulario() {
     if (this.formulario.valid) {

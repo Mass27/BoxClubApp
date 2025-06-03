@@ -9,6 +9,7 @@ import { Clientes } from 'src/app/usuarios/interfaces/usuario.interfaces';
 import { RutinasService } from 'src/app/rutinas/services/rutinas.service';
 import { Rutinas } from 'src/app/rutinas/interfaces/rutinas.interfaces';
 import { usuarioService } from 'src/app/usuarios/services/usuarios.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-agregar-metricas',
@@ -108,21 +109,64 @@ ordenHistorial: 'reciente' | 'antiguo' = 'reciente';
     this.metricaId = metrica._id;
   }
   onSubmit() {
+if (this.metricaForm.invalid) {
+    const camposInvalidos: string[] = [];
+
+    Object.keys(this.metricaForm.controls).forEach((campo) => {
+      const control = this.metricaForm.get(campo);
+      if (control && control.invalid) {
+        switch (campo) {
+         case 'fecha':
+            camposInvalidos.push('Fecha');
+            break;
+          case 'pesoCorporal':
+            camposInvalidos.push('Peso Corporal');
+            break;
+          case 'grasaCorporal':
+            camposInvalidos.push('Grasa Corporal');
+            break;
+          case 'imc':
+            camposInvalidos.push('IMC');
+            break;
+          case 'rutinaActual':
+            camposInvalidos.push('Rutina');
+            break;
+          case 'progreso':
+            camposInvalidos.push('Progreso');
+            break;
+             case 'medidas':
+            camposInvalidos.push('medidas');
+            break;
+        }
+      }
+    });
+
+
+    Object.values(this.metricaForm.controls).forEach(control => {
+      control.markAsTouched();
+    });
+
+  Swal.fire({
+  title: '🚫 Faltan datos',
+  html: '<p style="font-size: 15px;">Completa los siguientes campos:</p><ul style="text-align:left;">' +
+    camposInvalidos.map(campo => `<li>📌 ${campo}</li>`).join('') +
+    '</ul>',
+  icon: 'error',
+  background: '#fff',
+  confirmButtonText: 'Entendido',
+  customClass: {
+    confirmButton: 'swal2-confirm-custom'
+  }
+});
+
+    return; 
+  }
+
     const datos = this.metricaForm.value;
 
     if (!datos.clienteId && this.clienteId) {
       datos.clienteId = this.clienteId;
     }
-
-    // const esHistorial =
-    //   this.ActivatedRoute.snapshot.routeConfig?.path?.includes('edit');
-
-    // const payload = {
-    //   ...datos,
-    //   ...(this.isEditMode && { _id: this.metricaId }),
-    //   esHistorial:true
-
-    // };
 
     if (this.isEditMode) {
       datos._id = this.metricaId;

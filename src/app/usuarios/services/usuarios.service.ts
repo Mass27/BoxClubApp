@@ -8,6 +8,8 @@ import { Planes } from '../../planes/interfaces/planes.interface';
 import { IDUsuarios } from '../interfaces/usuId.interface';
 import { ContadorActivos } from '../interfaces/contadorActivos.interfaces';
 import { ClientePag } from '../interfaces/clientesPagin.interfaces';
+import { ClientesPendientes } from '../interfaces/ClientesPen.interfaces';
+import { ContadorInac } from '../interfaces/contadorClientesInac.interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class usuarioService {
@@ -73,6 +75,17 @@ export class usuarioService {
   contarClietnesActivos(): Observable<ContadorActivos> {
     return this.http.get<ContadorActivos>(
       `${this.baseUrl}/clientes/contar/clientesAct`
+    );
+  }
+
+   contarClietnesPendientes(): Observable<ClientesPendientes> {
+    return this.http.get<ClientesPendientes>(
+      `${this.baseUrl}/clientes/contar/clientesPen`
+    );
+  }
+    contarClietnesInactivos(): Observable<ContadorInac> {
+    return this.http.get<ContadorInac>(
+      `${this.baseUrl}/clientes/contar/clientesIna`
     );
   }
 

@@ -1,28 +1,21 @@
 <div class="flex justify-center mb-6">
   <button
     (click)="toggleFormulario()"
-    class="w-full max-w-md bg-red-600 text-white py-3 px-6 rounded-xl flex items-center justify-between hover:bg-red-700 transition-all ease-in-out duration-200 shadow-lg focus:outline-none"
+    class="w-full max-w-xl bg-red-600 text-white py-3 px-6 rounded-xl flex items-center justify-between hover:bg-red-700 transition-all ease-in-out duration-200 shadow-lg focus:outline-none"
   >
-    <span>{{ metricaId ? "Evaluar Métrica" : "Registrar Métrica" }}</span>
-    <span class="text-xl">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        [ngClass]="
-          showFormulario ? 'w-6 h-6 transform rotate-180' : 'w-6 h-6 transform'
-        "
-        class="transition-transform duration-300 ease-in-out"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M19 9l-7 7-7-7"
-        />
-      </svg>
+    <span class="text-lg font-medium">
+      {{ metricaId ? "Evaluar Métrica" : "Registrar Métrica" }}
     </span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      [ngClass]="showFormulario ? 'rotate-180' : ''"
+      class="w-6 h-6 transition-transform duration-300 ease-in-out"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
   </button>
 </div>
 
@@ -30,23 +23,35 @@
   *ngIf="showFormulario"
   [formGroup]="metricaForm"
   (ngSubmit)="onSubmit()"
-  class="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow space-y-6"
+  class="max-w-6xl mx-auto bg-white p-8 rounded-3xl shadow-xl border border-gray-200"
 >
-  <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+  <!-- Título -->
+  <div class="flex items-center gap-4 mb-8">
+  <img
+    src="assets/logo3.png"
+    alt="Logo"
+    class="w-12 h-12 object-contain rounded-full shadow-md border border-gray-300"
+  />
+  <h2 class="text-2xl font-bold text-red-600">
     {{ metricaId ? "Evaluar Métrica" : "Registrar Métrica" }}
   </h2>
+</div>
 
-  <div *ngIf="!metricaId" class="col-span-2">
-    <div class="mb-4">
-      <label for="clienteId" class="block text-gray-700 font-medium mb-2"
-        >Seleccionar Cliente</label
-      >
+
+  <!-- Cliente -->
+  <div *ngIf="!metricaId" class="mb-6">
+    <label class="block text-gray-800 font-medium mb-2">Cliente*</label>
+    <div class="flex items-center gap-2">
+      <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M5.121 17.804A9.003 9.003 0 0112 15a9.003 9.003 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
       <select
         formControlName="clienteId"
-        id="clienteId"
-        class="w-full p-3 border border-gray-300 rounded-md bg-white text-gray-700 focus:ring-2 focus:ring-blue-500"
+        class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500"
       >
-        <option value="" disabled selected>-- Selecciona una Rutina --</option>
+        <option value="" disabled selected>-- Selecciona un Cliente --</option>
         <option *ngFor="let cliente of clientes" [value]="cliente._id">
           {{ cliente.nombreCompleto }}
         </option>
@@ -54,191 +59,124 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <!-- Métricas Básicas -->
+  <div class="grid md:grid-cols-3 gap-6 mb-6">
     <div>
-      <label class="block text-gray-700 font-medium mb-2">Fecha</label>
-      <input
-        formControlName="fecha"
-        type="date"
-        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-      />
-      <div
-        *ngIf="
-          metricaForm.get('fecha')?.invalid && metricaForm.get('fecha')?.touched
-        "
-        class="text-red-600 text-sm"
-      >
-        La fecha es obligatoria.
-      </div>
+      <label class="text-gray-800 font-medium flex items-center gap-2 mb-1">
+        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 21h14a2 2 0 002-2V7H3v12a2 2 0 002 2z" />
+        </svg>
+        Fecha*
+      </label>
+      <input formControlName="fecha" type="date"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
     </div>
     <div>
-      <label class="block text-gray-700 font-medium mb-2">Peso (kg)</label>
-      <input
-        formControlName="pesoCorporal"
-        placeholder="Peso (kg)"
-        type="number"
-        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-      />
-      <div
-        *ngIf="
-          metricaForm.get('pesoCorporal')?.invalid &&
-          metricaForm.get('pesoCorporal')?.touched
-        "
-        class="text-red-600 text-sm"
-      >
-        El peso corporal es obligatorio y debe ser mayor a 0.
-      </div>
+      <label class="text-gray-800 font-medium flex items-center gap-2 mb-1">
+        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M13 16h-1v-4h-1m4 0a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        Peso (kg)*
+      </label>
+      <input formControlName="pesoCorporal" type="number" placeholder="Ej: 70"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
     </div>
     <div>
-      <label class="block text-gray-700 font-medium mb-2">Grasa (%)</label>
-      <input
-        formControlName="grasaCorporal"
-        placeholder="Grasa (%)"
-        type="number"
-        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-      />
-      <div
-        *ngIf="
-          metricaForm.get('grasaCorporal')?.invalid &&
-          metricaForm.get('grasaCorporal')?.touched
-        "
-        class="text-red-600 text-sm"
-      >
-        La grasa corporal es obligatoria y debe ser mayor a 0.
-      </div>
+      <label class="text-gray-800 font-medium flex items-center gap-2 mb-1">
+        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M20 12H4m0 0l4-4m-4 4l4 4" />
+        </svg>
+        Grasa (%)*
+      </label>
+      <input formControlName="grasaCorporal" type="number" placeholder="Ej: 18"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
     </div>
+  </div>
+
+  <!-- IMC y Rutina -->
+  <div class="grid md:grid-cols-3 gap-6 mb-6">
     <div>
-      <label class="block text-gray-700 font-medium mb-2">IMC</label>
-      <input
-        formControlName="imc"
-        placeholder="IMC"
-        type="number"
-        step="0.1"
-        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-      />
-      <div
-        *ngIf="metricaForm.get('imc')?.invalid && metricaForm.get('imc')?.touched"
-        class="text-red-600 text-sm"
-      >
-        El IMC es obligatorio y debe ser mayor a 0.
-      </div>
+      <label class="text-gray-800 font-medium mb-1 flex items-center gap-2">
+        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 10h11m0 0l-4-4m4 4l-4 4" />
+        </svg>
+        IMC*
+      </label>
+      <input formControlName="imc" type="number" step="0.1" placeholder="Ej: 22.5"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
     </div>
     <div class="md:col-span-2">
-      <label for="rutina" class="block text-gray-700 font-medium mb-2"
-        >Seleccionar Rutina</label
-      >
+      <label class="text-gray-800 font-medium mb-1">Rutina Actual*</label>
       <select
         formControlName="rutinaActual"
-        id="rutina"
-        class="w-full p-3 border border-gray-300 rounded-md bg-white text-gray-700 focus:ring-2 focus:ring-blue-500"
+        class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500"
       >
         <option value="" disabled selected>-- Selecciona una Rutina --</option>
         <option *ngFor="let rutina of rutinas" [value]="rutina._id">
           {{ rutina.nombre }}
         </option>
       </select>
-      <div
-        *ngIf="
-          metricaForm.get('rutinaActual')?.invalid &&
-          metricaForm.get('rutinaActual')?.touched
-        "
-        class="text-red-600 text-sm"
-      >
-        La rutina es obligatoria.
-      </div>
     </div>
-    <div class="md:col-span-2">
-      <label class="block text-gray-700 font-medium mb-2">Progreso</label>
-      <input
-        formControlName="progreso"
-        placeholder="Progreso"
-        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-      />
-      <div
-        *ngIf="
-          metricaForm.get('progreso')?.invalid &&
-          metricaForm.get('progreso')?.touched
-        "
-        class="text-red-600 text-sm"
-      >
-        El Progreso es obligatorio.
-      </div>
-    </div>
-
-    <fieldset formGroupName="medidas" class="md:col-span-2 mt-6">
-      <legend class="text-lg font-semibold text-gray-700 mb-4">Medidas</legend>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div>
-          <label class="block text-gray-700 font-medium mb-2">Cintura (cm)</label>
-          <input
-            formControlName="cintura"
-            placeholder="Cintura (cm)"
-            type="number"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
-          <div
-            *ngIf="
-              metricaForm.get('cintura')?.invalid &&
-              metricaForm.get('cintura')?.touched
-            "
-            class="text-red-600 text-sm"
-          >
-            La cintura es obligatoria y debe ser mayor a 0.
-          </div>
-        </div>
-        <div>
-          <label class="block text-gray-700 font-medium mb-2">Pecho (cm)</label>
-          <input
-            formControlName="pecho"
-            placeholder="Pecho (cm)"
-            type="number"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
-          <div
-            *ngIf="
-              metricaForm.get('pecho')?.invalid && metricaForm.get('pecho')?.touched
-            "
-            class="text-red-600 text-sm"
-          >
-            El pecho es obligatoria y debe ser mayor a 0.
-          </div>
-        </div>
-        <div>
-          <label class="block text-gray-700 font-medium mb-2">Bíceps (cm)</label>
-          <input
-            formControlName="biceps"
-            placeholder="Bíceps (cm)"
-            type="number"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
-          <div
-            *ngIf="
-              metricaForm.get('biceps')?.invalid &&
-              metricaForm.get('biceps')?.touched
-            "
-            class="text-red-600 text-sm"
-          >
-            El Bicep es obligatoria y debe ser mayor a 0.
-          </div>
-        </div>
-      </div>
-    </fieldset>
   </div>
- <div class="md:col-span-2">
-      <label class="block text-gray-700 font-medium mb-2">Nota</label>
-      <textarea
-        formControlName="nota"
-        placeholder="Nota"
-        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-      ></textarea>
+
+  <!-- Progreso -->
+  <div class="mb-6">
+    <label class="text-gray-800 font-medium mb-1">Progreso*</label>
+    <input formControlName="progreso" placeholder="Ej: Mejoró resistencia, bajó grasa"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+  </div>
+
+  <!-- Medidas -->
+  <fieldset formGroupName="medidas" class="mb-6 border-t pt-6">
+    <legend class="text-lg font-semibold text-gray-800 mb-4">Medidas Corporales*</legend>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div>
+        <label class="text-gray-800 font-medium mb-1">Cintura (cm)</label>
+        <input formControlName="cintura" type="number" placeholder="Ej: 80"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="text-gray-800 font-medium mb-1">Pecho (cm)</label>
+        <input formControlName="pecho" type="number" placeholder="Ej: 95"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="text-gray-800 font-medium mb-1">Bíceps (cm)</label>
+        <input formControlName="biceps" type="number" placeholder="Ej: 35"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
     </div>
+  </fieldset>
+
+  <!-- Nota -->
+  <div class="mb-8">
+    <label class="text-gray-800 font-medium mb-1">Nota</label>
+    <textarea
+      formControlName="nota"
+      placeholder="Observaciones del progreso del cliente"
+      rows="3"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
+    ></textarea>
+  </div>
+
+  <!-- Botón -->
   <button
     type="submit"
-    class="w-full bg-red-600 text-white py-3 px-6 rounded-xl hover:bg-red-700 focus:ring-2 focus:ring-red-500 transition"
+    class="w-full bg-red-600 text-white py-3 px-6 rounded-xl hover:bg-red-700 focus:ring-2 focus:ring-red-500 transition shadow-lg text-lg font-semibold"
   >
-    {{ isEditMode ? "Actualizar" : "Agregar" }}
+    {{ isEditMode ? "Actualizar Métrica" : "Agregar Métrica" }}
   </button>
 </form>
+
+
 <div class="flex flex-wrap justify-between items-center mb-4 gap-4">
 
   <div class="flex items-center gap-2 w-full sm:w-auto">
@@ -269,45 +207,61 @@
 
 
 <hr class="my-6" />
-<h3 class="text-xl font-semibold text-gray-800 mb-4">Historial de Métricas</h3>
 
-<div
-  class="grid grid-cols-1 md:grid-cols-2 gap-6"
->
-  <div
-    *ngFor="let metrica of metricasHistorialFiltradas"
-    class="bg-white shadow-lg rounded-lg p-6"
-  >
-    <div class="flex justify-between items-center mb-4">
-      <p class="text-lg font-medium text-gray-700">
-        <strong>Fecha:</strong> {{ metrica.fecha | date:'yyyy-MM-dd':'UTC' }}
-      </p>
-      <button
-        (click)="cargarParaEditar(metrica); toggleFormulario()"
-        class="text-blue-600 hover:text-blue-800 focus:outline-none font-medium"
-      >
-        Editar
-      </button>
-    </div>
+<h3 class="text-xl font-semibold text-gray-800 mb-4">
+  Historial de Métricas
+</h3>
 
-    <div class="grid grid-cols-2 gap-4 mb-4">
-      <div>
-        <p class="text-sm text-gray-500">Peso</p>
-        <p class="font-semibold text-gray-700">{{ metrica.pesoCorporal }} kg</p>
+<!-- Contenedor con scroll y altura máxima -->
+<div class="max-h-[600px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div
+      *ngFor="let metrica of metricasHistorialFiltradas"
+      class="bg-white shadow-md border border-gray-200 rounded-xl p-5 hover:shadow-lg transition"
+    >
+      <div class="flex justify-between items-center mb-4">
+        <p class="text-sm font-semibold text-gray-600">
+          <svg class="w-4 h-4 inline mr-1 text-red-500" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7H3v12a2 2 0 002 2z" />
+          </svg>
+          {{ metrica.fecha | date: 'yyyy-MM-dd':'UTC' }}
+        </p>
+        <button
+          (click)="cargarParaEditar(metrica); toggleFormulario()"
+          class="text-sm text-blue-600 hover:underline font-medium"
+        >
+          Editar
+        </button>
       </div>
-      <div>
-        <p class="text-sm text-gray-500">IMC</p>
-        <p class="font-semibold text-gray-700">{{ metrica.imc }}</p>
-      </div>
-      <div>
-        <p class="text-sm text-gray-500">Grasa Corporal</p>
-        <p class="font-semibold text-gray-700">{{ metrica.grasaCorporal }}%</p>
-      </div>
-      <div class="col-span-2">
-        <p class="text-sm text-gray-500">Nota</p>
-        <p class="font-semibold text-gray-700 overflow-hidden overflow-ellipsis whitespace-nowrap" style="max-width: 200px;">{{ metrica.nota || "N/A" }}</p>
+
+      <div class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+        <div>
+          <p class="text-gray-500">Peso</p>
+          <p class="text-gray-800 font-semibold">{{ metrica.pesoCorporal }} kg</p>
+        </div>
+        <div>
+          <p class="text-gray-500">IMC</p>
+          <p class="text-gray-800 font-semibold">{{ metrica.imc }}</p>
+        </div>
+        <div>
+          <p class="text-gray-500">Grasa Corporal</p>
+          <p class="text-gray-800 font-semibold">{{ metrica.grasaCorporal }}%</p>
+        </div>
+        <div class="col-span-2">
+          <p class="text-gray-500">Nota</p>
+          <p
+            class="text-gray-800 font-medium overflow-hidden overflow-ellipsis whitespace-nowrap"
+            style="max-width: 100%"
+          >
+            {{ metrica.nota || "N/A" }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
+
 </div>
 

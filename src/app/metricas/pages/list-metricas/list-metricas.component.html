@@ -1,39 +1,75 @@
-<h2 class="titulo-global text-xl md:text-2xl font-semibold mb-4">Listado de Métricas</h2>
+<div class="min-h-screen bg-gray-100 p-6">
+  <!-- Encabezado -->
+  <div class="mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <h2 class="text-3xl font-bold text-red-600 flex items-center gap-2">
+      Panel de Métricas
+    </h2>
 
-<div class="search-container flex flex-col sm:flex-row items-center sm:justify-between mb-4">
-  <app-searchBox (BuscarObject)="searchByName($event)" class="mb-4 sm:mb-0"></app-searchBox>
+    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+      <app-searchBox
+        (BuscarObject)="searchByName($event)"
+        class="flex-1 sm:flex-none"
+      ></app-searchBox>
 
-  <button
-    *ngIf="isAdmin || isEntrenador"
-    class="button-agregar flex items-center justify-center bg-red-500 text-white rounded-lg py-2 px-4 hover:bg-red-600"
-    routerLink="/metricas/agregar"
-  >
-    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-    </svg> Asignar Métrica
-  </button>
-</div>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-  <div
-    *ngFor="let metrica of MetricasFiltradas"
-    class="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
-  >
-    <div class="mb-4">
-      <h2 class="text-xl font-semibold text-gray-800 mb-1">
-        {{ getUuserName(metrica.clienteId) }}
-      </h2>
-      <p class="text-sm text-gray-500">
-        <strong class="text-gray-600">Fecha:</strong>
-        {{ metrica.fecha | date : "yyyy-MM-dd" : "UTC" }}
-      </p>
+      <button
+        *ngIf="isAdmin || isEntrenador"
+        routerLink="/metricas/agregar"
+        class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg flex items-center gap-2 transition"
+      >
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        Asignar Métrica
+      </button>
     </div>
+  </div>
 
-    <div class="mt-6">
+  <!-- Cards -->
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div
+      *ngFor="let metrica of MetricasFiltradas"
+      class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition"
+    >
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800 truncate">
+            👤 {{ getUuserName(metrica.clienteId) }}
+          </h3>
+          <p class="text-sm text-gray-500 flex items-center gap-1">
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M3 11h18M5 19h14a2 2 0 002-2v-5H3v5a2 2 0 002 2z" />
+            </svg>
+            {{ metrica.fecha | date: 'yyyy-MM-dd':'UTC' }}
+          </p>
+        </div>
+        <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-lg">ID: {{ metrica._id.slice(-5) }}</span>
+      </div>
+
+      <div class="text-sm text-gray-700 space-y-2">
+        <p class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 1010 10A10 10 0 0012 2z" />
+          </svg>
+          <strong>Peso:</strong> {{ metrica.pesoCorporal ?? 'N/D' }} kg
+        </p>
+        <p class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 00-8 0v2m4-18a4 4 0 00-4 4v1h8V7a4 4 0 00-4-4z" />
+          </svg>
+          <strong>IMC:</strong> {{ metrica.imc ?? 'N/D' }}
+        </p>
+        <p class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L15 12.75 9.75 8.5" />
+          </svg>
+          <strong>Grasa:</strong> {{ metrica.grasaCorporal ?? 'N/D' }}%
+        </p>
+      </div>
+
       <button
         *ngIf="isAdmin || isEntrenador"
         [routerLink]="['/metricas/edit', metrica._id]"
-        class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300"
+        class="mt-5 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-semibold transition"
       >
         Evaluar Métrica
       </button>

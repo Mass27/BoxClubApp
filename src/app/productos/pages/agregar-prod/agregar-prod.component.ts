@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductosService } from '../../services/productos.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-agregar-prod',
@@ -57,44 +58,81 @@ export class AgregarProdComponent implements OnInit {
     });
   }
 
-  enviarFormulario() {
-    // if (this.formulario.valid) {
-    const formData = this.formulario.value;
-    if (this.isEditMode && this.prodId) {
-      if (!this.isUpdating) {
-        this.isUpdating = true;
-        formData._id = this.prodId;
-        this.productosService.updateProductos(formData).subscribe(
-          (response) => {
-            if (this.prodId) {
-              // Verifica que usuarioId tenga un valor definido
-              this.uploadImage(this.prodId);
-            }
-          },
-          (error) => {
-            console.error('Error al actualizar usuario:', error);
+ enviarFormulario() {
+  if (this.formulario.invalid) {
+    const camposInvalidos: string[] = [];
 
-            this.isUpdating = false;
-          }
-        );
-      } else {
-        console.log('La actualización del producto ya está en curso.');
+    Object.keys(this.formulario.controls).forEach((campo) => {
+      const control = this.formulario.get(campo);
+      if (control && control.invalid) {
+        switch (campo) {
+          case 'nombreProducto':
+            camposInvalidos.push('Nombre del Producto');
+            break;
+          case 'descripcion':
+            camposInvalidos.push('Descripción');
+            break;
+          case 'precio':
+            camposInvalidos.push('Precio');
+            break;
+          case 'cantidadEnStock':
+            camposInvalidos.push('Cantidad en Stock');
+            break;
+        }
       }
-    } else {
-      // Si es un nuevo usuario, primero agregamos el usuario
-      this.productosService.postProductos(formData).subscribe(
-        (response) => {
-console.log('Producto FORM:', formData);
-          const nuevoProd = response._id;
-          this.uploadImage(nuevoProd);
+    });
 
+    this.formulario.markAllAsTouched();
+
+      Swal.fire({
+         title: '🚫 Faltan datos obligatorios',
+         html:
+           '<p style="font-size: 15px;">Completa los siguientes campos:</p><ul style="text-align:left;">' +
+           camposInvalidos.map((campo) => `<li>📌 ${campo}</li>`).join('') +
+           '</ul>',
+         icon: 'error',
+         background: '#fff',
+         confirmButtonText: 'Entendido',
+         customClass: {
+           confirmButton: 'swal2-confirm-custom',
+         },
+       });
+
+    return;
+  }
+
+  const formData = this.formulario.value;
+
+  if (this.isEditMode && this.prodId) {
+    if (!this.isUpdating) {
+      this.isUpdating = true;
+      formData._id = this.prodId;
+      this.productosService.updateProductos(formData).subscribe(
+        () => {
+          if (this.prodId) {
+            this.uploadImage(this.prodId);
+          }
         },
         (error) => {
-          console.error('Error al agregar usuario:', error);
+          console.error('Error al actualizar producto:', error);
+          this.isUpdating = false;
         }
       );
+    } else {
+      console.log('La actualización del producto ya está en curso.');
     }
+  } else {
+    this.productosService.postProductos(formData).subscribe(
+      (response) => {
+        const nuevoProd = response._id;
+        this.uploadImage(nuevoProd);
+      },
+      (error) => {
+        console.error('Error al agregar producto:', error);
+      }
+    );
   }
+}
 
 
   uploadImage(idproducto: string) {

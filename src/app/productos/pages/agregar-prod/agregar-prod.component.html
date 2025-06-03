@@ -1,150 +1,118 @@
-<div class="flex justify-center mt-8">
-  <div class="max-w-2xl w-full">
-    <form [formGroup]="formulario" class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
-      <h2 class="text-2xl font-bold text-red-600 mb-6 text-center">
-        {{ prodId ? 'Editar Producto' : 'Agregar Producto' }}
+<div class="min-h-screen bg-gray-100 py-10 px-4 flex justify-center items-start">
+  <div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl p-10 relative overflow-hidden">
+
+
+    <div class="text-center mb-10">
+      <h2 class="text-4xl font-extrabold text-red-600 tracking-tight">
+        {{ prodId ? 'Editar Producto' : 'Registrar Nuevo Producto' }}
       </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Nombre de Producto -->
-        <div>
-          <label for="nProd" class="block text-sm font-semibold text-gray-700 mb-2">
-            <span class="inline-block align-middle mr-1">
-              <!-- Box Icon -->
-              <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <rect x="3" y="7" width="18" height="13" rx="2"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16 3v4M8 3v4M3 10h18"/>
-              </svg>
-            </span>
-            Nombre de Producto <span class="text-red-500">*</span>
-          </label>
-          <input
-            formControlName="nombreProducto"
-            type="text"
-            id="nProd"
-            placeholder="Nombre de Producto"
-            class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-          />
-          <div *ngIf="formulario.get('nombreProducto')?.invalid && formulario.get('nombreProducto')?.touched">
-            <small class="text-red-500">Nombre de producto es requerido.</small>
-          </div>
-        </div>
-
-        <!-- Precio -->
-        <div>
-          <label for="precio" class="block text-sm font-semibold text-gray-700 mb-2">
-            <span class="inline-block align-middle mr-1">
-              <!-- Money Icon -->
-              <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 14v2m9-9h-2M5 12H3"/>
-              </svg>
-            </span>
-            Precio <span class="text-red-500">*</span>
-          </label>
-          <input
-            formControlName="precio"
-            type="number"
-            id="precio"
-            placeholder="Precio"
-            (input)="limitadorNegayMax($event)"
-            class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-          />
-          <div *ngIf="formulario.get('precio')?.invalid && formulario.get('precio')?.touched">
-            <small class="text-red-500">Precio del producto es requerido.</small>
-          </div>
-        </div>
-
-        <!-- Descripción -->
-        <div class="md:col-span-2">
-          <label for="desc" class="block text-sm font-semibold text-gray-700 mb-2">
-            <span class="inline-block align-middle mr-1">
-              <!-- Description Icon -->
-              <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <rect x="4" y="4" width="16" height="16" rx="2"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 9h8M8 13h6M8 17h4"/>
-              </svg>
-            </span>
-            Descripción <span class="text-red-500">*</span>
-          </label>
-          <input
-            formControlName="descripcion"
-            type="text"
-            id="desc"
-            placeholder="Descripción"
-            class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-          />
-          <div *ngIf="formulario.get('descripcion')?.invalid && formulario.get('descripcion')?.touched">
-            <small class="text-red-500">Descripción del producto es requerido.</small>
-          </div>
-        </div>
-
-        <!-- Cantidad en Stock -->
-        <div>
-          <label for="stock" class="block text-sm font-semibold text-gray-700 mb-2">
-            <span class="inline-block align-middle mr-1">
-              <!-- Stock Icon -->
-              <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <rect x="3" y="7" width="18" height="13" rx="2"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16 3v4M8 3v4M3 10h18"/>
-              </svg>
-            </span>
-            Cantidad en Stock <span class="text-red-500">*</span>
-          </label>
-          <input
-            (input)="limitadorNegayMax($event)"
-            formControlName="cantidadEnStock"
-            type="number"
-            id="stock"
-            placeholder="Cantidad en Stock"
-            class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-          />
-          <div *ngIf="formulario.get('cantidadEnStock')?.invalid && formulario.get('cantidadEnStock')?.touched">
-            <small class="text-red-500">Cantidad de stock del producto es requerido.</small>
-          </div>
-        </div>
+      <p class="text-gray-600 mt-2 text-lg">Completa la información del producto</p>
+    </div>
 
 
+    <form [formGroup]="formulario" class="grid grid-cols-1 md:grid-cols-2 gap-8 text-base">
 
-        <!-- Subir nueva imagen -->
-        <div class="md:col-span-2">
-          <label for="imagen" class="block text-sm font-semibold text-gray-700 mb-2">
-            <span class="inline-block align-middle mr-1">
-              <!-- Image Icon -->
-              <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <rect width="20" height="16" x="2" y="4" rx="2"/>
-                <circle cx="8" cy="10" r="2"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5-4 4-2-2-3 3"/>
-              </svg>
-            </span>
-            Imagen
-          </label>
-          <input
-            type="file"
-            (change)="onFileChange($event)"
-            id="imagen"
-            class="block w-full text-base text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-base file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 transition"
-          />
+
+      <div>
+        <label for="nombreProducto" class="block text-gray-700 font-semibold mb-1">
+          Nombre del Producto <span class="text-red-500">*</span>
+        </label>
+        <input
+          formControlName="nombreProducto"
+          id="nombreProducto"
+          type="text"
+          placeholder="Ej: Suplemento Xtreme"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-400"
+        />
+        <div *ngIf="formulario.get('nombreProducto')?.invalid && formulario.get('nombreProducto')?.touched">
+          <small class="text-red-500">Campo obligatorio.</small>
         </div>
       </div>
-  <!-- Imagen actual -->
-        <div *ngIf="currentImageUrl" class="flex flex-col items-center md:col-span-2">
-          <span class="text-xs text-gray-500 mb-1">Imagen actual</span>
-          <img
-            [src]="currentImageUrl"
-            alt="Imagen actual del producto"
-            class="w-28 h-28 object-cover rounded-full border-4 border-red-200 shadow-lg"
-          />
+
+  
+      <div>
+        <label for="precio" class="block text-gray-700 font-semibold mb-1">
+          Precio <span class="text-red-500">*</span>
+        </label>
+        <input
+          formControlName="precio"
+          id="precio"
+          type="number"
+          (input)="limitadorNegayMax($event)"
+          placeholder="Ej: 500"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-400"
+        />
+        <div *ngIf="formulario.get('precio')?.invalid && formulario.get('precio')?.touched">
+          <small class="text-red-500">Campo obligatorio.</small>
         </div>
-      <!-- Botón Guardar -->
-      <div class="pt-6">
-        <button
-          type="submit"
-          (click)="enviarFormulario()"
-          class="w-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white font-bold py-3 rounded-xl shadow-lg transition text-lg tracking-wide"
-        >
-          Guardar
-        </button>
+      </div>
+
+   
+      <div>
+        <label for="cantidadEnStock" class="block text-gray-700 font-semibold mb-1">
+          Cantidad en Stock <span class="text-red-500">*</span>
+        </label>
+        <input
+          formControlName="cantidadEnStock"
+          id="cantidadEnStock"
+          type="number"
+          (input)="limitadorNegayMax($event)"
+          placeholder="Ej: 150"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-400"
+        />
+        <div *ngIf="formulario.get('cantidadEnStock')?.invalid && formulario.get('cantidadEnStock')?.touched">
+          <small class="text-red-500">Campo obligatorio.</small>
+        </div>
+      </div>
+
+
+      <div>
+        <label for="descripcion" class="block text-gray-700 font-semibold mb-1">
+          Descripción <span class="text-red-500">*</span>
+        </label>
+        <textarea
+          formControlName="descripcion"
+          id="descripcion"
+          rows="3"
+          placeholder="Breve descripción del producto"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-red-400"
+        ></textarea>
+        <div *ngIf="formulario.get('descripcion')?.invalid && formulario.get('descripcion')?.touched">
+          <small class="text-red-500">Campo obligatorio.</small>
+        </div>
       </div>
     </form>
+
+   
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+      <div>
+        <label for="imagen" class="block text-gray-700 font-semibold mb-1">Subir Imagen</label>
+        <input
+          type="file"
+          id="imagen"
+          (change)="onFileChange($event)"
+          class="block w-full text-gray-600 text-base file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-red-50 file:text-red-700 hover:file:bg-red-100 transition"
+        />
+      </div>
+      <div *ngIf="currentImageUrl" class="flex flex-col items-center justify-center">
+        <span class="text-sm text-gray-500 mb-1">Imagen actual</span>
+        <img
+          [src]="currentImageUrl"
+          alt="Imagen del producto"
+          class="w-28 h-28 object-cover rounded-full border-4 border-red-200 shadow-md"
+        />
+      </div>
+    </div>
+
+
+    <div class="text-center mt-10">
+      <button
+        type="submit"
+        (click)="enviarFormulario()"
+        class="w-full md:w-auto px-10 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full shadow-lg text-lg transition-transform transform hover:scale-105"
+      >
+        {{ prodId ? 'Actualizar Producto' : 'Guardar Producto' }}
+      </button>
+    </div>
   </div>
 </div>

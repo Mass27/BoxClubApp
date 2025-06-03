@@ -134,9 +134,7 @@
   transition: background-color 0.3s ease;
 }
 
-/* .button-alternar:hover {
-  background-color: #d11b1b;
-} */
+
 
 .button-alternar.selected {
   background-color: #d11b1b;
@@ -252,4 +250,14 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}.swal2-confirm-custom {
+  background-color: #e3342f !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.swal2-confirm-custom:hover {
+  background-color: #cc1f1a !important;
 }

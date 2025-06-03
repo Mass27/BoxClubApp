@@ -1,38 +1,77 @@
-<h2 class="titulo-global text-xl md:text-2xl font-semibold mb-4">Listado de Empleados</h2>
+<div class="min-h-screen bg-gray-100 p-6">
+  <!-- Encabezado -->
+  <div class="mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <h2 class="text-3xl font-bold text-red-600 flex items-center gap-2">
+      <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1120.88 6.196a9 9 0 01-15.757 11.608z" />
+      </svg>
+      Panel de Empleados
+    </h2>
 
-<div class="search-container flex flex-col sm:flex-row items-center sm:justify-between mb-4">
-  <app-searchBox (BuscarObject)="buscarEmpleadoPorNombre($event)" class="mb-4 sm:mb-0"></app-searchBox>
+    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+      <app-searchBox
+        (BuscarObject)="buscarEmpleadoPorNombre($event)"
+        class="flex-1 sm:flex-none"
+      ></app-searchBox>
 
-  <button class="button-agregar flex items-center justify-center bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600" routerLink="/empleados/agregar">
-    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-    </svg> Agregar
-  </button>
-</div>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-  <div *ngFor="let item of empleadosFiltradas" class="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-    <div class="space-y-2">
-      <h2 class="text-xl font-semibold text-gray-800">{{ item.nombreCompleto }}</h2>
-
-      <p class="text-sm text-gray-600">
-        <strong class="text-gray-700">Correo:</strong> {{ item.correo }}
-      </p>
-
-      <p class="text-sm text-gray-600">
-        <strong class="text-gray-700">Identidad:</strong> {{ item.identidad }}
-      </p>
-
-      <p class="text-sm text-gray-600">
-        <strong class="text-gray-700">Cargo:</strong> {{ item.tipoEmpleado }}
-      </p>
+      <button
+        class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg flex items-center gap-2 transition"
+        routerLink="/empleados/agregar"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        Agregar
+      </button>
     </div>
+  </div>
 
-    <div class="mt-4">
+  <!-- Cards de empleados -->
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div
+      *ngFor="let item of empleadosFiltradas"
+      class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition relative"
+    >
+      <!-- Ícono tipo avatar -->
+      <div class="absolute -top-5 left-1/2 transform -translate-x-1/2">
+        <div class="bg-red-100 text-red-600 w-10 h-10 rounded-full flex items-center justify-center shadow">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1120.88 6.196a9 9 0 01-15.757 11.608z" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="mt-6 space-y-3 text-sm text-gray-700">
+        <h3 class="text-lg font-bold text-gray-800 text-center">
+          {{ item.nombreCompleto }}
+        </h3>
+
+        <p class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 12H8m0 0l4 4m-4-4l4-4" />
+          </svg>
+          <strong>Correo:</strong> {{ item.correo }}
+        </p>
+
+        <p class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 5v14M8 5v14M3 7h18M3 17h18" />
+          </svg>
+          <strong>Identidad:</strong> {{ item.identidad }}
+        </p>
+
+        <p class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-6h6v6h5v2H4v-2h5z" />
+          </svg>
+          <strong>Cargo:</strong> {{ item.tipoEmpleado }}
+        </p>
+      </div>
+
       <button
         *ngIf="isAdmin"
         [routerLink]="['/empleados/edit', item.idempleado]"
-        class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300"
+        class="mt-5 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-semibold transition"
       >
         Editar
       </button>

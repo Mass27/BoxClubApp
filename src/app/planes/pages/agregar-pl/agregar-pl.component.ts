@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PlanesService } from '../../services/planes.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-agregar-pl',
@@ -46,37 +47,73 @@ export class AgregarPlComponent implements OnInit {
       }
     });
   }
-  enviarForm() {
-    if (this.formulario.valid) {
-      const formData = this.formulario.value;
-      if (this.isEditMode) {
-        formData._id = this.planeId; 
-        this.planesServices.updateProducto(formData).subscribe(
-          (response) => {
-            console.log('Planes actualizado exitosamente:', response);
-            this.router.navigate(['/planes/list']);
-          },
-          (error) => {
-            console.error('Error al actualizar empleado:', error);
-          }
-        );
-      } else {
-        this.planesServices.postPlanes(formData).subscribe(
-          (response) => {
-            console.log('Planes agregado exitosamente:', response);
-            this.router.navigate(['/planes/list']);
-          },
-          (error) => {
-            console.error('Error al agregar empleado:', error);
-          }
-        );
+enviarForm() {
+  if (this.formulario.invalid) {
+    const camposInvalidos: string[] = [];
+
+    Object.keys(this.formulario.controls).forEach((campo) => {
+      const control = this.formulario.get(campo);
+      if (control && control.invalid) {
+        switch (campo) {
+          case 'nombrePlan':
+            camposInvalidos.push('Nombre del Plan');
+            break;
+          case 'descripcion':
+            camposInvalidos.push('Descripción');
+            break;
+          case 'precio':
+            camposInvalidos.push('Precio');
+            break;
+          case 'dias':
+            camposInvalidos.push('Cantidad de Días');
+            break;
+        }
       }
-    } else {
-      console.error(
-        'El formulario es inválido. Por favor, completa correctamente todos los campos.'
-      );
-    }
+    });
+
+    this.formulario.markAllAsTouched();
+
+    Swal.fire({
+      title: '🚫 Faltan datos obligatorios',
+      html:
+        '<p style="font-size: 15px;">Completa los siguientes campos:</p><ul style="text-align:left;">' +
+        camposInvalidos.map((campo) => `<li>📌 ${campo}</li>`).join('') +
+        '</ul>',
+      icon: 'error',
+      background: '#fff',
+      confirmButtonText: 'Entendido',
+      customClass: {
+        confirmButton: 'swal2-confirm-custom',
+      },
+    });
+
+    return;
   }
+
+  const formData = this.formulario.value;
+
+  if (this.isEditMode && this.planeId) {
+    formData._id = this.planeId;
+    this.planesServices.updateProducto(formData).subscribe(
+      () => {
+        this.router.navigate(['/planes/list']);
+      },
+      (error) => {
+        console.error('Error al actualizar plan:', error);
+      }
+    );
+  } else {
+    this.planesServices.postPlanes(formData).subscribe(
+      (response) => {
+        this.router.navigate(['/planes/list']);
+      },
+      (error) => {
+        console.error('Error al agregar plan:', error);
+      }
+    );
+  }
+}
+
 
   limitarInput(event: any) {
     let inputValue = event.target.value;

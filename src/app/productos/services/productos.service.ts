@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Productos } from '../interfaces/productos.interfaces';
 import { Observable } from 'rxjs';
 import { ProdByID } from '../interfaces/prodById.interfaces';
+import { Metricas } from '../interfaces/metrics.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -40,21 +41,14 @@ export class ProductosService {
     );
   }
 
-  // uploadImage(idproducto: string, formData: FormData): Observable<any> {
-  //   // Agregar el idcliente al FormData
-  //   formData.append('idproducto', idproducto);
-
-  //   const headers = new HttpHeaders({ 'Accept': '*/*' });
-  //   // Puedes omitir el encabezado "Accept" si no es necesario.
-
-  //   return this.http.post(`${this.baseUrl}/productos/cargarimagen`, formData, { headers, responseType: 'text' });
-  // }
-
   uploadImage(formData: FormData) {
     const headers = new HttpHeaders({ Accept: '*/*' });
     return this.http.post(`${this.baseUrl}/productos/cargarimagen`, formData, {
       headers,
       responseType: 'text',
     });
+  }
+    obtenerMetrics(): Observable<Metricas> {
+    return this.http.get<Metricas>(`${this.baseUrl}/productos/metrics`);
   }
 }

@@ -1,139 +1,119 @@
-<form [formGroup]="formulario" class="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-10">
-  <h2 class="text-2xl font-bold text-red-600 mb-6 text-center">{{empleadoId ? 'Editar Empleado' : 'Nuevo Empleado'}}</h2>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <!-- Identidad -->
-    <div>
-      <label for="identidad" class="block text-sm font-semibold text-gray-700 mb-2">
-        <span class="inline-block align-middle mr-1">
-          <!-- ID Card Icon -->
-          <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <rect width="20" height="14" x="2" y="5" rx="2" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 11h4M8 15h8"/>
-          </svg>
-        </span>
-        Identidad <span class="text-red-500">*</span>
-      </label>
-      <input
-        formControlName="identidad"
-        type="text"
-        id="identidad"
-        placeholder="Identidad"
-        maxlength="13"
-        (input)="limitarIdentidad($event)"
-        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-      />
-      <div *ngIf="formulario.get('identidad')?.invalid && formulario.get('identidad')?.touched">
-        <small class="text-red-500">Identidad del empleado es requerido.</small>
-      </div>
+<div class="min-h-screen bg-gray-50 py-10 px-4 flex justify-center items-start">
+  <div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl p-10 relative overflow-hidden">
+    
+    <!-- Encabezado -->
+    <div class="text-center mb-10">
+      <h2 class="text-4xl font-extrabold text-red-600 tracking-tight">
+        {{ empleadoId ? 'Editar Empleado' : 'Registrar Nuevo Empleado' }}
+      </h2>
+      <p class="text-gray-600 mt-2 text-lg">Completa la información del empleado</p>
     </div>
 
-    <!-- Nombre Completo -->
-    <div>
-      <label for="nombreCompleto" class="block text-sm font-semibold text-gray-700 mb-2">
-        <span class="inline-block align-middle mr-1">
-          <!-- User Icon -->
-          <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8z"/>
-          </svg>
-        </span>
-        Nombre Completo <span class="text-red-500">*</span>
-      </label>
-      <input
-        formControlName="nombreCompleto"
-        type="text"
-        id="nombreCompleto"
-        placeholder="Nombre Completo"
-        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-      />
-      <div *ngIf="formulario.get('nombreCompleto')?.invalid && formulario.get('nombreCompleto')?.touched">
-        <small class="text-red-500">Nombre del empleado es requerido.</small>
+    <!-- Formulario -->
+    <form [formGroup]="formulario" class="grid grid-cols-1 md:grid-cols-2 gap-8 text-base">
+      
+      <!-- Identidad -->
+      <div>
+        <label for="identidad" class="block text-gray-700 font-semibold mb-1">
+          Identidad <span class="text-red-500">*</span>
+        </label>
+        <input
+          formControlName="identidad"
+          type="text"
+          id="identidad"
+          maxlength="13"
+          (input)="limitarIdentidad($event)"
+          placeholder="0801199912345"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-400"
+        />
+        <div *ngIf="formulario.get('identidad')?.invalid && formulario.get('identidad')?.touched">
+          <small class="text-red-500">Debe tener 13 dígitos numéricos.</small>
+        </div>
       </div>
-    </div>
 
-    <!-- Correo -->
-    <div>
-      <label for="correo" class="block text-sm font-semibold text-gray-700 mb-2">
-        <span class="inline-block align-middle mr-1">
-          <!-- Mail Icon -->
-          <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16 12l-4-4-4 4m8 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16 0V6a2 2 0 00-2-2H6a2 2 0 00-2 2v6"/>
-          </svg>
-        </span>
-        Correo <span class="text-red-500">*</span>
-      </label>
-      <input
-        formControlName="correo"
-        type="email"
-        id="correo"
-        placeholder="Correo"
-        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-      />
-      <div *ngIf="formulario.get('correo')?.invalid && formulario.get('correo')?.touched">
-        <small class="text-red-500">Correo del empleado es requerido.</small>
+      <!-- Nombre Completo -->
+      <div>
+        <label for="nombreCompleto" class="block text-gray-700 font-semibold mb-1">
+          Nombre Completo <span class="text-red-500">*</span>
+        </label>
+        <input
+          formControlName="nombreCompleto"
+          type="text"
+          id="nombreCompleto"
+          placeholder="Juan Pérez"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-400"
+        />
+        <div *ngIf="formulario.get('nombreCompleto')?.invalid && formulario.get('nombreCompleto')?.touched">
+          <small class="text-red-500">Campo obligatorio.</small>
+        </div>
       </div>
-    </div>
 
-    <!-- Teléfono -->
-    <div>
-      <label for="telefono" class="block text-sm font-semibold text-gray-700 mb-2">
-        <span class="inline-block align-middle mr-1">
-          <!-- Phone Icon -->
-          <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm0 10a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-2zm10-10a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zm0 10a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
-          </svg>
-        </span>
-        Teléfono <span class="text-red-500">*</span>
-      </label>
-      <input
-        formControlName="numeroTelefono"
-        type="text"
-        id="telefono"
-        placeholder="Teléfono"
-        maxlength="8"
-        (input)="limitarNumeroTelefono($event)"
-        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-      />
-      <div *ngIf="formulario.get('numeroTelefono')?.invalid && formulario.get('numeroTelefono')?.touched">
-        <small class="text-red-500">Numero de telefono del empleado es requerido.</small>
+      <!-- Correo -->
+      <div>
+        <label for="correo" class="block text-gray-700 font-semibold mb-1">
+          Correo Electrónico <span class="text-red-500">*</span>
+        </label>
+        <input
+          formControlName="correo"
+          type="email"
+          id="correo"
+          placeholder="correo@ejemplo.com"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-400"
+        />
+        <div *ngIf="formulario.get('correo')?.invalid && formulario.get('correo')?.touched">
+          <small class="text-red-500">Correo inválido.</small>
+        </div>
       </div>
-    </div>
 
-    <!-- Tipo de Empleado -->
-    <div>
-      <label for="tipoEmpleado" class="block text-sm font-semibold text-gray-700 mb-2">
-        <span class="inline-block align-middle mr-1">
-          <!-- Tag Icon -->
-          <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M3 11l9 9a2 2 0 002.83 0l7.07-7.07a2 2 0 000-2.83l-9-9a2 2 0 00-2.83 0L3 8.17a2 2 0 000 2.83z"/>
-          </svg>
-        </span>
-        Tipo de Empleado <span class="text-red-500">*</span>
-      </label>
-      <select
-        formControlName="tipoEmpleado"
-        id="tipoEmpleado"
-        class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-base focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-      >
-        <option value="" disabled selected>Seleccione un tipo</option>
-        <option value="entrenador">Entrenador</option>
-        <option value="administrativo">Administrativo</option>
-        <option value="conserje">Conserje</option>
-      </select>
-      <div *ngIf="formulario.get('tipoEmpleado')?.invalid && formulario.get('tipoEmpleado')?.touched">
-        <small class="text-red-500">Tipo de empleado es requerido.</small>
+      <!-- Teléfono -->
+      <div>
+        <label for="telefono" class="block text-gray-700 font-semibold mb-1">
+          Teléfono <span class="text-red-500">*</span>
+        </label>
+        <input
+          formControlName="numeroTelefono"
+          type="text"
+          id="telefono"
+          maxlength="8"
+          (input)="limitarNumeroTelefono($event)"
+          placeholder="98765432"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-400"
+        />
+        <div *ngIf="formulario.get('numeroTelefono')?.invalid && formulario.get('numeroTelefono')?.touched">
+          <small class="text-red-500">Campo obligatorio.</small>
+        </div>
       </div>
-    </div>
+
+      <!-- Tipo de Empleado -->
+      <div class="md:col-span-2">
+        <label for="tipoEmpleado" class="block text-gray-700 font-semibold mb-1">
+          Tipo de Empleado <span class="text-red-500">*</span>
+        </label>
+        <select
+          formControlName="tipoEmpleado"
+          id="tipoEmpleado"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-400"
+        >
+          <option value="" disabled selected>Seleccione una opción</option>
+          <option value="entrenador">Entrenador</option>
+          <option value="administrativo">Administrativo</option>
+          <option value="conserje">Conserje</option>
+        </select>
+        <div *ngIf="formulario.get('tipoEmpleado')?.invalid && formulario.get('tipoEmpleado')?.touched">
+          <small class="text-red-500">Seleccione un tipo válido.</small>
+        </div>
+      </div>
+
+      <!-- Botón -->
+      <div class="md:col-span-2 text-center mt-6">
+        <button
+          type="submit"
+          (click)="enviarForm()"
+          class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-10 rounded-full shadow-lg transition-transform transform hover:scale-105"
+        >
+          {{ empleadoId ? 'Actualizar' : 'Registrar' }}
+        </button>
+      </div>
+    </form>
   </div>
-
-  <!-- Botón Guardar -->
-  <div class="pt-6">
-    <button
-      type="submit"
-      (click)="enviarForm()"
-      class="w-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white font-bold py-3 rounded-xl shadow-lg transition text-lg tracking-wide"
-    >
-      AGREGAR
-    </button>
-  </div>
-</form>
+</div>

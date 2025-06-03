@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { usuarioService } from '../../services/usuarios.service';
 import { Clientes } from '../../interfaces/usuario.interfaces';
 import { Planes } from '../../../planes/interfaces/planes.interface';
@@ -14,12 +14,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalRutinaComponent } from '../../components/modalRutina/modalRutina.component';
 import { ClientePage } from '../../interfaces/clientesPagin.interfaces';
+import { ClientesPendientes } from '../../interfaces/ClientesPen.interfaces';
+import { ContadorInac } from '../../interfaces/contadorClientesInac.interfaces';
 @Component({
   selector: 'app-list-usuarios',
-  // styleUrls: ['./list-usuarios.component.css'],
+   styleUrls: ['./list-usuarios.component.css'],
   templateUrl: './list-usuarios.component.html',
 })
 export class ListUsuariosComponent implements OnInit {
+   @ViewChild('bandeja') bandejaRef!: ElementRef;
+  @ViewChild('btnNoti') botonRef!: ElementRef;
   users: Clientes[] = [];
   allUsers: Clientes[] = [];
   tipPlanes: Planes[] = [];
@@ -33,6 +37,9 @@ totalPages: number = 0;
   mostrarPendientes: boolean = false;
 
   contadorClientesActivos: number = 0;
+    contadorClientesPen: number = 0;
+     contadorClientesInac: number = 0;
+     
   userPermissions: LoginAccess[] = [];
   isAdmin: boolean = false;
   usuariosConTresDiasRestantes: Clientes[] = [];
@@ -52,6 +59,8 @@ isEntrenador: boolean = false;
       .subscribe((planes) => (this.tipPlanes = planes));
     this.adminUser();
     this.contarClientesActivos();
+    this.contarClientesPendientes();
+    this.contarClientesInactivos();
   }
 cargarUsuarios(page: number = 1): void {
   this.usuarioService.getuserPaginated(page, this.limit).subscribe((data) => {
@@ -115,7 +124,7 @@ cargarUsuarios(page: number = 1): void {
   }
 
   formatDate(date: string): string {
-    // Convertir la fecha en formato ISO 8601 a formato yyyy-MM-dd
+   
     const dateObj = new Date(date);
     return dateObj.toISOString().split('T')[0];
   }
@@ -129,21 +138,21 @@ cargarUsuarios(page: number = 1): void {
     return plan ? plan.nombrePlan : 'Plan no encontrado';
   }
 
-  buscarClientePorNombre(nombre: string): void {
-    if (nombre.trim() === '') {
-      this.usuariosFiltrados = this.users;
-      return;
-    }
-    this.usuarioService.bcNombre(nombre).subscribe(
-      (usuarios: IDUsuarios[]) => {
-        // Actualiza las facturas filtradas con los resultados de la búsqueda
-        this.usuariosFiltrados = usuarios;
-      },
-      (error) => {
-        console.error('Error al buscar facturas por nombre:', error);
-      }
-    );
+ buscarClientePorNombre(nombre: string): void {
+  if (nombre.trim() === '') {
+    this.filterUsuarios(); 
+    return;
   }
+
+  this.usuarioService.bcNombre(nombre).subscribe(
+    (usuarios: IDUsuarios[]) => {
+      this.usuariosFiltrados = usuarios;
+    },
+    (error) => {
+      console.error('Error al buscar clientes por nombre:', error);
+    }
+  );
+}
 
   contarClientesActivos() {
     this.usuarioService.contarClietnesActivos().subscribe(
@@ -155,6 +164,33 @@ cargarUsuarios(page: number = 1): void {
       }
     );
   }
+
+
+  contarClientesPendientes() {
+    this.usuarioService.contarClietnesPendientes().subscribe(
+      (clientesPendientes: ClientesPendientes) => {
+        this.contadorClientesPen = clientesPendientes.cantidadClientesPen;
+      },
+      (error) => {
+        console.error('Error al contar clientes activos:', error);
+      }
+    );
+  }
+
+
+contarClientesInactivos() {
+    this.usuarioService.contarClietnesInactivos().subscribe(
+      (clientesInactivos: ContadorInac) => {
+        this.contadorClientesInac = clientesInactivos.cantidadClientesInactivos;
+      },
+      (error) => {
+        console.error('Error al contar clientes activos:', error);
+      }
+    );
+  }
+
+
+
   asignarRutina(usuarioId: string) {
     const dialogRef = this.dialog.open(ModalRutinaComponent, {
       width: '500px',
@@ -163,13 +199,25 @@ cargarUsuarios(page: number = 1): void {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.success) {
-        // Puedes mostrar un mensaje de éxito o actualizar la vista de alguna forma
+      
         alert('Rutina asignada correctamente');
       } else {
-        // Manejo de error
-        // alert('Error al asignar rutina');
+       
       }
     });
   }
+
+ @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+
+    const clickedInsideBandeja = this.bandejaRef?.nativeElement.contains(target);
+    const clickedOnButton = this.botonRef?.nativeElement.contains(target);
+
+    if (!clickedInsideBandeja && !clickedOnButton) {
+      this.mostrarBandeja = false;
+    }
+  }
+
 }
 

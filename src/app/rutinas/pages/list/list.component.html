@@ -1,45 +1,133 @@
-<h2 class="titulo-global text-xl md:text-2xl font-semibold mb-4">Listado de Rutinas</h2>
+<!-- Título del listado -->
+<h2 class="text-3xl font-extrabold text-center text-red-600 mb-6 flex items-center justify-center gap-2">
+  Listado de Rutinas
+</h2>
 
-<div class="search-container flex flex-col sm:flex-row items-center sm:justify-between mb-4">
+<!-- Cajón de búsqueda y botón “Agregar” -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 px-4 sm:px-0">
   <app-searchBox
     (BuscarObject)="searchByName($event)"
-    class="mb-4 sm:mb-0"
-  >
-  </app-searchBox>
+    class="w-full sm:w-auto"
+  ></app-searchBox>
 
-  <button *ngIf="isAdmin || isEntrenador"
-          class="button-agregar flex items-center justify-center bg-red-500 text-white rounded-lg py-2 px-4 hover:bg-red-600"
-          routerLink="/rutinas/agregar">
-    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+  <button
+    *ngIf="isAdmin || isEntrenador"
+    routerLink="/rutinas/agregar"
+    class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg shadow-sm transition"
+  >
+    <svg
+      class="w-5 h-5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
     </svg>
-    Agregar
+    Agregar Rutina
   </button>
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-  <div *ngFor="let item of rutinasFiltrado" class="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-    <div class="mb-4">
-      <h2 class="text-xl font-semibold text-gray-800 mb-1">
+<!-- Grid de tarjetas -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 px-4 sm:px-0">
+  <div
+    *ngFor="let item of rutinasFiltrado"
+    class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between"
+  >
+    <!-- Información de la rutina -->
+    <div class="space-y-3">
+      <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+        <svg
+          class="w-5 h-5 text-gray-600"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M20 13V7a2 2 0 00-2-2H6a2 2 0 00-2 2v6m16 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16 0H4"
+          />
+        </svg>
         {{ item.nombre }}
-      </h2>
-      <p class="text-sm text-gray-600 mb-1">
-        <strong class="text-gray-700">Descripción:</strong> {{ item.descripcion | slice:0:20 }}...
+      </h3>
+
+      <p class="text-sm text-gray-600 flex items-start gap-2">
+        <svg
+          class="w-4 h-4 mt-0.5 text-gray-500"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19 21H5a2 2 0 01-2-2V7a2 2 0 012-2h4l2-2h2l2 2h4a2 2 0 012 2v12a2 2 0 01-2 2z"
+          />
+        </svg>
+        <span class="font-medium text-gray-700">Descripción:</span>
+        {{ item.descripcion | slice:0:40 }}...
       </p>
-      <p class="text-sm text-gray-600">
-        <strong class="text-gray-700">Empleado:</strong> {{ getempleadoName(item.empleado) }}
+
+      <p class="text-sm text-gray-600 flex items-center gap-2">
+        <svg
+          class="w-4 h-4 text-gray-500"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5.121 17.804A4 4 0 019 16h6a4 4 0 013.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+        <span class="font-medium text-gray-700">Empleado:</span>
+        {{ getempleadoName(item.empleado) }}
       </p>
     </div>
 
-    <div class="mt-6">
-      <button *ngIf="isAdmin || isEntrenador"
-              [routerLink]="['/rutinas/edit', item._id]"
-              class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
-        Editar Rutina
+    <!-- Botones de acción -->
+    <div class="mt-5 grid grid-cols-1 gap-3">
+      <button
+        *ngIf="isAdmin || isEntrenador"
+        [routerLink]="['/rutinas/edit', item._id]"
+        class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition"
+      >
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-5M18.5 2.5l3 3M17 4l3 3"
+          />
+        </svg>
+        Editar
       </button>
-       <button *ngIf="isAdmin || isEntrenador"
-              (click)="downloadPDF(item._id)"
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300 mt-4">
+
+      <button
+        *ngIf="isAdmin || isEntrenador"
+        (click)="downloadPDF(item._id)"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition"
+      >
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v16h16" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v8m0 8v4" />
+        </svg>
         Descargar PDF
       </button>
     </div>
