@@ -8,6 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutRutinasComponent } from './pages/layoutRutinas/layoutRutinas.component';
 import { ListComponent } from './pages/list/list.component';
 import { AgregarRutinasComponent } from './pages/agregarRutinas/agregarRutinas.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -25,7 +29,11 @@ import { AgregarRutinasComponent } from './pages/agregarRutinas/agregarRutinas.c
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+     MatTableModule,
+      MatPaginatorModule,
+       MatSortModule,
+        MatButtonModule,
   ]
 })
 export class RutinasModule { }

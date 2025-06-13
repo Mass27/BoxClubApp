@@ -22,7 +22,7 @@ export class usuarioService {
   }
   getuserPaginated(page: number, limit: number): Observable<ClientePag> {
     return this.http.get<ClientePag>(
-      `${this.baseUrl}/clientes/listarPage?=${page}&limit=${limit}`
+      `${this.baseUrl}/clientes/listarPage?page=${page}&limit=${limit}`
     );  }
 
   addUser(user: Clientes): Observable<Clientes> {

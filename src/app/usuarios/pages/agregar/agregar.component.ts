@@ -123,7 +123,7 @@ export class AgregarComponent implements OnInit {
   Swal.fire({
   title: '🚫 Faltan datos',
   html: '<p style="font-size: 15px;">Completa los siguientes campos:</p><ul style="text-align:left;">' +
-    camposInvalidos.map(campo => `<li>📌 ${campo}</li>`).join('') +
+    camposInvalidos.map(campo => `<li> -${campo}</li>`).join('') +
     '</ul>',
   icon: 'error',
   background: '#fff',

@@ -1,24 +1,29 @@
 <form
   [formGroup]="formulario"
-  class="relative bg-white rounded-2xl shadow-xl p-8 max-w-5xl mx-auto space-y-8"
+  class="relative bg-white rounded-3xl shadow-2xl px-8 py-10 max-w-4xl mx-auto space-y-10 animate-fade-in"
 >
-  <!-- Encabezado -->
+  <!-- ENCABEZADO -->
   <div class="text-center">
-    <h2 class="text-3xl font-bold text-red-600">
-      {{ usuarioId ? "Editar Cliente" : "Registrar Cliente" }}
+    <h2 class="text-4xl font-extrabold text-red-600">
+      {{ usuarioId ? 'Editar Cliente' : 'Registrar Cliente' }}
     </h2>
-    <p class="text-gray-500">Llena los datos del cliente para continuar</p>
+    <p class="text-gray-500 mt-1 text-base">
+      Completa los datos para continuar con el registro
+    </p>
+    <div class="mt-2 mx-auto w-24 h-1 bg-red-500 rounded-full"></div>
   </div>
 
-  <!-- Imagen -->
+  <!-- IMAGEN -->
   <div class="flex justify-center">
-    <label for="imagen" class="relative cursor-pointer group">
-      <div class="w-32 h-32 bg-gray-100 border-2 border-dashed rounded-full flex items-center justify-center shadow-inner overflow-hidden">
+    <label for="imagen" class="relative group cursor-pointer">
+      <div
+        class="w-36 h-36 bg-gray-100 border-4 border-dashed rounded-full flex items-center justify-center overflow-hidden shadow-inner transition-all group-hover:border-red-400"
+      >
         <img
           *ngIf="currentImageUrl"
           [src]="currentImageUrl"
-          class="w-full h-full object-cover"
           alt="Imagen actual"
+          class="w-full h-full object-cover"
         />
         <svg
           *ngIf="!currentImageUrl"
@@ -28,11 +33,7 @@
           stroke-width="2"
           viewBox="0 0 24 24"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M5 12h14M12 5l7 7-7 7"
-          />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </div>
       <input type="file" id="imagen" (change)="onFileChange($event)" class="hidden" />
@@ -42,64 +43,64 @@
     </label>
   </div>
 
-  <!-- Campos en grid -->
-  <div class="grid md:grid-cols-2 gap-6 text-sm">
-    <!-- Nombre -->
+  <!-- CAMPOS -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-sm">
+    <!-- NOMBRE -->
     <div>
-      <label class="block mb-1 font-semibold text-gray-700"
+      <label class="block text-sm font-medium text-gray-700 mb-1"
         >Nombre Completo <span class="text-red-500">*</span></label
       >
       <input
         formControlName="nombreCompleto"
         maxlength="50"
         placeholder="Ej: Juan Pérez"
-        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:ring-2 focus:ring-red-400 outline-none"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500"
         type="text"
       />
     </div>
 
-    <!-- Teléfono -->
+    <!-- TELÉFONO -->
     <div>
-      <label class="block mb-1 font-semibold text-gray-700"
-        >Número de Teléfono <span class="text-red-500">*</span></label
+      <label class="block text-sm font-medium text-gray-700 mb-1"
+        >Teléfono <span class="text-red-500">*</span></label
       >
       <input
         formControlName="numeroTelefono"
         (input)="limitarNumeroTelefono($event)"
         type="text"
         placeholder="Ej: 99998888"
-        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:ring-2 focus:ring-red-400 outline-none"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500"
       />
     </div>
 
-    <!-- Fecha de ingreso -->
+    <!-- FECHA -->
     <div>
-      <label class="block mb-1 font-semibold text-gray-700"
+      <label class="block text-sm font-medium text-gray-700 mb-1"
         >Fecha de Ingreso <span class="text-red-500">*</span></label
       >
       <input
         formControlName="fechaIngreso"
         type="date"
-        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:ring-2 focus:ring-red-400 outline-none"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500"
       />
     </div>
 
-    <!-- Correo -->
+    <!-- CORREO -->
     <div>
-      <label class="block mb-1 font-semibold text-gray-700"
+      <label class="block text-sm font-medium text-gray-700 mb-1"
         >Correo <span class="text-red-500">*</span></label
       >
       <input
         formControlName="correo"
         type="email"
         placeholder="Ej: correo@ejemplo.com"
-        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:ring-2 focus:ring-red-400 outline-none"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500"
       />
     </div>
 
-    <!-- Identidad -->
+    <!-- IDENTIDAD -->
     <div>
-      <label class="block mb-1 font-semibold text-gray-700"
+      <label class="block text-sm font-medium text-gray-700 mb-1"
         >Identidad <span class="text-red-500">*</span></label
       >
       <input
@@ -108,18 +109,18 @@
         maxlength="13"
         (input)="limitarIdentidad($event)"
         placeholder="Ej: 0801199912345"
-        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:ring-2 focus:ring-red-400 outline-none"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500"
       />
     </div>
 
-    <!-- Plan -->
+    <!-- PLAN -->
     <div>
-      <label class="block mb-1 font-semibold text-gray-700"
+      <label class="block text-sm font-medium text-gray-700 mb-1"
         >Plan <span class="text-red-500">*</span></label
       >
       <select
         formControlName="idPlan"
-        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:ring-2 focus:ring-red-400 outline-none"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500"
       >
         <option disabled selected>Selecciona un plan</option>
         <option *ngFor="let plan of tipoPlanes" [value]="plan._id">
@@ -128,12 +129,12 @@
       </select>
     </div>
 
-    <!-- Estado -->
+    <!-- ESTADO -->
     <div>
-      <label class="block mb-1 font-semibold text-gray-700">Estado</label>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
       <select
         formControlName="estado"
-        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:ring-2 focus:ring-red-400 outline-none"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500"
       >
         <option disabled selected>Selecciona un estado</option>
         <option *ngFor="let plan of estados" [value]="plan.id">
@@ -143,12 +144,12 @@
     </div>
   </div>
 
-  <!-- Botón -->
+  <!-- BOTÓN -->
   <div class="pt-4">
     <button
       type="submit"
       (click)="enviarFormulario()"
-      class="w-full bg-gradient-to-r from-red-500 to-red-700 text-white py-3 rounded-xl text-lg font-semibold shadow-lg hover:from-red-600 hover:to-red-800 transition"
+      class="w-full bg-gradient-to-r from-red-500 to-red-700 text-white py-3 rounded-xl text-lg font-semibold shadow-md hover:from-red-600 hover:to-red-800 transition-all duration-300"
     >
       Guardar Cliente
     </button>

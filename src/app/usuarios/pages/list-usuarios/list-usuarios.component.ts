@@ -88,7 +88,7 @@ cargarUsuarios(page: number = 1): void {
 
   updateUsuariosConTresDiasRestantes() {
     this.usuariosConTresDiasRestantes = this.allUsers.filter(
-      (user) => user.diasRestantes === 27
+      (user) => user.diasRestantes === 4
     );
   }
 

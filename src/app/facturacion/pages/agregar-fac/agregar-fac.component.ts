@@ -135,11 +135,15 @@ console.log('Factura obtenida:', factura);
       this.clientes = clientes;
     });
   }
-  getProdcutos() {
-    this.prodService.getAllProductos().subscribe((productos) => {
-      this.productos = productos;
-    });
-  }
+getProdcutos() {
+  this.prodService.getAllProductos().subscribe((productos) => {
+    if (this.isEditMode) {
+      this.productos = productos; // No filtrar si estás editando
+    } else {
+      this.productos = productos.filter(producto => producto.cantidadEnStock > 0);
+    }
+  });
+}
 
    actualizarPrecioPlan(event: Event) {
     const idPlanSeleccionado = (event.target as HTMLSelectElement).value;

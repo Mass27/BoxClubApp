@@ -1,37 +1,40 @@
-<!-- Main Content -->
-<div class="flex-1 flex flex-col overflow-hidden bg-gray-50 min-h-screen">
+<div class="flex-1 flex flex-col bg-gray-50 min-h-screen overflow-hidden">
 
-  <!-- Encabezado tipo Dashboard -->
-  <header class="flex items-center justify-between px-6 py-4 bg-white border-b shadow-sm sticky top-0 z-30">
-    <h1 class="text-2xl font-semibold text-gray-800"> Listado de Clientes</h1>
-    <div class="flex items-center gap-4">
-      <!-- Notificaciones -->
-      <button #btnNoti (click)="toggleBandeja()" class="relative hover:scale-105 transition">
-        <mat-icon class="text-blue-600 text-[26px]">notifications</mat-icon>
+  <!-- === HEADER === -->
+  <header class="flex items-center justify-between px-5 py-3 bg-white border-b shadow-sm sticky top-0 z-30">
+    <h1 class="text-xl font-semibold text-gray-800">Listado de Clientes</h1>
+    <div class="flex items-center space-x-3">
+      <!-- Botón de notificaciones -->
+      <button #btnNoti
+              (click)="toggleBandeja()"
+              class="relative p-1 hover:scale-105 transition-transform">
+        <mat-icon class="text-blue-600 text-2xl">notifications</mat-icon>
         <span *ngIf="usuariosConTresDiasRestantes.length"
-              class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full px-1.5">
+              class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1">
           {{ usuariosConTresDiasRestantes.length }}
         </span>
       </button>
-      <!-- Botón Agregar -->
+
+      <!-- Botón Agregar (solo ADMIN) -->
       <button *ngIf="isAdmin"
               routerLink="/usuarios/agregar"
-              class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl flex items-center gap-2 shadow-sm transition">
-        <mat-icon>add</mat-icon> <span class="font-medium text-base ">Agregar</span>
+              class="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg shadow-sm transition">
+        <mat-icon class="text-base">add</mat-icon>
+        <span class="text-sm font-medium">Agregar</span>
       </button>
     </div>
   </header>
 
-  <!-- Bandeja de notificaciones -->
-  <div
-    *ngIf="mostrarBandeja"
-    #bandeja
-    class="absolute right-6 top-20 bg-white p-4 border shadow-xl rounded-xl w-80 z-50 animate-fade-in"
-  >
-    <h3 class="text-md font-bold text-gray-800 mb-3">🔔 Clientes por vencer</h3>
+  <!-- === BANDEJA DE NOTIFICACIONES === -->
+  <div *ngIf="mostrarBandeja"
+       #bandeja
+        class="absolute right-5 top-16 bg-white p-4 border rounded-lg shadow-lg w-72 z-50 animate-fade-in-up">
+    <h3 class="text-sm font-bold text-gray-800 mb-2">🔔 Clientes por vencer</h3>
     <div *ngIf="usuariosConTresDiasRestantes.length; else sinNotif">
-      <div *ngFor="let u of usuariosConTresDiasRestantes" class="text-sm border-b py-2">
-        <span class="font-semibold">{{ u.nombreCompleto }}</span> vence en <strong>{{ u.diasRestantes }}</strong> días.
+      <div *ngFor="let u of usuariosConTresDiasRestantes"
+           class="text-sm border-b pb-1 mb-1 last:border-b-0 last:pb-0 last:mb-0">
+        <span class="font-semibold">{{ u.nombreCompleto }}</span>
+        vence en <strong>{{ u.diasRestantes }}</strong> días.
       </div>
     </div>
     <ng-template #sinNotif>
@@ -39,46 +42,49 @@
     </ng-template>
   </div>
 
-  <!-- Panel de resumen -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-6 py-6">
-    <div class="bg-white p-5 rounded-2xl shadow text-center">
-      <p class="text-gray-500 text-sm">Total Clientes</p>
-      <h2 class="text-4xl font-extrabold text-gray-800 mt-1">{{ totalClientes }}</h2>
+  <!-- === TARJETAS DE ESTADÍSTICAS RÁPIDAS === -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 px-5 py-5">
+    <div class="bg-white p-4 rounded-lg shadow-sm text-center">
+      <p class="text-gray-500 text-xs">Total Clientes</p>
+      <h2 class="text-3xl font-extrabold text-gray-800 mt-1">{{ totalClientes }}</h2>
     </div>
-    <div class="bg-green-100 p-5 rounded-2xl shadow text-center">
-      <p class="text-green-800 text-sm">Activos</p>
-      <h2 class="text-4xl font-extrabold text-green-900 mt-1">{{ contadorClientesActivos }}</h2>
+    <div class="bg-green-50 p-4 rounded-lg shadow-sm text-center">
+      <p class="text-green-700 text-xs">Activos</p>
+      <h2 class="text-3xl font-extrabold text-green-900 mt-1">{{ contadorClientesActivos }}</h2>
     </div>
-    <div class="bg-yellow-100 p-5 rounded-2xl shadow text-center">
-      <p class="text-yellow-800 text-sm">Pendientes</p>
-      <h2 class="text-4xl font-extrabold text-yellow-900 mt-1">{{ contadorClientesPen }}</h2>
+    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm text-center">
+      <p class="text-yellow-700 text-xs">Pendientes</p>
+      <h2 class="text-3xl font-extrabold text-yellow-900 mt-1">{{ contadorClientesPen }}</h2>
     </div>
-     <div class="bg-red-100 p-5 rounded-2xl shadow text-center">
-      <p class="text-red-800 text-sm">Inactivos</p>
-      <h2 class="text-4xl font-extrabold text-red-900 mt-1">{{ contadorClientesInac }}</h2>
+    <div class="bg-red-50 p-4 rounded-lg shadow-sm text-center">
+      <p class="text-red-700 text-xs">Inactivos</p>
+      <h2 class="text-3xl font-extrabold text-red-900 mt-1">{{ contadorClientesInac }}</h2>
     </div>
   </div>
 
-  <!-- Búsqueda y filtros -->
-  <div class="flex flex-col md:flex-row justify-between items-center px-6 py-4 gap-4">
+  <!-- === FILTROS Y BÚSQUEDA === -->
+  <div class="flex flex-col sm:flex-row justify-between items-center px-5 py-3 gap-3">
+    <!-- Componente de búsqueda -->
     <app-search-box (bcNombre)="buscarClientePorNombre($event)"></app-search-box>
-    <div class="flex gap-2">
+
+    <!-- Botones de estado -->
+    <div class="flex space-x-2">
       <button
-        class="px-4 py-1 rounded-lg text-sm border transition"
+        class="px-3 py-1 rounded-lg text-sm border border-gray-300 transition"
         [class.bg-gray-200]="!mostrarInactivos && !mostrarPendientes"
         (click)="mostrarUsuarios('Activos')"
       >
         Activos
       </button>
       <button
-        class="px-4 py-1 rounded-lg text-sm border transition"
+        class="px-3 py-1 rounded-lg text-sm border border-gray-300 transition"
         [class.bg-gray-200]="mostrarInactivos"
         (click)="mostrarUsuarios('Inactivos')"
       >
         Inactivos
       </button>
       <button
-        class="px-4 py-1 rounded-lg text-sm border transition"
+        class="px-3 py-1 rounded-lg text-sm border border-gray-300 transition"
         [class.bg-gray-200]="mostrarPendientes"
         (click)="mostrarUsuarios('Pendientes')"
       >
@@ -87,70 +93,90 @@
     </div>
   </div>
 
-  <!-- Tarjetas de clientes -->
-  <div *ngIf="usuariosFiltrados.length; else sinClientes"
-       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 pb-10">
-    <div *ngFor="let c of usuariosFiltrados"
-         class="bg-white rounded-2xl shadow p-4 flex flex-col transition hover:shadow-md">
-      <div class="flex items-center gap-4 mb-4">
-        <img [src]="c.imagen" class="w-14 h-14 rounded-full object-cover border-2 border-gray-300" />
-        <div>
-      <p class="text-lg font-bold">{{ c.nombreCompleto }}</p> <!-- antes text-base -->
-<p class="text-sm text-gray-500">{{ c.estado }}</p> <!-- igual -->
+  <!-- === GRILLA DE TARJETAS DE CLIENTE (versión con Flexbox) === -->
+<div *ngIf="usuariosFiltrados.length; else sinClientes"
+     class="flex flex-wrap justify-center gap-4 px-5 py-4">
+<div *ngFor="let c of usuariosFiltrados"
+     class="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 bg-white rounded-lg shadow-sm p-4 flex flex-col hover:shadow-md transition transform hover:scale-[1.01] animate-fade-in-scale">
 
-        </div>
+    <!-- Avatar + nombre + estado -->
+    <div class="flex items-center gap-3 mb-2">
+      <img [src]="c.imagen"
+           alt="Foto {{ c.nombreCompleto }}"
+           class="w-10 h-10 rounded-full object-cover border-2 border-gray-200" />
+      <div>
+        <p class="text-base font-semibold text-gray-800">{{ c.nombreCompleto }}</p>
+        <p class="text-xs text-gray-500">{{ c.estado }}</p>
       </div>
-      <div class="text-base text-gray-700 flex-1 space-y-1"> <!-- antes text-sm -->
-  <p><strong>Correo:</strong> {{ c.correo }}</p>
-  <p><strong>DNI:</strong> {{ c.identidad }}</p>
-  <p><strong>Ingreso:</strong> {{ c.fechaIngreso | date }}</p>
-  <p><strong>Días:</strong> {{ c.diasRestantes }}</p>
-  <p><strong>Plan:</strong> {{ getPlanName(c.idPlan) }}</p>
-</div>
-      <div class="flex gap-2 mt-4">
-        <button *ngIf="isAdmin || isEntrenador"
-                (click)="asignarRutina(c._id)"
-                class="flex-1 bg-gray-600 text-white py-1.5 rounded-lg hover:bg-gray-700 text-base  font-medium">
-          Asignar Rutina
-        </button>
-        <button *ngIf="isAdmin"
-                [routerLink]="['/usuarios/edit', c._id]"
-                class="flex-1 bg-red-500 text-white py-1.5 rounded-lg hover:bg-red-600 text-base  font-medium">
-          Editar
-        </button>
-      </div>
+    </div>
+
+    <!-- Datos secundarios -->
+    <div class="text-sm text-gray-700 flex-1 space-y-1">
+      <p><strong>Correo:</strong> {{ c.correo }}</p>
+      <p><strong>DNI:</strong> {{ c.identidad }}</p>
+      <p><strong>Ingreso:</strong> {{ c.fechaIngreso | date:'shortDate' }}</p>
+      <p><strong>Días:</strong> {{ c.diasRestantes }}</p>
+      <p><strong>Plan:</strong> {{ getPlanName(c.idPlan) }}</p>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="flex space-x-2 mt-3">
+      <button *ngIf="isAdmin || isEntrenador"
+              (click)="asignarRutina(c._id)"
+              class="flex-1 bg-gray-600 text-white py-1.5 rounded-lg hover:bg-gray-700 text-sm">
+        Asignar Rutina
+      </button>
+      <button *ngIf="isAdmin"
+              [routerLink]="['/usuarios/edit', c._id]"
+              class="flex-1 bg-red-500 text-white py-1.5 rounded-lg hover:bg-red-600 text-sm">
+        Editar
+      </button>
     </div>
   </div>
+</div>
 
-  <!-- Sin clientes -->
-  <ng-template #sinClientes>
-    <div class="text-center py-20 text-gray-500">
-      <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
-           alt="sin clientes"
-           class="w-24 h-24 mx-auto mb-4" />
-      <p>No hay clientes en esta categoría</p>
-    </div>
-  </ng-template>
+<ng-template #sinClientes>
+  <div class="flex flex-col items-center py-16 text-gray-500">
+    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
+         alt="sin clientes"
+         class="w-20 h-20 mb-3" />
+    <p>No hay clientes en esta categoría</p>
+  </div>
+</ng-template>
 
-  <!-- Paginación -->
-  <div class="flex justify-between items-center px-6 py-4 text-sm">
-    <div class="space-x-2">
-      <button (click)="cargarUsuarios(1)" [disabled]="currentPage === 1"
-              class="border px-3 py-1 rounded disabled:opacity-50">Primera</button>
-      <button (click)="cargarUsuarios(currentPage - 1)" [disabled]="currentPage === 1"
-              class="border px-3 py-1 rounded disabled:opacity-50">Anterior</button>
+  <!-- === PAGINACIÓN === -->
+  <div class="flex flex-col sm:flex-row justify-between items-center px-5 py-3 text-sm space-y-2 sm:space-y-0">
+    <div class="flex space-x-2">
+      <button (click)="cargarUsuarios(1)"
+              [disabled]="currentPage === 1"
+              class="border border-gray-300 px-2 py-1 rounded disabled:opacity-50">
+        Primera
+      </button>
+      <button (click)="cargarUsuarios(currentPage - 1)"
+              [disabled]="currentPage === 1"
+              class="border border-gray-300 px-2 py-1 rounded disabled:opacity-50">
+        Anterior
+      </button>
       <span>Página {{ currentPage }} de {{ totalPages }}</span>
-      <button (click)="cargarUsuarios(currentPage + 1)" [disabled]="currentPage === totalPages"
-              class="border px-3 py-1 rounded disabled:opacity-50">Siguiente</button>
-      <button (click)="cargarUsuarios(totalPages)" [disabled]="currentPage === totalPages"
-              class="border px-3 py-1 rounded disabled:opacity-50">Última</button>
+      <button (click)="cargarUsuarios(currentPage + 1)"
+              [disabled]="currentPage === totalPages"
+              class="border border-gray-300 px-2 py-1 rounded disabled:opacity-50">
+        Siguiente
+      </button>
+      <button (click)="cargarUsuarios(totalPages)"
+              [disabled]="currentPage === totalPages"
+              class="border border-gray-300 px-2 py-1 rounded disabled:opacity-50">
+        Última
+      </button>
     </div>
-    <div class="flex items-center gap-2">
-      <label>Items:</label>
-      <select [(ngModel)]="limit" (change)="cargarUsuarios(1)"
-              class="border rounded px-3 py-1">
+    <div class="flex items-center space-x-2">
+      <label class="text-sm">Items:</label>
+      <select [(ngModel)]="limit"
+              (change)="cargarUsuarios(1)"
+              class="border border-gray-300 rounded px-2 py-1 text-sm">
         <option *ngFor="let l of [5, 10, 20, 50]" [value]="l">{{ l }}</option>
       </select>
     </div>
   </div>
+
 </div>

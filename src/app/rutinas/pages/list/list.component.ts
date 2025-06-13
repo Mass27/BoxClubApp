@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RutinasService } from '../../services/rutinas.service';
 import { Rutinas } from '../../interfaces/rutinas.interfaces';
 import { EmpleadosService } from 'src/app/Empleados/services/empleados.service';
 import { Empleados2 } from 'src/app/Empleados/interfaces/empleados2.interfaces';
 import { RutinasID } from '../../interfaces/rutinasId.interfaces';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-list',
@@ -20,7 +23,10 @@ export class ListComponent implements OnInit {
     private rutinasService: RutinasService,
     private empleadoService: EmpleadosService
   ) {}
-
+  displayedColumns: string[] = ['nombre', 'descripcion', 'empleado', 'acciones'];
+  dataSource: MatTableDataSource<Rutinas> = new MatTableDataSource<Rutinas>();
+   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   ngOnInit() {
     this.getRutinas();
     this.adminUser();
@@ -33,7 +39,10 @@ export class ListComponent implements OnInit {
   getRutinas() {
     this.rutinasService.getAllRutinas().subscribe((rutinas) => {
       this.rutinas = rutinas;
-      this.rutinasFiltrado = [...this.rutinas];
+      this.rutinasFiltrado = [...rutinas];
+      this.dataSource = new MatTableDataSource(rutinas);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
   adminUser() {
@@ -42,16 +51,15 @@ export class ListComponent implements OnInit {
     this.isEntrenador = tipoUsuario === 'entrenadores'; // o 'ENTRENADOR' si lo guardas en mayúsculas
   }
 
-  searchByName(name: string): void {
+ searchByName(name: string): void {
     if (name.trim() === '') {
-      this.rutinasFiltrado = this.rutinas; // Restaurar la lista completa
+      this.dataSource.data = this.rutinas;
       return;
     }
 
     this.rutinasService.searchByName(name).subscribe(
       (rutinas: Rutinas[]) => {
-        // Actualiza las rutinas filtradas con los resultados de la búsqueda
-        this.rutinasFiltrado = rutinas;
+        this.dataSource.data = rutinas;
       },
       (error) => {
         console.error('Error al buscar rutinas por nombre:', error);

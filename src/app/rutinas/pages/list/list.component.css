@@ -1,0 +1,27 @@
+.mat-header-cell {
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.mat-row, .mat-header-row {
+  min-height: 56px;
+}
+::ng-deep .mat-sort-header-arrow {
+  color: #dc2626; /* rojo */
+}
+
+::ng-deep .mat-header-cell {
+  font-weight: 600;
+}
+
+::ng-deep .mat-paginator {
+  border-top: 1px solid #f3f4f6;
+}
+
+::ng-deep .mat-raised-button.mat-warn {
+  background-color: #dc2626;
+}
+
+::ng-deep .mat-raised-button.mat-warn:hover {
+  background-color: #b91c1c;
+}
